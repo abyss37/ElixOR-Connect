@@ -239,7 +239,7 @@
                             ${escapeHtml(budget.company_name)}
                         </div>
 
-                        <div class="ff-budget-product ${budget.software === "BETA" ? "beta" : ""}">
+                        <div class="ff-budget-product">
                             <span class="ff-budget-product-dot"></span>
                             ${escapeHtml(budget.software)}
                             ·

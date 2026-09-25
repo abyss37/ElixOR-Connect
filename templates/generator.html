@@ -87,21 +87,15 @@
                     Все
                 </button>
 
-                <button
-                    type="button"
-                    class="ff-generator-filter"
-                    data-filter="ALPHA"
-                >
-                    ALPHA
-                </button>
-
-                <button
-                    type="button"
-                    class="ff-generator-filter"
-                    data-filter="BETA"
-                >
-                    BETA
-                </button>
+                {% for product in products %}
+                    <button
+                        type="button"
+                        class="ff-generator-filter"
+                        data-filter="{{ product.code }}"
+                    >
+                        {{ product.name or product.code }}
+                    </button>
+                {% endfor %}
             </div>
 
             <div

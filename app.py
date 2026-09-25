@@ -361,7 +361,7 @@ SOFTWARE_ALIASES = {
 
 
 def canonical_software(value):
-    value = (value or "ALPHA").strip()
+    value = (value or "").strip()
     return SOFTWARE_ALIASES.get(value, value)
 
 
@@ -963,74 +963,7 @@ def build_company_cards(companies):
             if inv.status != "CANCELLED"
         ]
 
-        software_data = {}
-
-        for software in ("ALPHA", "BETA"):
-            software_budgets = [
-                budget
-                for budget in company.budgets
-                if canonical_software(budget.software) == software
-            ]
-
-            software_invoices = [
-                inv
-                for inv in active_invoices
-                if canonical_software(inv.software) == software
-            ]
-
-            # A company/software card represents one budget.
-            # Prefer the existing budget with the highest amount.
-            # Currency is kept explicitly so EUR/USD/UAH are never mixed.
-            budget = (
-                max(
-                    software_budgets,
-                    key=lambda item: money(item.total_amount),
-                )
-                if software_budgets
-                else None
-            )
-
-            if budget:
-                currency = canonical_currency(budget.currency)
-            elif software_invoices:
-                currency = canonical_currency(software_invoices[0].currency)
-            else:
-                currency = "EUR"
-
-            spent = sum(
-                (
-                    money(inv.amount_eur)
-                    for inv in software_invoices
-                    if canonical_currency(inv.currency) == currency
-                ),
-                Decimal("0.00"),
-            )
-
-            has_software = bool(software_invoices) or bool(
-                budget and money(budget.total_amount) > 0
-            )
-
-            software_data[software] = {
-                "budget": budget,
-                "currency": currency,
-                "spent": spent,
-                "has": has_software,
-            }
-
-        alpha = software_data["ALPHA"]
-        beta = software_data["BETA"]
-
-        has_alpha = alpha["has"]
-        has_beta = beta["has"]
-
-        if not has_alpha and not has_beta:
-            has_alpha = True
-
-        default_sw = "ALPHA" if has_alpha else "BETA"
-
         # Dynamic product layer.
-        # Keep the legacy ALPHA/BETA fields below for compatibility
-        # with the current Companies frontend and notification logic.
         products = []
 
         active_products = (
@@ -1124,35 +1057,6 @@ def build_company_cards(companies):
 
             "products": products,
 
-            "has_alpha": has_alpha,
-            "has_beta": has_beta,
-            "default_sw": default_sw,
-
-            "alpha_budget": (
-                money_float(alpha["budget"].total_amount)
-                if alpha["budget"] else 0
-            ),
-            "alpha_spent": money_float(alpha["spent"]),
-            "alpha_currency": alpha["currency"],
-            "alpha_symbol": currency_symbol(alpha["currency"]),
-            "alpha_date": (
-                alpha["budget"].completion_date.isoformat()
-                if alpha["budget"] and alpha["budget"].completion_date
-                else ""
-            ),
-
-            "beta_budget": (
-                money_float(beta["budget"].total_amount)
-                if beta["budget"] else 0
-            ),
-            "beta_spent": money_float(beta["spent"]),
-            "beta_currency": beta["currency"],
-            "beta_symbol": currency_symbol(beta["currency"]),
-            "beta_date": (
-                beta["budget"].completion_date.isoformat()
-                if beta["budget"] and beta["budget"].completion_date
-                else ""
-            ),
         })
 
     return cards
@@ -1271,18 +1175,11 @@ def build_alerts(company_cards, invoices=None):
     for card in company_cards:
         company_name = card["name"]
 
-        for software in ("ALPHA", "BETA"):
-            prefix = software.lower()
-
-            budget = Decimal(
-                str(card[f"{prefix}_budget"] or 0)
-            )
-            spent = Decimal(
-                str(card[f"{prefix}_spent"] or 0)
-            )
-            currency = canonical_currency(
-                card[f"{prefix}_currency"]
-            )
+        for product in card.get("products", []):
+            software = product.get("code") or product.get("name") or ""
+            budget = Decimal(str(product.get("budget") or 0))
+            spent = Decimal(str(product.get("spent") or 0))
+            currency = canonical_currency(product.get("currency"))
             symbol = currency_symbol(currency)
 
             if budget <= 0:
@@ -1322,7 +1219,7 @@ def build_alerts(company_cards, invoices=None):
                     ),
                 })
 
-            completion = card[f"{prefix}_date"]
+            completion = product.get("completion_date")
 
             if isinstance(completion, str):
                 try:
@@ -1424,19 +1321,19 @@ def sync_notifications(company_cards, invoices):
         company_id = card["id"]
         company_name = card["name"]
 
-        for software in ("ALPHA", "BETA"):
-            prefix = software.lower()
+        for product in card.get("products", []):
+            software = product.get("code") or product.get("name") or ""
 
             budget = Decimal(
-                str(card[f"{prefix}_budget"] or 0)
+                str(product.get("budget") or 0)
             )
 
             spent = Decimal(
-                str(card[f"{prefix}_spent"] or 0)
+                str(product.get("spent") or 0)
             )
 
             currency = canonical_currency(
-                card[f"{prefix}_currency"]
+                product.get("currency")
             )
             symbol = currency_symbol(currency)
 
@@ -1499,7 +1396,7 @@ def sync_notifications(company_cards, invoices):
             # Contract expiration
             # -------------------------------------------------
 
-            completion = card[f"{prefix}_date"]
+            completion = product.get("completion_date")
 
             if isinstance(completion, str):
                 try:
@@ -2662,6 +2559,12 @@ def delete_product(product_id):
 @login_required
 def analytics():
     companies = Company.query.order_by(Company.name).all()
+    products = (
+        Product.query
+        .filter(Product.status == "ACTIVE")
+        .order_by(Product.name.asc())
+        .all()
+    )
     invoices = Invoice.query.order_by(Invoice.id.desc()).all()
     company_cards = build_company_cards(companies)
     metrics = dashboard_metrics(company_cards, invoices)
@@ -2713,6 +2616,7 @@ def analytics():
     return render_template(
         "analytics.html",
         companies=companies,
+        products=products,
         invoices=invoice_data,
         company_cards=company_cards,
         metrics=metrics,
@@ -3336,6 +3240,12 @@ def generator_pdf(invoice_id):
 @login_required
 def generator():
     companies = Company.query.order_by(Company.name).all()
+    products = (
+        Product.query
+        .filter(Product.status == "ACTIVE")
+        .order_by(Product.name.asc())
+        .all()
+    )
     invoices = Invoice.query.order_by(Invoice.id.desc()).all()
     initial_invoice_id = request.args.get("invoice_id", type=int)
 
@@ -3449,6 +3359,7 @@ def generator():
     return render_template(
         "generator.html",
         companies=companies,
+        products=products,
         archived_invoices=invoices_list,
         initial_invoice_id=initial_invoice_id,
         our_company=our_company_data,
@@ -4100,28 +4011,6 @@ def cancel_invoice(invoice_id):
 
         db.session.commit()
 
-        active_invoices = Invoice.query.filter(
-            Invoice.company_id == company_id,
-            Invoice.status != "CANCELLED",
-        ).all()
-
-        alpha_spent = sum(
-            (
-                money(i.amount_eur)
-                for i in active_invoices
-                if canonical_software(i.software) == "ALPHA"
-            ),
-            Decimal("0.00"),
-        )
-        beta_spent = sum(
-            (
-                money(i.amount_eur)
-                for i in active_invoices
-                if canonical_software(i.software) == "BETA"
-            ),
-            Decimal("0.00"),
-        )
-
         return jsonify({
             "status": "ok",
             "invoice_id": inv.id,
@@ -4129,8 +4018,7 @@ def cancel_invoice(invoice_id):
             "invoice_status": inv.status,
             "cancelled_at": inv.cancelled_at.isoformat(),
             "cancellation_reason": inv.cancellation_reason,
-            "alpha_spent": money_float(alpha_spent),
-            "beta_spent": money_float(beta_spent),
+            "software": software,
         })
 
     except Exception:
@@ -4883,7 +4771,17 @@ def change_user_password(user_id):
 @app.route("/audit-log")
 @login_required
 def audit_log_page():
-    return render_template("audit-log.html", current_user=get_current_user())
+    products = (
+        Product.query
+        .filter(Product.status == "ACTIVE")
+        .order_by(Product.name.asc())
+        .all()
+    )
+    return render_template(
+        "audit-log.html",
+        current_user=get_current_user(),
+        products=products,
+    )
 
 
 @app.route("/api/audit-log")
@@ -4900,7 +4798,7 @@ def api_audit_log():
         action = (request.args.get("action") or "").strip().upper()
         company_id_raw = (request.args.get("company_id") or "").strip()
         user_id_raw = (request.args.get("user_id") or "").strip()
-        software = canonical_software(request.args.get("software")) if request.args.get("software") else ""
+        software = (request.args.get("software") or "").strip()
         date_from_raw = (request.args.get("date_from") or "").strip()
         date_to_raw = (request.args.get("date_to") or "").strip()
 
@@ -4940,7 +4838,16 @@ def api_audit_log():
             query = query.filter(AuditLog.user_id == user_id)
 
         if software:
-            if software not in ("ALPHA", "BETA"):
+            valid_product = (
+                Product.query
+                .filter(
+                    Product.status == "ACTIVE",
+                    Product.code == software,
+                )
+                .first()
+            )
+
+            if not valid_product:
                 return jsonify({
                     "status": "error",
                     "message": "Invalid software product",

@@ -78,7 +78,7 @@
         return String(
             invoice.software ||
             invoice.product ||
-            'ALPHA'
+            ''
         ).toUpperCase();
     }
 
@@ -348,10 +348,9 @@
                 ? Math.min(100, (row.amount / max) * 100)
                 : 0;
 
-            const fillClass =
-                row.product === 'BETA'
-                    ? 'ff-analytics-bar-fill-product'
-                    : 'ff-analytics-bar-fill-company';
+            const fillClass = row.product
+                ? 'ff-analytics-bar-fill-product'
+                : 'ff-analytics-bar-fill-company';
 
             return `
                 <div class="ff-analytics-bar-row">

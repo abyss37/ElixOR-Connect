@@ -782,16 +782,6 @@
     letter-spacing: .06em;
 }
 
-.ff-audit-product.is-alpha {
-    border-color: rgba(96, 165, 250, .14);
-    color: #93c5fd;
-}
-
-.ff-audit-product.is-beta {
-    border-color: rgba(192, 132, 252, .14);
-    color: #d8b4fe;
-}
-
 .ff-audit-description {
     max-width: 100%;
 }

@@ -142,7 +142,6 @@
             "Spend by product": "Сума рахунків за продуктами",
             "Active invoiced amount by product.":
                 "Сума активних рахунків за продуктами",
-            "ALPHA · BETA": "ALPHA · BETA",
 
             "Monthly spending": "Сума рахунків за місяцями",
             "Active invoiced amount grouped by invoice month.":

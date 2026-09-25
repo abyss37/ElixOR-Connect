@@ -632,7 +632,7 @@
                     <td>
                         ${
                             software
-                                ? `<span class="ff-audit-product ${software === 'ALPHA' ? 'is-alpha' : software === 'BETA' ? 'is-beta' : ''}">
+                                ? `<span class="ff-audit-product">
                                     ${escapeHtml(software)}
                                    </span>`
                                 : '<span class="ff-audit-product">—</span>'

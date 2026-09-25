@@ -204,8 +204,11 @@
                             Все продукты
                         </option>
 
-                        <option value="ALPHA">ALPHA</option>
-                        <option value="BETA">BETA</option>
+                        {% for product in products %}
+                            <option value="{{ product.code }}">
+                                {{ product.name or product.code }}
+                            </option>
+                        {% endfor %}
 
                     </select>
 

@@ -322,12 +322,6 @@
     border: 1px solid rgba(16, 185, 129, .14);
 }
 
-.ff-product-badge.is-beta {
-    color: #bfdbfe;
-    background: rgba(59, 130, 246, .10);
-    border-color: rgba(59, 130, 246, .14);
-}
-
 .ff-invoice-badge {
     padding: 5px 9px;
     border: 1px solid transparent;
