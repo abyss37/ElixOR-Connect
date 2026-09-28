@@ -5356,3 +5356,25 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
     color: rgba(255, 255, 255, 0.48);
 }
 
+
+
+/* ELIXOR CONNECT SIDEBAR BRAND MARK */
+
+.ff-brand-mark {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+
+.ff-brand-mark-image {
+    display: block;
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+    object-position: center;
+}
+
+.ff-sidebar.collapsed .ff-brand-mark-image {
+    width: 26px;
+    height: 26px;
+}

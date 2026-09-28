@@ -1,0 +1,1069 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+
+:root {
+    --bg: #05070b;
+    --bg2: #080d15;
+    --panel: rgba(13, 20, 31, .72);
+    --panel-strong: rgba(15, 24, 37, .90);
+    --line: rgba(148, 181, 220, .12);
+    --line-bright: rgba(148, 194, 255, .24);
+    --text: #edf4ff;
+    --muted: #8290a5;
+    --soft: #aab7ca;
+    --blue: #69adff;
+    --blue2: #9bcbff;
+    --cyan: #78d8ff;
+}
+
+* { box-sizing: border-box; }
+
+html {
+    scroll-behavior: smooth;
+    background: var(--bg);
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    background:
+        radial-gradient(circle at 78% 5%, rgba(54, 119, 191, .12), transparent 30rem),
+        radial-gradient(circle at 8% 38%, rgba(38, 77, 127, .07), transparent 34rem),
+        var(--bg);
+    color: var(--text);
+    font-family: "DM Sans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.elixor-page {
+    position: relative;
+    overflow: hidden;
+}
+
+.elixor-noise {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+    opacity: .025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+}
+
+.elixor-orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(100px);
+    opacity: .13;
+}
+
+.elixor-orb-a {
+    width: 520px;
+    height: 520px;
+    right: -220px;
+    top: 500px;
+    background: #2179c8;
+}
+
+.elixor-orb-b {
+    width: 400px;
+    height: 400px;
+    left: -220px;
+    top: 1200px;
+    background: #254f89;
+}
+
+.elixor-header,
+.elixor-hero,
+.elixor-section,
+.elixor-control,
+.elixor-security,
+.elixor-final,
+.elixor-footer {
+    width: min(1240px, calc(100% - 48px));
+    margin-inline: auto;
+}
+
+.elixor-header {
+    height: 86px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    z-index: 5;
+}
+
+.elixor-brand,
+.elixor-footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.elixor-brand-symbol {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line-bright);
+    border-radius: 11px;
+    background: rgba(14, 24, 38, .8);
+    box-shadow: 0 0 30px rgba(67, 145, 225, .10);
+}
+
+.elixor-brand-symbol img {
+    width: 25px;
+    height: 25px;
+}
+
+.elixor-brand-name {
+    display: flex;
+    gap: 5px;
+    align-items: baseline;
+    font-family: Manrope, sans-serif;
+    font-size: 15px;
+    letter-spacing: -.02em;
+}
+
+.elixor-brand-name strong { font-weight: 800; }
+.elixor-brand-name span { color: var(--muted); }
+
+.elixor-nav {
+    display: flex;
+    gap: 34px;
+    margin-left: 80px;
+}
+
+.elixor-nav a,
+.elixor-footer-links a {
+    color: var(--muted);
+    font-size: 12px;
+    transition: color .2s ease;
+}
+
+.elixor-nav a:hover,
+.elixor-footer-links a:hover { color: var(--text); }
+
+.elixor-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.elixor-language {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+    color: #4d5a6d;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .08em;
+}
+
+.elixor-language button {
+    border: 0;
+    background: none;
+    padding: 0;
+    color: var(--muted);
+    cursor: pointer;
+    font: inherit;
+}
+
+.elixor-language button:hover { color: var(--text); }
+
+.elixor-signin {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 15px;
+    border: 1px solid var(--line-bright);
+    border-radius: 9px;
+    background: rgba(14, 23, 35, .55);
+    font-size: 12px;
+    transition: .2s ease;
+}
+
+.elixor-signin:hover {
+    background: rgba(27, 44, 66, .7);
+    border-color: rgba(148, 194, 255, .4);
+}
+
+.elixor-hero {
+    min-height: 720px;
+    display: grid;
+    grid-template-columns: .82fr 1.18fr;
+    align-items: center;
+    gap: 55px;
+    padding: 92px 0 120px;
+}
+
+.elixor-eyebrow,
+.elixor-section-index {
+    color: #6d819b;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .16em;
+}
+
+.elixor-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 25px;
+}
+
+.elixor-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 0 14px rgba(105, 173, 255, .8);
+}
+
+.elixor-hero h1,
+.elixor-section-heading h2,
+.elixor-control h2,
+.elixor-security h2,
+.elixor-final h2 {
+    font-family: Manrope, sans-serif;
+    letter-spacing: -.055em;
+    font-weight: 700;
+}
+
+.elixor-hero h1 {
+    max-width: 640px;
+    margin: 0;
+    font-size: clamp(52px, 6vw, 88px);
+    line-height: .98;
+}
+
+.elixor-hero h1 span,
+.elixor-section-heading em,
+.elixor-control em,
+.elixor-security em,
+.elixor-final em {
+    color: var(--blue2);
+    font-style: normal;
+}
+
+.elixor-hero-lead {
+    max-width: 430px;
+    margin: 30px 0 42px;
+    color: var(--soft);
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.elixor-hero-meta {
+    display: flex;
+    gap: 34px;
+}
+
+.elixor-hero-meta div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.elixor-hero-meta strong {
+    font-family: Manrope, sans-serif;
+    font-size: 13px;
+    color: #c4d8ef;
+}
+
+.elixor-hero-meta span {
+    font-size: 9px;
+    color: #56657a;
+    letter-spacing: .14em;
+}
+
+.elixor-dashboard-stage {
+    position: relative;
+    min-height: 510px;
+    display: grid;
+    place-items: center;
+}
+
+.elixor-dashboard-glow {
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    background: rgba(48, 130, 216, .16);
+    filter: blur(80px);
+    border-radius: 50%;
+}
+
+.elixor-dashboard {
+    width: min(650px, 100%);
+    position: relative;
+    z-index: 2;
+    padding: 23px;
+    border: 1px solid rgba(143, 184, 227, .20);
+    border-radius: 18px;
+    background:
+        linear-gradient(145deg, rgba(24, 36, 52, .92), rgba(7, 12, 19, .94));
+    box-shadow:
+        0 35px 100px rgba(0, 0, 0, .55),
+        inset 0 1px rgba(255, 255, 255, .045);
+    transform: perspective(1400px) rotateY(-4deg) rotateX(2deg);
+}
+
+.elixor-dashboard-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+}
+
+.elixor-window-label {
+    display: block;
+    margin-bottom: 6px;
+    color: #566a82;
+    font-size: 8px;
+    letter-spacing: .15em;
+}
+
+.elixor-dashboard-top strong {
+    font: 600 14px Manrope, sans-serif;
+}
+
+.elixor-live {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #7e94ae;
+    font-size: 8px;
+    letter-spacing: .12em;
+}
+
+.elixor-live i {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #75c5ff;
+    box-shadow: 0 0 10px #75c5ff;
+}
+
+.elixor-balance {
+    padding: 28px 0 20px;
+}
+
+.elixor-balance span,
+.elixor-metric span {
+    color: #66778c;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .09em;
+}
+
+.elixor-balance strong {
+    display: block;
+    margin: 7px 0 4px;
+    font: 700 39px Manrope, sans-serif;
+    letter-spacing: -.04em;
+}
+
+.elixor-balance small,
+.elixor-metric small {
+    color: #5c6c80;
+    font-size: 9px;
+}
+
+.elixor-chart {
+    height: 145px;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+}
+
+.elixor-chart-grid {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.elixor-chart-grid span {
+    border-top: 1px solid rgba(125, 164, 204, .06);
+}
+
+.elixor-chart svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.elixor-dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 1px;
+    margin-top: 1px;
+    background: var(--line);
+}
+
+.elixor-metric {
+    min-height: 100px;
+    padding: 17px;
+    background: rgba(10, 17, 27, .86);
+}
+
+.elixor-metric strong {
+    display: block;
+    margin: 8px 0 8px;
+    font: 600 20px Manrope, sans-serif;
+}
+
+.elixor-progress {
+    height: 4px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #182333;
+}
+
+.elixor-progress i {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #4c91dc, #8dc8ff);
+}
+
+.elixor-dashboard-footer {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 17px;
+    color: #56677c;
+    font-size: 8px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.elixor-dashboard-footer i { color: #78b9f4; }
+
+.elixor-float-card {
+    position: absolute;
+    z-index: 4;
+    min-width: 145px;
+    padding: 14px 15px;
+    border: 1px solid rgba(145, 187, 228, .18);
+    border-radius: 12px;
+    background: rgba(11, 18, 28, .86);
+    box-shadow: 0 20px 45px rgba(0,0,0,.4);
+    backdrop-filter: blur(20px);
+}
+
+.elixor-float-card span {
+    display: block;
+    color: #687b92;
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+}
+
+.elixor-float-card strong {
+    display: inline-block;
+    margin-top: 6px;
+    font: 600 17px Manrope, sans-serif;
+}
+
+.elixor-float-card i {
+    float: right;
+    margin-top: 8px;
+    color: var(--blue);
+}
+
+.elixor-float-budget { left: 18px; bottom: 28px; }
+.elixor-float-invoice { right: 18px; top: 28px; }
+
+.elixor-section {
+    padding: 145px 0;
+}
+
+.elixor-section-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    margin-bottom: 65px;
+}
+
+.elixor-section-heading h2 {
+    width: min(720px, 100%);
+    margin: 0;
+    font-size: clamp(40px, 5vw, 68px);
+    line-height: 1.03;
+}
+
+.elixor-feature-layout {
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 14px;
+}
+
+.elixor-feature {
+    min-height: 290px;
+    padding: 30px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: linear-gradient(145deg, rgba(15, 23, 35, .76), rgba(7, 11, 17, .62));
+    transition: border-color .25s ease, transform .25s ease;
+}
+
+.elixor-feature:hover {
+    border-color: rgba(128, 180, 232, .25);
+    transform: translateY(-3px);
+}
+
+.elixor-feature-icon {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 55px;
+    border: 1px solid var(--line-bright);
+    border-radius: 10px;
+    color: var(--blue);
+    background: rgba(65, 115, 169, .08);
+}
+
+.elixor-feature > span,
+.elixor-feature-wide-copy > span {
+    color: #63768d;
+    font-size: 9px;
+    letter-spacing: .14em;
+    font-weight: 700;
+}
+
+.elixor-feature h3 {
+    max-width: 560px;
+    margin: 12px 0 10px;
+    font: 600 23px/1.25 Manrope, sans-serif;
+    letter-spacing: -.035em;
+}
+
+.elixor-feature p {
+    max-width: 560px;
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.65;
+    font-size: 13px;
+}
+
+.feature-large {
+    min-height: 420px;
+}
+
+.feature-line {
+    width: 100%;
+    height: 1px;
+    margin-top: 45px;
+    background: linear-gradient(90deg, rgba(103,170,240,.5), transparent);
+}
+
+.feature-wide {
+    grid-column: 1 / -1;
+    min-height: 235px;
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    align-items: center;
+}
+
+.elixor-feature-wide-copy h3 {
+    margin: 12px 0 0;
+    font: 600 30px/1.18 Manrope, sans-serif;
+    letter-spacing: -.04em;
+}
+
+.elixor-mini-stack {
+    width: min(400px, 100%);
+}
+
+.elixor-mini-stack div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--line);
+    color: #91a0b4;
+    font-size: 11px;
+}
+
+.elixor-mini-stack i { color: var(--blue); }
+.elixor-mini-stack b {
+    margin-left: auto;
+    color: #4f6279;
+    font-size: 8px;
+    letter-spacing: .1em;
+}
+
+.elixor-control {
+    width: 100%;
+    padding: 145px max(24px, calc((100vw - 1240px) / 2));
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background:
+        radial-gradient(circle at 50% 50%, rgba(48, 101, 157, .09), transparent 40%),
+        rgba(8, 13, 21, .72);
+}
+
+.elixor-control-copy {
+    width: min(1240px, 100%);
+    margin-inline: auto;
+}
+
+.elixor-control h2,
+.elixor-security h2,
+.elixor-final h2 {
+    margin: 22px 0;
+    font-size: clamp(42px, 5vw, 70px);
+    line-height: 1.03;
+}
+
+.elixor-control-copy p {
+    max-width: 570px;
+    color: var(--muted);
+    line-height: 1.75;
+    font-size: 14px;
+}
+
+.elixor-flow {
+    width: min(1240px, 100%);
+    margin: 80px auto 0;
+    display: flex;
+    align-items: center;
+}
+
+.elixor-flow-node {
+    width: 150px;
+    flex: 0 0 150px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    background: rgba(10, 17, 27, .76);
+}
+
+.elixor-flow-node span {
+    display: block;
+    color: #53657a;
+    font-size: 8px;
+    letter-spacing: .1em;
+}
+
+.elixor-flow-node i {
+    display: block;
+    margin: 17px 0 13px;
+    color: #7591ae;
+    font-size: 21px;
+}
+
+.elixor-flow-node strong {
+    font: 600 12px Manrope, sans-serif;
+}
+
+.elixor-flow-node.active {
+    border-color: rgba(110, 181, 249, .42);
+    box-shadow: 0 0 45px rgba(56, 139, 219, .10);
+}
+
+.elixor-flow-node.active i { color: var(--blue); }
+
+.elixor-flow-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(99,145,191,.25), rgba(99,145,191,.07));
+}
+
+.elixor-security {
+    padding: 145px 0;
+}
+
+.elixor-security-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(17, 27, 41, .78), rgba(6, 10, 16, .9));
+}
+
+.elixor-security-main {
+    padding: 65px;
+    min-height: 490px;
+    border-right: 1px solid var(--line);
+}
+
+.elixor-security-icon {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    margin-top: 75px;
+    border: 1px solid var(--line-bright);
+    border-radius: 14px;
+    color: var(--blue);
+    background: rgba(73, 132, 194, .08);
+    font-size: 20px;
+}
+
+.elixor-security-main p {
+    max-width: 470px;
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 13px;
+}
+
+.elixor-security-list {
+    padding: 65px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.elixor-security-list div {
+    display: grid;
+    grid-template-columns: 24px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 19px 0;
+    border-bottom: 1px solid var(--line);
+    color: #a9b6c8;
+    font-size: 12px;
+}
+
+.elixor-security-list i { color: #6faef0; }
+.elixor-security-list b {
+    color: #4d6076;
+    font-size: 7px;
+    letter-spacing: .12em;
+}
+
+.elixor-final {
+    min-height: 600px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-top: 1px solid var(--line);
+}
+
+.elixor-final-glow {
+    position: absolute;
+    width: 500px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(57, 133, 217, .13);
+    filter: blur(100px);
+    pointer-events: none;
+}
+
+.elixor-final > *:not(.elixor-final-glow) { position: relative; }
+
+.elixor-final h2 {
+    font-size: clamp(52px, 7vw, 92px);
+}
+
+.elixor-final p {
+    margin: 0 0 34px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.elixor-primary-cta {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 14px 17px 14px 22px;
+    border: 1px solid rgba(139, 193, 246, .34);
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(72, 137, 202, .28), rgba(22, 39, 58, .7));
+    box-shadow: 0 20px 55px rgba(20, 83, 139, .12);
+    font-size: 12px;
+    transition: .2s ease;
+}
+
+.elixor-primary-cta i {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 7px;
+    background: rgba(146, 199, 251, .12);
+}
+
+.elixor-primary-cta:hover {
+    transform: translateY(-2px);
+    border-color: rgba(139, 193, 246, .55);
+}
+
+.elixor-footer {
+    min-height: 90px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 20px;
+    border-top: 1px solid var(--line);
+    color: #4e5e72;
+    font-size: 10px;
+}
+
+.elixor-footer-brand {
+    color: #8595aa;
+}
+
+.elixor-footer-brand img {
+    width: 22px;
+    height: 22px;
+}
+
+.elixor-footer-links {
+    display: flex;
+    justify-content: flex-end;
+    gap: 22px;
+}
+
+@media (max-width: 1000px) {
+    .elixor-nav { display: none; }
+
+    .elixor-hero {
+        grid-template-columns: 1fr;
+        padding-top: 70px;
+    }
+
+    .elixor-dashboard-stage { min-height: 470px; }
+
+    .elixor-section-heading {
+        flex-direction: column;
+    }
+
+    .elixor-feature-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-wide {
+        grid-column: auto;
+    }
+
+    .elixor-flow {
+        overflow-x: auto;
+        padding-bottom: 15px;
+    }
+
+    .elixor-security-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .elixor-security-main {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+    }
+}
+
+@media (max-width: 680px) {
+    .elixor-header,
+    .elixor-hero,
+    .elixor-section,
+    .elixor-security,
+    .elixor-final,
+    .elixor-footer {
+        width: min(100% - 28px, 1240px);
+    }
+
+    .elixor-header { height: 72px; }
+
+    .elixor-header-actions { gap: 10px; }
+    .elixor-language { display: none; }
+
+    .elixor-hero {
+        padding: 60px 0 80px;
+    }
+
+    .elixor-hero h1 { font-size: 51px; }
+
+    .elixor-hero-meta {
+        gap: 18px;
+    }
+
+    .elixor-dashboard {
+        transform: none;
+        padding: 16px;
+    }
+
+    .elixor-dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .elixor-float-budget {
+        left: -5px;
+        bottom: 25px;
+    }
+
+    .elixor-float-invoice {
+        right: -5px;
+        top: 15px;
+    }
+
+    .elixor-section,
+    .elixor-security {
+        padding: 95px 0;
+    }
+
+    .elixor-feature {
+        min-height: 310px;
+    }
+
+    .feature-wide {
+        display: block;
+    }
+
+    .elixor-mini-stack {
+        margin-top: 35px;
+    }
+
+    .elixor-control {
+        padding: 95px 14px;
+    }
+
+    .elixor-flow-node {
+        flex-basis: 130px;
+        width: 130px;
+    }
+
+    .elixor-security-main,
+    .elixor-security-list {
+        padding: 35px 25px;
+    }
+
+    .elixor-security-icon {
+        margin-top: 45px;
+    }
+
+    .elixor-footer {
+        grid-template-columns: 1fr;
+        padding: 25px 0;
+    }
+
+    .elixor-footer-links {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   ELIXOR CONNECT — PLACEHOLDER MOBILE FINAL
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .elixor-placeholder {
+        width: 100%;
+        min-height: 100dvh;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: auto;
+        position: relative;
+        background: #020509;
+    }
+
+    .elixor-placeholder-header {
+        position: relative !important;
+        inset: auto !important;
+        order: 1;
+        flex: 0 0 76px;
+        width: 100%;
+        height: 76px;
+        z-index: 50;
+    }
+
+    .elixor-placeholder-main {
+        position: relative !important;
+        inset: auto !important;
+        order: 2;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        overflow: visible;
+    }
+
+    .elixor-placeholder-image-wrap {
+        position: relative;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 2752 / 1536;
+        overflow: hidden;
+        flex: 0 0 auto;
+        background: #020509;
+    }
+
+    .elixor-placeholder-image {
+        position: relative !important;
+        inset: auto !important;
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        max-width: none !important;
+        object-fit: cover !important;
+        object-position: center center !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        filter: none !important;
+    }
+
+    .elixor-placeholder-overlay {
+        display: none !important;
+    }
+
+    .elixor-placeholder-content {
+        position: relative !important;
+        inset: auto !important;
+        width: 100%;
+        flex: 0 0 auto;
+        background: #020509;
+    }
+
+    .elixor-placeholder-copy {
+        position: relative !important;
+        inset: auto !important;
+        width: 100%;
+        padding: 22px 20px 28px;
+        box-sizing: border-box;
+    }
+
+    .elixor-placeholder-badge {
+        margin-bottom: 12px;
+    }
+
+    .elixor-placeholder-copy h1 {
+        margin-top: 0;
+    }
+
+    .elixor-placeholder-copy p {
+        margin-bottom: 0;
+    }
+
+    .elixor-placeholder-footer {
+        display: none !important;
+    }
+}

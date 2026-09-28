@@ -1,0 +1,374 @@
+/* =========================================================
+   ElixOR Connect — temporary landing placeholder
+   Completely isolated from the main landing stylesheet.
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    background: #020509;
+    color: #f5f7fb;
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.elixor-placeholder {
+    width: 100%;
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(20, 70, 120, .16),
+            transparent 42%
+        ),
+        #020509;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+.elixor-placeholder-header {
+    position: relative;
+    z-index: 10;
+
+    width: 100%;
+    height: 78px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 32px;
+
+    background: rgba(2, 5, 9, .82);
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.elixor-placeholder-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+
+    color: #fff;
+    text-decoration: none;
+}
+
+.elixor-placeholder-mark {
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    overflow: hidden;
+    border-radius: 9px;
+}
+
+.elixor-placeholder-mark img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.elixor-placeholder-brand strong,
+.elixor-placeholder-brand em {
+    display: block;
+    line-height: 1;
+}
+
+.elixor-placeholder-brand strong {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: .08em;
+}
+
+.elixor-placeholder-brand em {
+    margin-top: 4px;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: .22em;
+    opacity: .55;
+}
+
+.elixor-placeholder-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.elixor-placeholder-language {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: rgba(255,255,255,.35);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+}
+
+.elixor-placeholder-language button {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: rgba(255,255,255,.42);
+    padding: 5px 2px;
+    cursor: pointer;
+    font: inherit;
+}
+
+.elixor-placeholder-language button.is-active {
+    color: #fff;
+}
+
+.elixor-placeholder-login {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    min-height: 38px;
+    padding: 0 15px;
+
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 9px;
+
+    background: rgba(255,255,255,.055);
+    color: #fff;
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .05em;
+
+    transition:
+        background .18s ease,
+        border-color .18s ease,
+        transform .18s ease;
+}
+
+.elixor-placeholder-login:hover {
+    background: rgba(255,255,255,.10);
+    border-color: rgba(255,255,255,.24);
+    transform: translateY(-1px);
+}
+
+/* =========================
+   MAIN
+   ========================= */
+
+.elixor-placeholder-main {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.elixor-placeholder-image-wrap {
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 0;
+    background: #020509;
+}
+
+.elixor-placeholder-image {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    margin: 0;
+    padding: 0;
+
+    object-fit: contain;
+}
+
+/* =========================
+   COPY
+   ========================= */
+
+.elixor-placeholder-content {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.elixor-placeholder-copy {
+    width: min(900px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 42px 0 55px;
+}
+
+.elixor-placeholder-badge {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-bottom: 15px;
+
+    color: rgba(255,255,255,.46);
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .16em;
+}
+
+.elixor-placeholder-badge span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4aa8ff;
+    box-shadow: 0 0 14px rgba(74,168,255,.65);
+}
+
+.elixor-placeholder-copy h1 {
+    margin: 0;
+
+    font-size: clamp(30px, 4vw, 58px);
+    line-height: .98;
+    letter-spacing: -.045em;
+    font-weight: 400;
+}
+
+.elixor-placeholder-copy h1 strong {
+    font-weight: 800;
+}
+
+.elixor-placeholder-copy p {
+    max-width: 620px;
+
+    margin: 20px 0 0;
+
+    color: rgba(255,255,255,.55);
+
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+
+.elixor-placeholder-footer {
+    display: flex;
+    justify-content: space-between;
+
+    width: min(900px, calc(100% - 48px));
+    margin: 0 auto;
+
+    padding: 0 0 28px;
+
+    color: rgba(255,255,255,.28);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 700px) {
+
+    body {
+        background: #020509;
+    }
+
+    .elixor-placeholder {
+        min-height: 100dvh;
+    }
+
+    .elixor-placeholder-header {
+        height: 68px;
+        padding: 0 16px;
+    }
+
+    .elixor-placeholder-mark {
+        width: 30px;
+        height: 30px;
+    }
+
+    .elixor-placeholder-brand strong {
+        font-size: 13px;
+    }
+
+    .elixor-placeholder-brand em {
+        font-size: 8px;
+        letter-spacing: .18em;
+    }
+
+    .elixor-placeholder-actions {
+        gap: 10px;
+    }
+
+    .elixor-placeholder-language {
+        gap: 4px;
+        font-size: 10px;
+    }
+
+    .elixor-placeholder-login {
+        min-height: 34px;
+        padding: 0 11px;
+        font-size: 10px;
+    }
+
+    .elixor-placeholder-image-wrap {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .elixor-placeholder-image {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+
+    .elixor-placeholder-copy {
+        width: calc(100% - 32px);
+        padding: 25px 0 34px;
+    }
+
+    .elixor-placeholder-badge {
+        margin-bottom: 12px;
+        font-size: 8px;
+        letter-spacing: .12em;
+    }
+
+    .elixor-placeholder-copy h1 {
+        font-size: 34px;
+        line-height: 1;
+    }
+
+    .elixor-placeholder-copy p {
+        margin-top: 14px;
+        font-size: 13px;
+        line-height: 1.55;
+    }
+
+    .elixor-placeholder-footer {
+        display: none;
+    }
+}

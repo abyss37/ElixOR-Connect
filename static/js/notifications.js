@@ -277,7 +277,7 @@
         const companyMeta =
             item.title
                 ? escapeHtml(item.title)
-                : 'FinFlow';
+                : 'ElixOR Connect';
 
         const contextParts = [];
 

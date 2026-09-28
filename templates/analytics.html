@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Аналитика — FinFlow{% endblock %}
+{% block title %}Analytics — ElixOR Connect{% endblock %}
 
 {% block page_icon %}
 <span class="ff-page-icon">
@@ -8,10 +8,10 @@
 </span>
 {% endblock %}
 
-{% block page_title %}Аналитика{% endblock %}
+{% block page_title %}<span data-i18n="Analytics">Analytics</span>{% endblock %}
 
 {% block page_subtitle %}
-Финансовая аналитика и показатели FinFlow
+<span data-i18n="Financial analytics and ElixOR Connect metrics">Financial analytics and ElixOR Connect metrics</span>
 {% endblock %}
 
 {% block content %}
@@ -28,7 +28,7 @@
 
             <div class="ff-analytics-kpi-top">
                 <span class="ff-analytics-kpi-label">
-                    ОБЩИЙ ОБЪЁМ
+                    <span data-i18n="TOTAL VOLUME">TOTAL VOLUME</span>
                 </span>
 
                 <span class="ff-analytics-kpi-icon">
@@ -43,7 +43,7 @@
             </div>
 
             <div class="ff-analytics-kpi-meta">
-                Активные счета
+                <span data-i18n="Active invoices">Active invoices</span>
             </div>
 
         </article>
@@ -53,7 +53,7 @@
 
             <div class="ff-analytics-kpi-top">
                 <span class="ff-analytics-kpi-label">
-                    КОМПАНИИ
+                    <span data-i18n="COMPANIES">COMPANIES</span>
                 </span>
 
                 <span class="ff-analytics-kpi-icon">
@@ -68,7 +68,7 @@
             </div>
 
             <div class="ff-analytics-kpi-meta">
-                В финансовом анализе
+                <span data-i18n="In financial analysis">In financial analysis</span>
             </div>
 
         </article>
@@ -78,7 +78,7 @@
 
             <div class="ff-analytics-kpi-top">
                 <span class="ff-analytics-kpi-label">
-                    ПРОДУКТЫ
+                    <span data-i18n="PRODUCTS">PRODUCTS</span>
                 </span>
 
                 <span class="ff-analytics-kpi-icon">
@@ -93,7 +93,7 @@
             </div>
 
             <div class="ff-analytics-kpi-meta">
-                Активные направления
+                <span data-i18n="Active lines">Active lines</span>
             </div>
 
         </article>
@@ -103,7 +103,7 @@
 
             <div class="ff-analytics-kpi-top">
                 <span class="ff-analytics-kpi-label">
-                    СЧЕТА
+                    <span data-i18n="INVOICES">INVOICES</span>
                 </span>
 
                 <span class="ff-analytics-kpi-icon">
@@ -118,7 +118,7 @@
             </div>
 
             <div class="ff-analytics-kpi-meta">
-                Учтены в расчёте
+                <span data-i18n="Included in calculation">Included in calculation</span>
             </div>
 
         </article>
@@ -140,13 +140,13 @@
                 </div>
 
                 <h3>
-                    Параметры анализа
+                    <span data-i18n="Analysis parameters">Analysis parameters</span>
                 </h3>
             </div>
 
             <div class="ff-analytics-filter-status">
                 <i class="bi bi-sliders2"></i>
-                <span>Настройка выборки</span>
+                <span><span data-i18n="Selection settings">Selection settings</span></span>
             </div>
 
         </div>
@@ -157,8 +157,8 @@
             <div class="ff-analytics-field">
 
                 <label for="filterCompany">
-                    <span>Компания</span>
-                    <small>Финансовый контур</small>
+                    <span data-i18n="Company">Company</span>
+                    <small data-i18n="Financial scope">Financial scope</small>
                 </label>
 
                 <div class="ff-analytics-select-wrap">
@@ -169,7 +169,7 @@
                         <option
                             value=""
                             data-i18n-option="All companies">
-                            Все компании
+                            <span data-i18n="All companies">All companies</span>
                         </option>
 
                         {% for company in companies %}
@@ -189,8 +189,8 @@
             <div class="ff-analytics-field">
 
                 <label for="filterProduct">
-                    <span>Продукт</span>
-                    <small>Продуктовое направление</small>
+                    <span data-i18n="Product">Product</span>
+                    <small data-i18n="Product line">Product line</small>
                 </label>
 
                 <div class="ff-analytics-select-wrap">
@@ -201,7 +201,7 @@
                         <option
                             value=""
                             data-i18n-option="All products">
-                            Все продукты
+                            <span data-i18n="All products">All products</span>
                         </option>
 
                         {% for product in products %}
@@ -227,7 +227,7 @@
                     class="ff-analytics-btn ff-analytics-btn-primary">
 
                     <i class="bi bi-funnel-fill"></i>
-                    <span>Применить</span>
+                    <span data-i18n="Apply">Apply</span>
 
                 </button>
 
@@ -237,7 +237,7 @@
                     class="ff-analytics-btn ff-analytics-btn-secondary">
 
                     <i class="bi bi-arrow-counterclockwise"></i>
-                    <span>Сбросить</span>
+                    <span data-i18n="Reset">Reset</span>
 
                 </button>
 
@@ -273,7 +273,7 @@
                         </div>
 
                         <h3 data-i18n="Spend by company">
-                            Расходы по компаниям
+                            <span data-i18n="Expenses by company">Expenses by company</span>
                         </h3>
                     </div>
 
@@ -289,11 +289,11 @@
             <div class="ff-analytics-chart-head">
 
                 <span>
-                    Распределение объёма
+                    <span data-i18n="Volume distribution">Volume distribution</span>
                 </span>
 
                 <span>
-                    Активные счета
+                    <span data-i18n="Active invoices">Active invoices</span>
                 </span>
 
             </div>
@@ -305,7 +305,7 @@
 
                 <div class="ff-analytics-empty">
                     <i class="bi bi-bar-chart"></i>
-                    <span>Нет данных о расходах</span>
+                    <span><span data-i18n="No expense data">No expense data</span></span>
                 </div>
 
             </div>
@@ -331,7 +331,7 @@
                         </div>
 
                         <h3 data-i18n="Spend by product">
-                            Расходы по продуктам
+                            <span data-i18n="Expenses by product">Expenses by product</span>
                         </h3>
                     </div>
 
@@ -347,11 +347,11 @@
             <div class="ff-analytics-chart-head">
 
                 <span>
-                    Продуктовое распределение
+                    <span data-i18n="Product distribution">Product distribution</span>
                 </span>
 
                 <span>
-                    Объём
+                    <span data-i18n="Volume">Volume</span>
                 </span>
 
             </div>
@@ -363,7 +363,7 @@
 
                 <div class="ff-analytics-empty">
                     <i class="bi bi-pie-chart"></i>
-                    <span>Нет данных о продуктах</span>
+                    <span><span data-i18n="No product data">No product data</span></span>
                 </div>
 
             </div>
@@ -393,7 +393,7 @@
                     </div>
 
                     <h3>
-                        Ежемесячные расходы
+                        <span data-i18n="Monthly expenses">Monthly expenses</span>
                     </h3>
                 </div>
 
@@ -406,8 +406,8 @@
         </div>
 
         <div class="ff-analytics-chart-head">
-            <span>Динамика активных счетов</span>
-            <span>По месяцам</span>
+            <span><span data-i18n="Active invoices trend">Active invoices trend</span></span>
+            <span><span data-i18n="By month">By month</span></span>
         </div>
 
         <div
@@ -416,7 +416,7 @@
 
             <div class="ff-analytics-empty">
                 <i class="bi bi-graph-up"></i>
-                <span>Нет данных по месяцам</span>
+                <span><span data-i18n="No monthly data">No monthly data</span></span>
             </div>
 
         </div>

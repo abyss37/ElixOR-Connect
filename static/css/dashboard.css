@@ -192,6 +192,19 @@
     letter-spacing: -.025em;
 }
 
+.ff-overview-summary-item strong.ff-overview-summary-value-multiline {
+    white-space: pre-line;
+    overflow: visible;
+    text-overflow: clip;
+}
+
+
+.ff-overview-card-meta-multiline {
+    white-space: pre-line;
+    overflow: visible;
+    text-overflow: clip;
+}
+
 .ff-overview-card-meta {
     display: block;
 

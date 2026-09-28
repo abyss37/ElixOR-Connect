@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ _('Компании') if _ else 'Компании' }} · FinFlow{% endblock %}
+{% block title %}Companies · ElixOR Connect{% endblock %}
 
 {% block head %}
 <link rel="stylesheet"
@@ -14,10 +14,10 @@
 </span>
 {% endblock %}
 
-{% block page_title %}Компании{% endblock %}
+{% block page_title %}Companies{% endblock %}
 
 {% block page_subtitle %}
-Компании, договоры и финансовые отношения в одном рабочем пространстве.
+Companies, contracts and financial relationships in one workspace.
 {% endblock %}
 
 {% block content %}
@@ -37,7 +37,7 @@
             id="companies-create-button">
 
             <i class="bi bi-plus-lg"></i>
-            <span>Новая компания</span>
+            <span data-i18n="New company">New company</span>
 
         </button>
         {% endif %}
@@ -58,14 +58,14 @@
                 id="companies-search"
                 type="search"
                 autocomplete="off"
-                placeholder="Поиск компаний..."
-                aria-label="Поиск компаний">
+                placeholder="Search companies..." data-i18n-placeholder="Search companies..."
+                aria-label="Search companies" data-i18n-aria-label="Search companies">
 
             <button
                 type="button"
                 id="companies-search-clear"
                 class="ff-search-clear hidden"
-                aria-label="Очистить поиск">
+                aria-label="Clear search" data-i18n-aria-label="Clear search">
 
                 <i class="bi bi-x-lg"></i>
 
@@ -79,16 +79,16 @@
             <div
                 class="ff-view-switcher"
                 role="group"
-                aria-label="Вид компаний">
+                aria-label="Company view" data-i18n-aria-label="Company view">
 
                 <button
                     type="button"
                     class="ff-view-button is-active"
                     data-view="grid"
-                    title="Плитка">
+                    title="Grid" data-i18n-title="Grid">
 
                     <i class="bi bi-grid-3x3-gap"></i>
-                    <span>Плитка</span>
+                    <span data-i18n="Grid">Grid</span>
 
                 </button>
 
@@ -96,10 +96,10 @@
                     type="button"
                     class="ff-view-button"
                     data-view="list"
-                    title="Список">
+                    title="List" data-i18n-title="List">
 
                     <i class="bi bi-list-ul"></i>
-                    <span>Список</span>
+                    <span data-i18n="List">List</span>
 
                 </button>
 
@@ -107,7 +107,7 @@
 
             <div class="ff-companies-count">
                 <span id="companies-visible-count">{{ companies|length }}</span>
-                <span>из</span>
+                <span data-i18n="of">of</span>
                 <span>{{ companies|length }}</span>
             </div>
 
@@ -127,10 +127,10 @@
             <i class="bi bi-search"></i>
         </div>
 
-        <h3>Компании не найдены</h3>
+        <h3 data-i18n="Companies not found">Companies not found</h3>
 
         <p>
-            Попробуйте изменить поисковый запрос.
+            <span data-i18n="Try changing your search query.">Try changing your search query.</span>
         </p>
 
         <button
@@ -138,7 +138,7 @@
             class="ff-btn ff-btn-secondary"
             id="companies-search-reset">
 
-            Сбросить поиск
+            <span data-i18n="Reset search">Reset search</span>
 
         </button>
 
@@ -151,7 +151,7 @@
     <section
         id="companies-grid"
         class="ff-companies-grid"
-        aria-label="Компании">
+        aria-label="Companies" data-i18n-aria-label="Companies">
 
         {% for company in companies %}
 
@@ -188,7 +188,7 @@
                             <strong>{{ company.name }}</strong>
 
                             <small>
-                                Компания #{{ company.id }}
+                                <span data-i18n="Company">Company</span> #{{ company.id }}
                             </small>
 
                         </span>
@@ -210,7 +210,7 @@
                         type="button"
                         class="ff-icon-button ff-company-menu-button"
                         data-company-menu="{{ company.id }}"
-                        aria-label="Действия">
+                        aria-label="Actions" data-i18n-aria-label="Actions">
 
                         <i class="bi bi-three-dots"></i>
 
@@ -225,7 +225,7 @@
                             data-company-edit="{{ company.id }}">
 
                             <i class="bi bi-pencil"></i>
-                            Редактировать
+                            <span data-i18n="Edit">Edit</span>
 
                         </button>
 
@@ -235,7 +235,7 @@
                             data-company-delete="{{ company.id }}">
 
                             <i class="bi bi-trash3"></i>
-                            Удалить
+                            <span data-i18n="Delete">Delete</span>
 
                         </button>
 
@@ -290,7 +290,7 @@
                 <div class="ff-financial-item">
 
                     <span class="ff-financial-label">
-                        Бюджет
+                        <span data-i18n="Budget">Budget</span>
                     </span>
 
                     <strong
@@ -303,7 +303,7 @@
                 <div class="ff-financial-item">
 
                     <span class="ff-financial-label">
-                        Использовано
+                        <span data-i18n="Spent">Spent</span>
                     </span>
 
                     <strong
@@ -316,7 +316,7 @@
                 <div class="ff-financial-item">
 
                     <span class="ff-financial-label">
-                        Остаток
+                        <span data-i18n="Remaining">Remaining</span>
                     </span>
 
                     <strong
@@ -334,7 +334,7 @@
 
                 <div class="ff-company-progress-head">
 
-                    <span>Использование бюджета</span>
+                    <span><span data-i18n="Budget utilization">Budget utilization</span></span>
 
                     <strong
                         data-company-utilization="{{ company.id }}">
@@ -365,7 +365,7 @@
 
                 <div class="ff-contract-content">
 
-                    <span>Завершение договора</span>
+                    <span><span data-i18n="Contract end">Contract end</span></span>
 
                     <strong
                         data-company-contract="{{ company.id }}">
@@ -400,7 +400,7 @@
                                 FINANCIAL ACTIVITY
                             </span>
 
-                            <h3>Счета компании</h3>
+                            <h3 data-i18n="Company invoices">Company invoices</h3>
 
                         </div>
 
@@ -408,7 +408,7 @@
                             type="button"
                             class="ff-details-close"
                             data-company-toggle="{{ company.id }}"
-                            aria-label="Свернуть">
+                            aria-label="Collapse" data-i18n-aria-label="Collapse">
 
                             <i class="bi bi-chevron-up"></i>
 
@@ -429,7 +429,7 @@
         class="is-active"
         data-invoice-filter="ALL">
 
-        Все
+        <span data-i18n="All">All</span>
 
     </button>
 
@@ -477,7 +477,7 @@
 
                         <div class="ff-invoices-loading">
                             <i class="bi bi-arrow-repeat"></i>
-                            Загрузка счетов...
+                            <span data-i18n="Loading invoices...">Loading invoices...</span>
                         </div>
 
                     </div>
@@ -496,10 +496,10 @@
                 <i class="bi bi-buildings"></i>
             </div>
 
-            <h3>Компаний пока нет</h3>
+            <h3 data-i18n="No companies yet">No companies yet</h3>
 
             <p>
-                Создайте первую компанию, чтобы начать работу.
+                <span data-i18n="Create your first company to get started.">Create your first company to get started.</span>
             </p>
 
         </section>
@@ -515,17 +515,17 @@
     <section
         id="companies-list"
         class="ff-companies-list hidden"
-        aria-label="Список компаний">
+        aria-label="Company list" data-i18n-aria-label="Company list">
 
         <div class="ff-list-head">
 
-            <span>Компания</span>
-            <span>Продукты</span>
-            <span>Бюджет</span>
-            <span>Использовано</span>
-            <span>Остаток</span>
-            <span>Договор</span>
-            <span>Счета</span>
+            <span data-i18n="Company">Company</span>
+            <span data-i18n="Products">Products</span>
+            <span><span data-i18n="Budget">Budget</span></span>
+            <span><span data-i18n="Spent">Spent</span></span>
+            <span><span data-i18n="Remaining">Remaining</span></span>
+            <span data-i18n="Contract">Contract</span>
+            <span data-i18n="Invoices">Invoices</span>
             <span></span>
 
         </div>
@@ -569,7 +569,7 @@
                         type="button"
                         class="ff-icon-button ff-company-menu-button"
                         data-company-menu="{{ company.id }}"
-                        aria-label="Действия">
+                        aria-label="Actions" data-i18n-aria-label="Actions">
 
                         <i class="bi bi-three-dots"></i>
 
@@ -584,7 +584,7 @@
                             data-company-edit="{{ company.id }}">
 
                             <i class="bi bi-pencil"></i>
-                            Редактировать
+                            <span data-i18n="Edit">Edit</span>
 
                         </button>
 
@@ -594,7 +594,7 @@
                             data-company-delete="{{ company.id }}">
 
                             <i class="bi bi-trash3"></i>
-                            Удалить
+                            <span data-i18n="Delete">Delete</span>
 
                         </button>
 
@@ -620,14 +620,14 @@
                                     FINANCIAL ACTIVITY
                                 </span>
 
-                                <h3>Счета компании</h3>
+                                <h3 data-i18n="Company invoices">Company invoices</h3>
                             </div>
 
                             <button
                                 type="button"
                                 class="ff-details-close"
                                 data-company-toggle="{{ company.id }}"
-                                aria-label="Свернуть">
+                                aria-label="Collapse" data-i18n-aria-label="Collapse">
 
                                 <i class="bi bi-chevron-up"></i>
 
@@ -646,7 +646,7 @@
         class="is-active"
         data-invoice-filter="ALL">
 
-        Все
+        <span data-i18n="All">All</span>
 
     </button>
 
@@ -727,7 +727,7 @@
                 </span>
 
                 <h2 id="company-dialog-title">
-                    Новая компания
+                    <span data-i18n="New company">New company</span>
                 </h2>
 
             </div>
@@ -736,7 +736,7 @@
                 type="button"
                 class="ff-dialog-close"
                 id="company-dialog-close"
-                aria-label="Закрыть">
+                aria-label="Close" data-i18n-aria-label="Close">
 
                 <i class="bi bi-x-lg"></i>
 
@@ -755,7 +755,7 @@
             <div class="ff-form-field">
 
                 <label for="company-form-name">
-                    Название компании
+                    <span data-i18n="Company name">Company name</span>
                 </label>
 
                 <input
@@ -765,65 +765,12 @@
                     maxlength="255"
                     autocomplete="organization"
                     required
-                    placeholder="Например, ООО «Альфа»">
+                    placeholder="For example, Alpha LLC" data-i18n-placeholder="For example, Alpha LLC">
 
             </div>
 
 
-            <div class="ff-company-stamp-field" id="company-stamp-field">
 
-                <div class="ff-company-stamp-heading">
-                    <div>
-                        <label for="company-stamp-input">
-                            Печать компании
-                        </label>
-
-                        <small>
-                            Используется в генераторе счетов и при печати документа.
-                        </small>
-                    </div>
-
-                    <span
-                        id="company-stamp-status"
-                        class="ff-company-stamp-status">
-                        Не загружена
-                    </span>
-                </div>
-
-                <div class="ff-company-stamp-body">
-
-                    <div
-                        id="company-stamp-preview"
-                        class="ff-company-stamp-preview hidden">
-                    </div>
-
-                    <div class="ff-company-stamp-upload">
-
-                        <input
-                            type="file"
-                            id="company-stamp-input"
-                            accept=".png,.jpg,.jpeg,.webp"
-                            class="hidden">
-
-                        <button
-                            type="button"
-                            class="ff-btn ff-btn-secondary"
-                            id="company-stamp-button">
-
-                            <i class="bi bi-upload"></i>
-                            <span>Загрузить печать</span>
-
-                        </button>
-
-                        <small>
-                            PNG, JPG или WebP · до 5 МБ
-                        </small>
-
-                    </div>
-
-                </div>
-
-            </div>
 
 
             <div
@@ -839,7 +786,7 @@
                     class="ff-btn ff-btn-secondary"
                     id="company-dialog-cancel">
 
-                    Отмена
+                    <span data-i18n="Cancel">Cancel</span>
 
                 </button>
 
@@ -849,7 +796,7 @@
                     id="company-form-submit">
 
                     <i class="bi bi-check-lg"></i>
-                    Сохранить
+                    <span data-i18n="Save">Save</span>
 
                 </button>
 

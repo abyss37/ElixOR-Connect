@@ -146,7 +146,7 @@
             .map(item => {
                 return `${percent(item.utilization)} · ${canonicalCurrency(item.currency)}`;
             })
-            .join(' · ');
+            .join('\n');
     }
 
 
@@ -214,7 +214,7 @@
 
             if (productMeta) {
                 productMeta.textContent = activeProducts.length
-                    ? activeProducts.map(product => product.name).filter(Boolean).join(' · ')
+                    ? activeProducts.map(product => product.name).filter(Boolean).join('\n')
                     : 'Нет активных продуктов';
             }
         }

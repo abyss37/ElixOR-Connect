@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Счета · FinFlow{% endblock %}
+{% block title %}Invoices · ElixOR Connect{% endblock %}
 
 
 {% block page_icon %}
@@ -9,10 +9,10 @@
 </span>
 {% endblock %}
 
-{% block page_title %}Счета{% endblock %}
+{% block page_title %}<span data-i18n="Invoices">Invoices</span>{% endblock %}
 
 {% block page_subtitle %}
-Реестр выставленных счетов, оплат и контрактных обязательств.
+<span data-i18n="Registry of issued invoices, payments and contract obligations.">Registry of issued invoices, payments and contract obligations.</span>
 {% endblock %}
 
 {% block head %}
@@ -26,17 +26,17 @@
     <div class="ff-invoices-page-actions">
             <button type="button" class="ff-btn ff-btn-secondary" id="invoicesRefresh">
                 <i class="bi bi-arrow-clockwise"></i>
-                <span>Обновить</span>
+                <span data-i18n="Refresh">Refresh</span>
             </button>
 
             <button type="button" class="ff-btn ff-btn-secondary" id="invoiceGeneratorButton">
                 <i class="bi bi-file-earmark-pdf"></i>
-                <span>Генератор</span>
+                <span data-i18n="Generator">Generator</span>
             </button>
 
             <button type="button" class="ff-btn ff-btn-primary" id="invoiceCreateButton">
                 <i class="bi bi-plus-lg"></i>
-                <span>Новый счёт</span>
+                <span data-i18n="New invoice">New invoice</span>
             </button>
         </div>
 
@@ -49,17 +49,17 @@
             <input
                 type="search"
                 id="invoiceSearch"
-                placeholder="Поиск по счёту или компании..."
+                placeholder="Search invoices or companies..." data-i18n-placeholder="Search invoices or companies..."
                 autocomplete="off"
             >
         </div>
 
         <select id="invoiceCompanyFilter" class="ff-filter-select">
-            <option value="">Все компании</option>
+            <option value="" data-i18n="All companies">All companies</option>
         </select>
 
         <select id="invoiceSoftwareFilter" class="ff-filter-select">
-            <option value="">Все продукты</option>
+            <option value="" data-i18n="All products">All products</option>
             {% for product in products|default([]) %}
                 <option value="{{ product.code }}">
                     {{ product.name }}
@@ -68,30 +68,30 @@
         </select>
 
         <select id="invoiceCurrencyFilter" class="ff-filter-select">
-            <option value="">Все валюты</option>
+            <option value="" data-i18n="All currencies">All currencies</option>
             <option value="EUR">EUR</option>
             <option value="USD">USD</option>
             <option value="UAH">UAH</option>
         </select>
 
         <select id="invoiceStatusFilter" class="ff-filter-select">
-            <option value="">Все статусы</option>
-            <option value="ISSUED">Выставлен</option>
-            <option value="CANCELLED">Отменён</option>
+            <option value="" data-i18n="All statuses">All statuses</option>
+            <option value="ISSUED" data-i18n="Issued">Issued</option>
+            <option value="CANCELLED" data-i18n="Cancelled">Cancelled</option>
         </select>
 
         <select id="invoicePaymentFilter" class="ff-filter-select">
-            <option value="">Все оплаты</option>
-            <option value="UNPAID">Не оплачен</option>
-            <option value="PARTIAL">Частично</option>
-            <option value="PAID">Оплачен</option>
+            <option value="" data-i18n="All payments">All payments</option>
+            <option value="UNPAID" data-i18n="Unpaid">Unpaid</option>
+            <option value="PARTIAL" data-i18n="Partially paid">Partially paid</option>
+            <option value="PAID" data-i18n="Paid">Paid</option>
         </select>
 
         <div class="ff-invoice-view-toggle">
-            <button type="button" class="is-active" data-invoice-view="table" title="Таблица">
+            <button type="button" class="is-active" data-invoice-view="table" title="Table" data-i18n-title="Table">
                 <i class="bi bi-list-ul"></i>
             </button>
-            <button type="button" data-invoice-view="cards" title="Карточки">
+            <button type="button" data-invoice-view="cards" title="Cards" data-i18n-title="Cards">
                 <i class="bi bi-grid-3x3-gap"></i>
             </button>
         </div>
@@ -105,14 +105,14 @@
                 <table class="ff-invoice-table">
                     <thead>
                         <tr>
-                            <th>Счёт</th>
-                            <th>Компания</th>
-                            <th>Продукт</th>
-                            <th>Дата</th>
-                            <th>Сумма</th>
-                            <th>Оплата</th>
-                            <th>Срок</th>
-                            <th>Статус</th>
+                            <th data-i18n="Invoice">Invoice</th>
+                            <th data-i18n="Company">Company</th>
+                            <th data-i18n="Product">Product</th>
+                            <th data-i18n="Date">Date</th>
+                            <th data-i18n="Amount">Amount</th>
+                            <th data-i18n="Payment">Payment</th>
+                            <th data-i18n="Deadline">Deadline</th>
+                            <th data-i18n="Status">Status</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -129,9 +129,9 @@
             <div class="ff-invoice-create-head">
                 <div>
                     <div class="ff-page-eyebrow">INVOICE EDITOR</div>
-                    <h2 id="invoiceCreateTitle">Новый счёт</h2>
+                    <h2 id="invoiceCreateTitle" data-i18n="New invoice">New invoice</h2>
                     <p id="invoiceCreateSubtitle">
-                        Создание счёта непосредственно в реестре.
+                        <span data-i18n="Create an invoice directly in the registry.">Create an invoice directly in the registry.</span>
                     </p>
                 </div>
 
@@ -139,7 +139,7 @@
                     type="button"
                     class="ff-invoice-detail-close"
                     id="invoiceCreateClose"
-                    title="Закрыть"
+                    title="Close" data-i18n-title="Close"
                 >
                     <i class="bi bi-x-lg"></i>
                 </button>
@@ -152,18 +152,18 @@
                     <div class="ff-invoice-editor-section-head">
                         <div>
                             <span class="ff-invoice-editor-kicker">01</span>
-                            <h3>Основные данные</h3>
+                            <h3 data-i18n="Basic information">Basic information</h3>
                         </div>
                     </div>
 
                     <div class="ff-invoice-form-grid ff-invoice-form-grid-2">
                         <label class="ff-field">
-                            <span>Компания</span>
+                            <span data-i18n="Company">Company</span>
                             <select
                                 name="company_name"
                                 required
                             >
-                                <option value="">Выберите компанию</option>
+                                <option value="" data-i18n="Select company">Select company</option>
                                 {% for company in companies|default([]) %}
                                     <option value="{{ company.name }}">
                                         {{ company.name }}
@@ -173,7 +173,7 @@
                         </label>
 
                         <label class="ff-field">
-                            <span>Номер счёта</span>
+                            <span data-i18n="Invoice number">Invoice number</span>
                             <input
                                 type="text"
                                 name="invoice_number"
@@ -183,7 +183,7 @@
                         </label>
 
                         <label class="ff-field">
-                            <span>Дата счёта</span>
+                            <span data-i18n="Invoice date">Invoice date</span>
                             <input
                                 type="date"
                                 name="invoice_date"
@@ -192,7 +192,7 @@
                         </label>
 
                         <label class="ff-field">
-                            <span>Дата завершения</span>
+                            <span data-i18n="Completion date">Completion date</span>
                             <input
                                 type="date"
                                 name="completion_date"
@@ -200,9 +200,9 @@
                         </label>
 
                         <label class="ff-field">
-                            <span>Продукт</span>
+                            <span data-i18n="Product">Product</span>
                             <select name="software" required>
-                                <option value="">Выберите продукт</option>
+                                <option value="" data-i18n="Select product">Select product</option>
                                 {% for product in products|default([]) %}
                                     <option value="{{ product.code }}">
                                         {{ product.name }}
@@ -212,7 +212,7 @@
                         </label>
 
                         <label class="ff-field">
-                            <span>Валюта</span>
+                            <span data-i18n="Currency">Currency</span>
                             <select name="currency" required>
                                 <option value="EUR">EUR</option>
                                 <option value="USD">USD</option>
@@ -227,13 +227,13 @@
                     <div class="ff-invoice-editor-section-head">
                         <div>
                             <span class="ff-invoice-editor-kicker">02</span>
-                            <h3>Сумма и условия</h3>
+                            <h3 data-i18n="Amount and terms">Amount and terms</h3>
                         </div>
                     </div>
 
                     <div class="ff-invoice-form-grid ff-invoice-form-grid-3">
                         <label class="ff-field">
-                            <span>Сумма</span>
+                            <span data-i18n="Amount">Amount</span>
                             <input
                                 type="number"
                                 name="amount"
@@ -254,7 +254,7 @@
                         </label>
 
                         <label class="ff-field">
-                            <span>Условия оплаты</span>
+                            <span data-i18n="Payment terms">Payment terms</span>
                             <input
                                 type="text"
                                 name="payment_terms"
@@ -270,16 +270,16 @@
                     <div class="ff-invoice-editor-section-head">
                         <div>
                             <span class="ff-invoice-editor-kicker">03</span>
-                            <h3>Данные клиента</h3>
+                            <h3 data-i18n="Client information">Client information</h3>
                         </div>
                     </div>
 
                     <label class="ff-field">
-                        <span>Bill To / реквизиты клиента</span>
+                        <span data-i18n="Bill To / client details">Bill To / client details</span>
                         <textarea
                             name="bill_to_details"
                             rows="3"
-                            placeholder="Адрес, email и другие реквизиты клиента"
+                            placeholder="Address, email and other client details" data-i18n-placeholder="Address, email and other client details"
                         ></textarea>
                     </label>
                 </div>
@@ -289,8 +289,8 @@
                     <div class="ff-invoice-editor-section-head ff-invoice-items-head">
                         <div>
                             <span class="ff-invoice-editor-kicker">04</span>
-                            <h3>Позиции счёта</h3>
-                            <p>Позиции сохраняются внутри contract_details.</p>
+                            <h3 data-i18n="Invoice items">Invoice items</h3>
+                            <p data-i18n="Items are stored inside contract_details.">Items are stored inside contract_details.</p>
                         </div>
 
                         <button
@@ -299,16 +299,16 @@
                             id="invoiceAddItem"
                         >
                             <i class="bi bi-plus-lg"></i>
-                            Добавить позицию
+                            <span data-i18n="Add item">Add item</span>
                         </button>
                     </div>
 
                     <div class="ff-invoice-items-wrap">
                         <div class="ff-invoice-items-header">
-                            <span>Описание</span>
-                            <span>Кол-во</span>
-                            <span>Ставка</span>
-                            <span>Сумма</span>
+                            <span data-i18n="Description">Description</span>
+                            <span data-i18n="Qty">Qty</span>
+                            <span data-i18n="Rate">Rate</span>
+                            <span data-i18n="Amount">Amount</span>
                             <span></span>
                         </div>
 
@@ -342,7 +342,7 @@
                                     type="button"
                                     class="ff-invoice-item-remove"
                                     data-remove-item
-                                    title="Удалить позицию"
+                                    title="Delete item" data-i18n-title="Delete item"
                                 >
                                     <i class="bi bi-trash3"></i>
                                 </button>
@@ -356,26 +356,26 @@
                     <div class="ff-invoice-editor-section-head">
                         <div>
                             <span class="ff-invoice-editor-kicker">05</span>
-                            <h3>Дополнительная информация</h3>
+                            <h3 data-i18n="Additional information">Additional information</h3>
                         </div>
                     </div>
 
                     <div class="ff-invoice-form-grid ff-invoice-form-grid-2">
                         <label class="ff-field">
-                            <span>Примечание</span>
+                            <span data-i18n="Note">Note</span>
                             <textarea
                                 name="notes"
                                 rows="4"
-                                placeholder="Дополнительная информация по счёту"
+                                placeholder="Additional invoice information" data-i18n-placeholder="Additional invoice information"
                             ></textarea>
                         </label>
 
                         <label class="ff-field">
-                            <span>Условия</span>
+                            <span data-i18n="Terms">Terms</span>
                             <textarea
                                 name="terms"
                                 rows="4"
-                                placeholder="Условия оплаты, штрафы, сроки поставки и т.д."
+                                placeholder="Payment terms, penalties, delivery dates, etc." data-i18n-placeholder="Payment terms, penalties, delivery dates, etc."
                             ></textarea>
                         </label>
                     </div>
@@ -396,7 +396,7 @@
                         class="ff-btn ff-btn-secondary"
                         id="invoiceCreateCancel"
                     >
-                        Отмена
+                        <span data-i18n="Cancel">Cancel</span>
                     </button>
 
                     <button
@@ -404,7 +404,7 @@
                         class="ff-btn ff-btn-primary"
                     >
                         <i class="bi bi-check2"></i>
-                        Сохранить счёт
+                        <span data-i18n="Save invoice">Save invoice</span>
                     </button>
                 </div>
             </form>
@@ -414,8 +414,8 @@
             <div class="ff-empty-icon">
                 <i class="bi bi-receipt"></i>
             </div>
-            <h3>Счета не найдены</h3>
-            <p>Измените параметры поиска или создайте новый счёт.</p>
+            <h3 data-i18n="No invoices found">No invoices found</h3>
+            <p data-i18n="Change your search filters or create a new invoice.">Change your search filters or create a new invoice.</p>
         </div>
 
     </section>
@@ -427,5 +427,5 @@
     window.FINFLOW_CURRENT_USER_ROLE = {{ current_user.role|tojson }};
 </script>
 
-<script src="{{ url_for('static', filename='js/invoices.js') }}?v=20260924-5"></script>
+<script src="{{ url_for('static', filename='js/invoices.js') }}?v=20260928-7"></script>
 {% endblock %}

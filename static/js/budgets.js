@@ -34,7 +34,7 @@
         if (Number(total || 0) <= 0) {
             return {
                 key: "empty",
-                label: "Не задан",
+                label: window.finflowI18n?.translateSmart("Empty") || "Empty",
                 icon: "bi-dash-circle",
             };
         }
@@ -42,7 +42,7 @@
         if (utilization >= 100) {
             return {
                 key: "exceeded",
-                label: "Превышен",
+                label: window.finflowI18n?.translateSmart("Exceeded") || "Exceeded",
                 icon: "bi-exclamation-octagon",
             };
         }
@@ -50,7 +50,7 @@
         if (utilization >= 90) {
             return {
                 key: "critical",
-                label: "Критический",
+                label: window.finflowI18n?.translateSmart("Critical") || "Critical",
                 icon: "bi-exclamation-triangle",
             };
         }
@@ -58,14 +58,14 @@
         if (utilization >= 80) {
             return {
                 key: "warning",
-                label: "Внимание",
+                label: window.finflowI18n?.translateSmart("Warning") || "Warning",
                 icon: "bi-exclamation-circle",
             };
         }
 
         return {
             key: "healthy",
-            label: "Под контролем",
+            label: window.finflowI18n?.translateSmart("Under control") || "Under control",
             icon: "bi-check-circle",
         };
     }
@@ -73,7 +73,7 @@
     function contractInfo(value) {
         if (!value) {
             return {
-                label: "Дата не задана",
+                label: window.finflowI18n?.translateSmart("Date not specified") || "Date not specified",
                 state: "",
             };
         }
@@ -100,27 +100,27 @@
 
         if (diff < 0) {
             return {
-                label: `Просрочен на ${Math.abs(diff)} дн.`,
+                label: `${window.finflowI18n?.translateSmart("Overdue by") || "Overdue by"} ${Math.abs(diff)} ${window.finflowI18n?.translateSmart("days") || "days"}.`,
                 state: "overdue",
             };
         }
 
         if (diff === 0) {
             return {
-                label: "Завершается сегодня",
+                label: window.finflowI18n?.translateSmart("Ends today") || "Ends today",
                 state: "expiring",
             };
         }
 
         if (diff <= 30) {
             return {
-                label: `${diff} дн. до завершения`,
+                label: `${diff} ${window.finflowI18n?.translateSmart("days until completion") || "days until completion"}`,
                 state: "expiring",
             };
         }
 
         return {
-            label: `${diff} дн. до завершения`,
+            label: `${diff} ${window.finflowI18n?.translateSmart("days until completion") || "days until completion"}`,
             state: "",
         };
     }
@@ -216,7 +216,7 @@
                 onclick="openBudgetModal(${Number(budget.id)})"
             >
                 <i class="bi bi-pencil"></i>
-                Изменить
+                ${window.finflowI18n?.translateSmart("Change") || "Change"}
             </button>
         `;
     }
@@ -255,21 +255,21 @@
 
                 <div class="ff-budget-card-finance">
                     <div>
-                        <div class="ff-budget-finance-label">Бюджет</div>
+                        <div class="ff-budget-finance-label">${window.finflowI18n?.translateSmart("Budget") || "Budget"}</div>
                         <div class="ff-budget-finance-value main">
                             ${money(budget.total_amount, budget.currency)}
                         </div>
                     </div>
 
                     <div>
-                        <div class="ff-budget-finance-label">Потрачено</div>
+                        <div class="ff-budget-finance-label">${window.finflowI18n?.translateSmart("Spent") || "Spent"}</div>
                         <div class="ff-budget-finance-value">
                             ${money(budget.spent_amount, budget.currency)}
                         </div>
                     </div>
 
                     <div>
-                        <div class="ff-budget-finance-label">Остаток</div>
+                        <div class="ff-budget-finance-label">${window.finflowI18n?.translateSmart("Remaining") || "Remaining"}</div>
                         <div class="ff-budget-finance-value">
                             ${money(budget.remaining_amount, budget.currency)}
                         </div>
@@ -414,9 +414,9 @@
         $("#budgetEditCurrency").value = "EUR";
         $("#budgetEditCurrencyLabel").textContent = "EUR";
 
-        $("#budgetModalTitle").textContent = "Новый бюджет";
+        $("#budgetModalTitle").textContent = window.finflowI18n?.translateSmart("New budget") || "New budget";
         $("#budgetModalSubtitle").textContent =
-            "Создание бюджета для компании и продукта";
+            window.finflowI18n?.translateSmart("Create budget for company and product.") || "Create budget for company and product.";
 
         $("#budgetEditCompanyId").disabled = false;
         $("#budgetEditSoftware").disabled = false;
@@ -452,7 +452,7 @@
         $("#budgetEditCurrencyLabel").textContent = budget.currency;
 
         $("#budgetModalTitle").textContent =
-            `Редактировать бюджет · ${budget.software}`;
+            `${window.finflowI18n?.translateSmart("Edit budget") || "Edit budget"} · ${budget.software}`;
 
         $("#budgetModalSubtitle").textContent =
             `${budget.company_name} · ${budget.currency}`;
@@ -492,7 +492,7 @@
 
         budgetButton.disabled = true;
         budgetButton.innerHTML =
-            '<i class="bi bi-arrow-repeat"></i> Сохранение...';
+            '<i class="bi bi-arrow-repeat"></i> ' + (window.finflowI18n?.translateSmart("Saving...") || "Saving...");
 
         try {
             const csrfToken =
@@ -500,7 +500,7 @@
 
             if (!csrfToken) {
                 throw new Error(
-                    "Не удалось получить CSRF-токен. Перезагрузите страницу."
+                    window.finflowI18n?.translateSmart("Failed to get CSRF token. Reload the page.") || "Failed to get CSRF token. Reload the page."
                 );
             }
 
@@ -529,7 +529,7 @@
             if (!budgetResponse.ok || budgetResult.status !== "ok") {
                 throw new Error(
                     budgetResult.message ||
-                    "Не удалось сохранить бюджет."
+                    window.finflowI18n?.translateSmart("Failed to save budget.") || "Failed to save budget."
                 );
             }
 
@@ -558,13 +558,13 @@
             if (!dateResponse.ok || dateResult.status !== "ok") {
                 throw new Error(
                     dateResult.message ||
-                    "Бюджет сохранён, но дату завершения изменить не удалось."
+                    window.finflowI18n?.translateSmart("Budget saved, but completion date could not be updated.") || "Budget saved, but completion date could not be updated."
                 );
             }
 
             window.location.reload();
         } catch (error) {
-            alert(error.message || "Ошибка сохранения.");
+            alert(error.message || window.finflowI18n?.translateSmart("Save error.") || "Save error.");
         } finally {
             budgetButton.disabled = false;
             budgetButton.innerHTML = oldText;

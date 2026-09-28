@@ -141,13 +141,13 @@ function loadProductsView() {
     function statusLabel(status) {
         if (status === 'ARCHIVED') {
             return {
-                text: 'Архив',
+                text: window.finflowI18n?.translateSmart("Archived") || "Archived",
                 icon: 'bi-archive-fill'
             };
         }
 
         return {
-            text: 'Активен',
+            text: window.finflowI18n?.translateSmart("Active") || "Active",
             icon: 'bi-check-circle-fill'
         };
     }
@@ -246,7 +246,7 @@ function loadProductsView() {
                     ${
                         product.description
                             ? escapeHtml(product.description)
-                            : '<span>Описание не задано.</span>'
+                            : `<span>${window.finflowI18n?.translateSmart("Description not specified.") || "Description not specified."}</span>`
                     }
                 </div>
 
@@ -257,7 +257,7 @@ function loadProductsView() {
                         <i class="bi bi-wallet2"></i>
                         <div>
                             <strong>${product.usage.budgets}</strong>
-                            <span>Бюджетов</span>
+                            <span>${window.finflowI18n?.translateSmart("Budgets") || "Budgets"}</span>
                         </div>
                     </div>
 
@@ -267,7 +267,7 @@ function loadProductsView() {
                         <i class="bi bi-receipt"></i>
                         <div>
                             <strong>${product.usage.invoices}</strong>
-                            <span>Счетов</span>
+                            <span>${window.finflowI18n?.translateSmart("Invoices") || "Invoices"}</span>
                         </div>
                     </div>
 
@@ -277,7 +277,7 @@ function loadProductsView() {
                 <div class="ff-product-card-footer">
 
                     <div class="ff-product-created">
-                        <span>Создан</span>
+                        <span>${window.finflowI18n?.translateSmart("Created") || "Created"}</span>
                         <strong>${formatDate(product.created_at)}</strong>
                     </div>
 
@@ -290,8 +290,8 @@ function loadProductsView() {
                                         type="button"
                                         class="ff-product-action"
                                         data-product-action="edit"
-                                        title="Редактировать"
-                                        aria-label="Редактировать ${escapeHtml(product.name)}"
+                                        title="Edit"
+                                        aria-label="${escapeHtml(window.finflowI18n?.translateSmart("Edit") || "Edit")} ${escapeHtml(product.name)}"
                                     >
                                         <i class="bi bi-pencil"></i>
                                     </button>
@@ -303,8 +303,8 @@ function loadProductsView() {
                                                     type="button"
                                                     class="ff-product-action"
                                                     data-product-action="archive"
-                                                    title="Архивировать"
-                                                    aria-label="Архивировать ${escapeHtml(product.name)}"
+                                                    title="Archive"
+                                                    aria-label="${escapeHtml(window.finflowI18n?.translateSmart("Archive") || "Archive")} ${escapeHtml(product.name)}"
                                                 >
                                                     <i class="bi bi-archive"></i>
                                                 </button>
@@ -316,8 +316,8 @@ function loadProductsView() {
                                         type="button"
                                         class="ff-product-action ff-product-action-danger"
                                         data-product-action="delete"
-                                        title="Удалить"
-                                        aria-label="Удалить ${escapeHtml(product.name)}"
+                                        title="Delete"
+                                        aria-label="${escapeHtml(window.finflowI18n?.translateSmart("Delete") || "Delete")} ${escapeHtml(product.name)}"
                                     >
                                         <i class="bi bi-trash3"></i>
                                     </button>
@@ -427,7 +427,7 @@ function loadProductsView() {
             }
 
             if (text) {
-                text.textContent = 'Сохранение...';
+                text.textContent = window.finflowI18n?.translateSmart("Saving...") || "Saving...";
             }
         } else {
             if (icon) {
@@ -435,7 +435,7 @@ function loadProductsView() {
             }
 
             if (text) {
-                text.textContent = 'Сохранить';
+                text.textContent = window.finflowI18n?.translateSmart("Save") || "Save";
             }
         }
     }
@@ -456,13 +456,13 @@ function loadProductsView() {
         setFormError('');
 
         if (product) {
-            modalTitle.textContent = 'Редактировать продукт';
+            modalTitle.textContent = window.finflowI18n?.translateSmart("Edit product") || "Edit product";
             modalSubtitle.textContent =
-                'Измените параметры продукта в каталоге FinFlow.';
+                window.finflowI18n?.translateSmart("Change product parameters in the ElixOR Connect catalog.") || "Change product parameters in the ElixOR Connect catalog.";
         } else {
-            modalTitle.textContent = 'Новый продукт';
+            modalTitle.textContent = window.finflowI18n?.translateSmart("New product") || "New product";
             modalSubtitle.textContent =
-                'Добавьте продукт в каталог FinFlow.';
+                window.finflowI18n?.translateSmart("Add a product to the ElixOR Connect catalog.") || "Add a product to the ElixOR Connect catalog.";
         }
 
         modal.hidden = false;
@@ -566,21 +566,21 @@ function loadProductsView() {
         setFormError('');
 
         if (!code) {
-            setFormError('Введите код продукта.');
+            setFormError(window.finflowI18n?.translateSmart("Enter product code.") || "Enter product code.");
             codeInput.focus();
             return;
         }
 
         if (!/^[A-Z0-9_-]+$/.test(code)) {
             setFormError(
-                'Код может содержать только латинские буквы, цифры, дефис и подчёркивание.'
+                window.finflowI18n?.translateSmart("Code may contain only Latin letters, numbers, hyphen and underscore.") || "Code may contain only Latin letters, numbers, hyphen and underscore."
             );
             codeInput.focus();
             return;
         }
 
         if (!name) {
-            setFormError('Введите название продукта.');
+            setFormError(window.finflowI18n?.translateSmart("Enter product name.") || "Enter product name.");
             nameInput.focus();
             return;
         }
@@ -621,7 +621,7 @@ function loadProductsView() {
             }
 
             if (!result?.product) {
-                throw new Error('Сервер не вернул данные продукта.');
+                throw new Error(window.finflowI18n?.translateSmart("Server did not return product data.") || "Server did not return product data.");
             }
 
             const normalized = normalizeProduct(result.product);
@@ -643,7 +643,7 @@ function loadProductsView() {
             renderProducts();
         } catch (error) {
             console.error('[FinFlow] Product save failed:', error);
-            setFormError(error.message || 'Не удалось сохранить продукт.');
+            setFormError(error.message || window.finflowI18n?.translateSmart("Failed to save product.") || "Failed to save product.");
         } finally {
             setSaveBusy(false);
         }
@@ -656,8 +656,8 @@ function loadProductsView() {
         }
 
         const confirmed = window.confirm(
-            `Архивировать продукт «${product.name}»?\n\n`
-            + 'Он останется в системе, но будет исключён из новых операций.'
+            `${window.finflowI18n?.translateSmart("Archive product") || "Archive product"} «${product.name}»?\n\n`
+            + `${window.finflowI18n?.translateSmart("It will remain in the system but will be excluded from new operations.") || "It will remain in the system but will be excluded from new operations."}`
         );
 
         if (!confirmed) {
@@ -695,7 +695,7 @@ function loadProductsView() {
             console.error('[FinFlow] Product archive failed:', error);
 
             window.alert(
-                error.message || 'Не удалось архивировать продукт.'
+                error.message || window.finflowI18n?.translateSmart("Failed to archive product.") || "Failed to archive product."
             );
         } finally {
             busy = false;
@@ -715,19 +715,19 @@ function loadProductsView() {
 
         if (used > 0) {
             window.alert(
-                `Продукт «${product.name}» используется в системе.\n\n`
-                + `Бюджетов: ${usage.budgets || 0}\n`
-                + `Счетов: ${usage.invoices || 0}\n\n`
-                + 'Физическое удаление невозможно. '
-                + 'Используйте архивирование.'
+                `${window.finflowI18n?.translateSmart("Product is used in the system.") || "Product is used in the system."} «${product.name}».\n\n`
+                + `${window.finflowI18n?.translateSmart("Budgets") || "Budgets"}: ${usage.budgets || 0}\n`
+                + `${window.finflowI18n?.translateSmart("Invoices") || "Invoices"}: ${usage.invoices || 0}\n\n`
+                + `${window.finflowI18n?.translateSmart("Physical deletion is not possible.") || "Physical deletion is not possible."} `
+                + `${window.finflowI18n?.translateSmart("Use archiving instead.") || "Use archiving instead."}`
             );
 
             return;
         }
 
         const confirmed = window.confirm(
-            `Удалить продукт «${product.name}»?\n\n`
-            + 'Это действие нельзя отменить.'
+            `${window.finflowI18n?.translateSmart("Delete") || "Delete"} «${product.name}»?\n\n`
+            + `${window.finflowI18n?.translateSmart("This action cannot be undone.") || "This action cannot be undone."}`
         );
 
         if (!confirmed) {
@@ -756,11 +756,11 @@ function loadProductsView() {
             if (error.code === 'in_use') {
                 window.alert(
                     error.message
-                    || 'Продукт используется в системе и не может быть удалён.'
+                    || window.finflowI18n?.translateSmart("Product is used in the system and cannot be deleted.") || "Product is used in the system and cannot be deleted."
                 );
             } else {
                 window.alert(
-                    error.message || 'Не удалось удалить продукт.'
+                    error.message || window.finflowI18n?.translateSmart("Failed to delete product.") || "Failed to delete product."
                 );
             }
         } finally {

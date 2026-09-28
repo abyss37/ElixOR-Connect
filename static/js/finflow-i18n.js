@@ -2,7 +2,7 @@
     "use strict";
 
     /*
-     * FinFlow global i18n
+     * ElixOR Connect global i18n
      *
      * Single source of truth for:
      * Dashboard
@@ -21,9 +21,9 @@
 
             /* ==================== COMMON ==================== */
 
-            "FinFlow": "FinFlow",
+            "FinFlow": "ElixOR Connect",
             "Control": "Контроль",
-            "FinFlow — Financial Control": "FinFlow — Фінансовий контроль",
+            "ElixOR Connect — Financial Control": "ElixOR Connect — Фінансовий контроль",
             "Financial control platform": "Платформа фінансового контролю",
             "Financial overview": "Фінансовий огляд",
 
@@ -40,11 +40,99 @@
             "Track contract budgets, invoices and remaining spend in one place — with early warnings before a budget becomes a problem.":
                 "Контролюйте бюджети договорів, рахунки та залишок коштів в одному місці — з ранніми попередженнями про ризики.",
 
-            "New invoice": "Новий рахунок",
+                "Registry of issued invoices, payments and contract obligations.":
+        "Реєстр виставлених рахунків, оплат і договірних зобов'язань.",
+
+    "Search invoices or companies...":
+        "Пошук за рахунком або компанією...",
+
+    "All statuses": "Усі статуси",
+    "All payments": "Усі оплати",
+    "Table": "Таблиця",
+    "Cards": "Картки",
+    "Deadline": "Термін",
+
+    "Create an invoice directly in the registry.":
+        "Створення рахунку безпосередньо в реєстрі.",
+
+    "Basic information": "Основні дані",
+    "Amount and terms": "Сума та умови",
+    "Payment terms": "Умови оплати",
+    "15 days": "15 днів",
+    "Client information": "Дані клієнта",
+
+    "Bill To / client details":
+        "Bill To / реквізити клієнта",
+
+    "Address, email and other client details":
+        "Адреса, email та інші реквізити клієнта",
+
+    "Invoice items": "Позиції рахунку",
+
+    "Items are stored inside contract_details.":
+        "Позиції зберігаються всередині contract_details.",
+
+    "Add item": "Додати позицію",
+    "Qty": "К-сть",
+    "Rate": "Ставка",
+    "Delete item": "Видалити позицію",
+
+    "Additional information": "Додаткова інформація",
+    "Note": "Примітка",
+    "Additional invoice information":
+        "Додаткова інформація щодо рахунку",
+
+    "Payment terms, penalties, delivery dates, etc.":
+        "Умови оплати, штрафи, строки поставки тощо.",
+
+    "Save invoice": "Зберегти рахунок",
+    "No invoices found": "Рахунків не знайдено",
+
+    "Change your search filters or create a new invoice.":
+        "Змініть параметри пошуку або створіть новий рахунок.",
+
+"New invoice": "Новий рахунок",
             "Add invoice": "Додати рахунок",
             "Create invoice": "Створити рахунок",
             "Create invoice PDF": "Створити рахунок PDF",
 
+            "Manage ElixOR Connect products and product lines.": "Керування продуктами та продуктовими напрямами ElixOR Connect.",
+            "Product filter": "Фільтр продуктів",
+            "Archived": "Архівні",
+            "New product": "Новий продукт",
+            "Search products...": "Пошук продуктів...",
+            "Product view": "Вигляд продуктів",
+            "Total products": "Усього продуктів",
+            "Active products": "Активних продуктів",
+            "Archived products": "Архівних продуктів",
+            "Description not specified.": "Опис не задано.",
+            "No products yet": "Продуктів поки немає",
+            "Create your first product to get started.": "Створіть перший продукт, щоб почати роботу.",
+            "Create product": "Створити продукт",
+            "Add a product to the ElixOR Connect catalog.": "Додайте продукт до каталогу ElixOR Connect.",
+            "Product code": "Код продукту",
+            "For example, CRM": "Наприклад, CRM",
+            "Stable technical identifier for the product.": "Стабільний технічний ідентифікатор продукту.",
+            "For example, ElixOR Connect CRM": "Наприклад, ElixOR Connect CRM",
+            "Short product description...": "Короткий опис продукту...",
+            "Saving...": "Збереження...",
+            "Edit product": "Редагувати продукт",
+            "Change product parameters in the ElixOR Connect catalog.": "Змініть параметри продукту в каталозі ElixOR Connect.",
+            "Enter product code.": "Введіть код продукту.",
+            "Code may contain only Latin letters, numbers, hyphen and underscore.": "Код може містити лише латинські літери, цифри, дефіс і підкреслення.",
+            "Enter product name.": "Введіть назву продукту.",
+            "Server did not return product data.": "Сервер не повернув дані продукту.",
+            "Failed to save product.": "Не вдалося зберегти продукт.",
+            "Archive product": "Архівувати продукт",
+            "It will remain in the system but will be excluded from new operations.": "Він залишиться в системі, але буде виключений із нових операцій.",
+            "Failed to archive product.": "Не вдалося архівувати продукт.",
+            "Product is used in the system.": "Продукт використовується в системі.",
+            "Physical deletion is not possible.": "Фізичне видалення неможливе.",
+            "Use archiving instead.": "Скористайтеся архівуванням.",
+            "This action cannot be undone.": "Цю дію неможливо скасувати.",
+            "Product is used in the system and cannot be deleted.": "Продукт використовується в системі та не може бути видалений.",
+            "Failed to delete product.": "Не вдалося видалити продукт.",
+            "days overdue": "дн. прострочено",
             "Save": "Зберегти",
             "Close": "Закрити",
             "Cancel": "Скасувати",
@@ -57,6 +145,178 @@
             "Generate": "Створити",
             "Draft": "Чернетка",
 
+            "Overview": "Огляд",
+            "Save error.": "Помилка збереження.",
+            "Budget saved, but completion date could not be updated.": "Бюджет збережено, але дату завершення змінити не вдалося.",
+            "Failed to save budget.": "Не вдалося зберегти бюджет.",
+            "Failed to get CSRF token. Reload the page.": "Не вдалося отримати CSRF-токен. Перезавантажте сторінку.",
+            "Create budget for company and product.": "Створення бюджету для компанії та продукту",
+            "Change": "Змінити",
+            "days until completion": "дн. до завершення",
+            "Ends today": "Завершується сьогодні",
+            "Overdue by": "Прострочено на",
+            "Exceeded": "Перевищено",
+            "Empty": "Не задано",
+            "Currency": "Валюта",
+            "Select product": "Оберіть продукт",
+            "Select company": "Оберіть компанію",
+            "Edit budget": "Редагувати бюджет",
+            "Try changing the filters or create a budget for the company.": "Спробуйте змінити фільтри або створити бюджет для компанії.",
+            "No budgets found": "Бюджетів не знайдено",
+            "All currencies": "Усі валюти",
+                "Active invoices": "Активних рахунків",
+    "Fully paid": "Повністю оплачено",
+    "Outstanding balance": "Залишок до оплати",
+    "Open invoice": "Відкрити рахунок",
+    "Contract completion": "Завершення договору",
+    "Contract details": "Деталі договору",
+    "Open": "Відкрити",
+
+"Need attention": "Потребують уваги",
+            "Under control": "Під контролем",
+            "Refresh": "Оновити",
+            "New budget": "Новий бюджет",
+            "Manage company budgets, expenses and contract status.": "Керування бюджетами компаній, витратами та станом договорів.",
+            "Products": "Продукти",
+            "Companies": "Компанії",
+            "Budgets": "Бюджети",
+            "Invoices": "Рахунки",
+            "Insights": "Аналітика",
+            "Audit": "Аудит",
+            "Alerts": "Сповіщення",
+            "Administration": "Адміністрування",
+            "Organization": "Організація",
+            "Legal entities": "Юридичні особи",
+            "Legal entities, company details, signatures and stamps used for documents.": "Юридичні особи ElixOR Connect, реквізити, підписи та печатки для оформлення документів.",
+            "Create organization": "Створити організацію",
+            "Companies on whose behalf ElixOR Connect creates documents and operations.": "Компанії, від імені яких ElixOR Connect формує документи та операції.",
+            "company": "компанія",
+            "companies": "компаній",
+            "Open company data": "Відкрити дані компанії",
+            "Company not created yet": "Компанію ще не створено",
+            "Add a legal entity on whose behalf ElixOR Connect will issue documents.": "Додайте юридичну особу, від імені якої ElixOR Connect оформлюватиме документи.",
+            "Products count one": "продукт",
+            "Products count few": "продукти",
+            "Products count many": "продуктів",
+            "Details sets one": "набір реквізитів",
+            "Details sets few": "набори реквізитів",
+            "Details sets many": "наборів реквізитів",
+            "Logo": "Логотип",
+            "Signature": "Підпис",
+            "Stamp": "Печатка",
+            "Digital signature": "ЕЦП",
+            "Add a legal entity on whose behalf ElixOR Connect will issue documents.": "Додайте юридичну особу, від імені якої ElixOR Connect оформлюватиме документи.",
+            "Legal entity data": "Дані юридичної особи",
+            "For example, ООО «Кайзерин»": "Наприклад, ТОВ «Кайзерин»",
+            "Full legal name of the organization.": "Повна юридична назва організації.",
+            "Director full name": "ПІБ керівника",
+            "Director position": "Посада керівника",
+            "For example, General Director": "Наприклад, Генеральний директор",
+            "Contact details of the legal entity": "Контактні дані юридичної особи",
+            "Phone": "Телефон",
+            "Email": "Email",
+            "Availability for new documents": "Доступність для нових документів",
+            "The organization will be available when creating new documents.": "Організація буде доступна для вибору під час створення нових документів.",
+            "Available": "Доступна",
+            "Can be used in new documents": "Можна використовувати в нових документах",
+            "Legal entity details, company information and documents.": "Дані юридичної особи, реквізити та документи.",
+            "Company data": "Дані компанії",
+            "Legal details": "Юридичні реквізити",
+            "Registration and banking information": "Реєстраційні та банківські дані",
+            "Add details set": "Додати набір",
+            "Details set": "Набір реквізитів",
+            "Edit details set": "Редагувати набір реквізитів",
+            "Legal address": "Юридична адреса",
+            "Actual address": "Фактична адреса",
+            "Registration number": "Реєстраційний номер",
+            "Tax number": "Податковий номер",
+            "VAT number": "Номер платника ПДВ",
+            "Bank": "Банк",
+            "IBAN": "IBAN",
+            "SWIFT": "SWIFT",
+            "Documents and signatures": "Документи та підписи",
+            "Files used when generating documents.": "Файли, які використовуються під час формування документів.",
+            "Uploaded": "Завантажено",
+            "Configured": "Налаштовано",
+            "Not configured": "Не налаштовано",
+            "Replace": "Замінити",
+            "Upload": "Завантажити",
+            "Preview": "Перегляд",
+            "Details sets have not been added yet": "Набори реквізитів ще не додані",
+            "Add a details set to use legal and banking information in documents.": "Додайте набір, щоб використовувати юридичні та банківські дані компанії в документах.",
+            "Uploaded feminine": "Завантажена",
+            "Not uploaded feminine": "Не завантажена",
+            "Legal, registration and banking information": "Юридичні, реєстраційні та банківські дані",
+            "Form steps": "Кроки форми",
+            "Main": "Основне",
+            "Addresses": "Адреси",
+            "Registration": "Реєстрація",
+            "Details set name": "Назва набору",
+            "For example: Main details": "Наприклад: Основні реквізити",
+            "Legal and tax registration": "Реєстрація та податки",
+            "Tax ID / tax number": "ІПН / податковий номер",
+            "VAT / VAT number": "VAT / номер ПДВ",
+            "Our organization": "Наша організація",
+            "Main navigation": "Головна навігація",
+            "Financial control and system status":
+                "Фінансовий контроль і стан системи",
+
+            "New company": "Нова компанія",
+            "Search companies...": "Пошук компаній...",
+            "Clear search": "Очистити пошук",
+            "Company view": "Вигляд компаній",
+            "Grid": "Плитка",
+            "List": "Список",
+            "of": "з",
+            "Companies not found": "Компаній не знайдено",
+            "Try changing your search query.": "Спробуйте змінити пошуковий запит.",
+            "Reset search": "Скинути пошук",
+            "Actions": "Дії",
+            "Company": "Компанія",
+            "Delete": "Видалити",
+            "invoices": "рахунків",
+            "Budget": "Бюджет",
+            "Spent": "Використано",
+            "Remaining": "Залишок",
+            "Budget utilization": "Використання бюджету",
+            "Contract end": "Завершення договору",
+            "Company invoices": "Рахунки компанії",
+            "Collapse": "Згорнути",
+            "All": "Усі",
+            "No invoices": "Рахунків немає",
+            "Loading invoices...": "Завантаження рахунків...",
+            "No companies yet": "Компаній поки немає",
+            "Create your first company to get started.": "Створіть першу компанію, щоб почати роботу.",
+            "Company list": "Список компаній",
+            "Contract": "Договір",
+            "Company name": "Назва компанії",
+            "For example, Alpha LLC": "Наприклад, ТОВ «Альфа»",
+            "Company stamp": "Печатка компанії",
+            "Used in invoice generator and document printing.": "Використовується в генераторі рахунків і під час друку документа.",
+            "Not uploaded": "Не завантажена",
+            "Upload stamp": "Завантажити печатку",
+            "PNG, JPG or WebP · up to 5 MB": "PNG, JPG або WebP · до 5 МБ",
+            "Date not specified": "Дата не вказана",
+            "completed": "завершено",
+            "days ago": "дн. тому",
+            "today": "сьогодні",
+            "days remaining": "дн. залишилося",
+            "Completed": "Завершено",
+            "Paid": "Оплачено",
+            "Partially paid": "Частково оплачено",
+            "Unpaid": "Не оплачено",
+            "Payment": "Оплата",
+            "Cancel invoice": "Скасувати рахунок",
+            "Cancellation reason": "Причина скасування",
+            "Overdue": "Прострочено",
+            "Payment amount": "Сума оплати",
+            "Invoice amount": "Сума рахунку",
+            "Current payment": "Поточна оплата",
+            "Enter a valid amount.": "Введіть коректну суму.",
+            "Payment amount cannot be negative.": "Сума оплати не може бути від'ємною.",
+            "Payment amount cannot exceed invoice amount.": "Сума оплати не може перевищувати суму рахунку.",
+            "Reason is required.": "Причина скасування обов'язкова.",
+            "Invoice will remain in history but will be excluded from financial totals.": "Рахунок залишиться в історії, але буде виключений із фінансових підсумків.",
             /* ==================== NOTIFICATIONS ==================== */
 
             "Notifications": "Сповіщення",
@@ -82,11 +342,6 @@
             "Critical budget level": "Критичний рівень бюджету",
             "Budget exceeded": "Бюджет перевищено",
             "Contract expiring": "Завершення договору",
-            "Recent system alerts": "Останні системні події",
-            "Mark all as read": "Прочитати всі",
-            "All clear": "Усе чисто",
-            "No active notifications.": "Немає активних сповіщень.",
-            "Mark as read": "Позначити як прочитане",
             "alerts": "попереджень",
 
             /* ==================== SUMMARY ==================== */
@@ -95,7 +350,6 @@
             "All active products": "Усі активні продукти",
             "Invoiced": "Виставлено рахунків",
             "Recorded spend": "Враховані витрати",
-            "Remaining": "Залишок",
             "Available budget": "Доступний бюджет",
             "Utilization": "Використання",
             "Budget consumed": "Використано бюджету",
@@ -137,7 +391,6 @@
             "Spend by company": "Сума рахунків за компаніями",
             "Active invoiced amount by company.":
                 "Сума активних рахунків за компаніями",
-            "Companies": "Компанії",
 
             "Spend by product": "Сума рахунків за продуктами",
             "Active invoiced amount by product.":
@@ -158,8 +411,6 @@
 
             /* ==================== BUDGET ==================== */
 
-            "Budget": "Бюджет",
-            "Budget utilization": "Використання бюджету",
             "Budget health": "Стан бюджету",
             "Budget overview": "Огляд бюджету",
             "Only companies and invoices": "Тільки компанії та рахунки",
@@ -195,7 +446,6 @@
             "Click to view full budget overview":
                 "Натисніть, щоб переглянути повний огляд бюджету",
 
-            "Budget exceeded": "Бюджет перевищено",
             "Budget attention": "Бюджет потребує уваги",
             "Budget almost exhausted": "Бюджет майже вичерпано",
 
@@ -213,12 +463,10 @@
             "Set budgets, review spend and spot risk at a glance.":
                 "Встановлюйте бюджети, контролюйте витрати та одразу помічайте ризики.",
 
-            "Search companies...": "Пошук компаній...",
             "Click to view invoices":
                 "Натисніть, щоб переглянути рахунки",
 
             "Contract budget (€)": "Бюджет договору (€)",
-            "Contract end": "Завершення договору",
 
             "No companies yet. Create your first invoice to get started.":
                 "Компаній поки немає. Створіть перший рахунок, щоб почати.",
@@ -230,9 +478,7 @@
             "Search invoices...": "Пошук рахунків...",
 
             "Invoice": "Рахунок",
-            "Invoices": "Рахунки",
             "Date": "Дата",
-            "Company": "Компанія",
             "Product": "Продукт",
             "Amount": "Сума",
             "Status": "Статус",
@@ -252,23 +498,18 @@
             "HIGH USAGE": "ВИСОКЕ ЗАВАНТАЖЕННЯ",
             "HEALTHY": "У НОРМІ",
 
-            "Paid": "Оплачено",
             "Outstanding": "До сплати",
             "paid": "оплачено",
             "due": "до сплати",
-            "day": "день",
-            "days": "днів",
 
             "Paid amount for invoice": "Сума оплати за рахунком",
             "Total": "Усього",
             "Currently paid": "Наразі оплачено",
-            "Remaining": "Залишок",
             "Enter total paid amount": "Введіть загальну суму оплати",
             "Please enter a valid non-negative amount.": "Введіть коректну невід'ємну суму.",
             "Paid amount cannot exceed invoice total": "Сума оплати не може перевищувати загальну суму рахунку",
 
             "Update payment": "Оновити оплату",
-            "Cancel invoice": "Скасувати рахунок",
             "Users": "Користувачі",
             "Logout": "Вийти",
             "Administrator": "Адміністратор",
@@ -276,7 +517,6 @@
             "Viewer": "Переглядач",
 
             "No invoices yet.": "Рахунків поки немає.",
-            "No invoices": "Рахунків немає",
             "Total:": "Разом:",
             "No data yet": "Даних поки немає",
             "No budget data": "Немає даних щодо бюджету",
@@ -288,7 +528,6 @@
             "Quickly add an invoice directly to the registry":
                 "Швидко додайте рахунок безпосередньо до реєстру",
 
-            "Company name": "Назва компанії",
             "Software Product": "Програмний продукт",
             "Invoice number": "Номер рахунку",
             "Invoice date": "Дата рахунку",
@@ -297,12 +536,28 @@
 
             "Save to Registry": "Зберегти до реєстру",
 
-            "Edit invoice": "Редагувати рахунок",
-            "Cancel invoice": "Скасувати рахунок",
-            "Update payment": "Оновити оплату",
+                "Change existing invoice data.": "Зміна даних існуючого рахунку.",
+
+"Edit invoice": "Редагувати рахунок",
 
             "Cancellation reason:": "Причина скасування:",
-            "Cancellation reason is required.":
+                "Save changes": "Зберегти зміни",
+    "Fill in company, invoice number, date and amount.": "Заповніть компанію, номер рахунку, дату та суму.",
+    "Invoice amount must be greater than zero.": "Сума рахунку має бути більшою за нуль.",
+    "Failed to save invoice.": "Не вдалося зберегти рахунок.",
+    "Enter a valid non-negative amount.": "Введіть коректну невід'ємну суму.",
+    "Payment amount cannot exceed invoice amount": "Сума оплати не може перевищувати суму рахунку",
+    "Failed to update payment.": "Не вдалося оновити оплату.",
+    "Invoice cancellation reason:": "Причина скасування рахунку:",
+    "Cancel this invoice?": "Скасувати цей рахунок?",
+    "It will remain in the registry with status CANCELLED.": "Він залишиться в реєстрі зі статусом CANCELLED.",
+    "Failed to cancel invoice.": "Не вдалося скасувати рахунок.",
+
+    "Paid on invoice": "Оплачено по рахунку",
+    "Paid now": "Оплачено зараз",
+    "Enter total payment amount:": "Введіть загальну суму оплати:",
+
+"Cancellation reason is required.":
                 "Необхідно вказати причину скасування.",
 
             "Cancel this invoice? It will remain in the registry as CANCELLED.":
@@ -356,11 +611,9 @@
 
             /* ==================== USERS ==================== */
 
-            "Users": "Користувачі",
-            "Administrator": "Адміністратор",
 
-            "Manage FinFlow users, roles and access.":
-                "Керування користувачами FinFlow, ролями та доступом.",
+            "Manage ElixOR Connect users, roles and access.":
+                "Керування користувачами ElixOR Connect, ролями та доступом.",
 
             "Create user": "Створити користувача",
 
@@ -385,7 +638,6 @@
             "Created": "Створено",
             "Last login": "Останній вхід",
             "IP": "IP",
-            "Actions": "Дії",
 
             "You": "Ви",
             "Active": "Активний",
@@ -412,8 +664,6 @@
                 "Повернутися до панелі керування",
 
             "Admin": "Адміністратор",
-            "Manager": "Менеджер",
-            "Viewer": "Переглядач",
 
             /* ==================== AUDIT ==================== */
 
@@ -458,7 +708,6 @@
                 "Додаткових деталей немає.",
 
             "Page": "Сторінка",
-            "of": "із",
             "event": "подія",
             "events": "подій",
             "total": "усього",
@@ -468,7 +717,6 @@
             "Invoice ID": "ID рахунку",
             "Contract date": "Дата договору",
             "Contract budget": "Бюджет договору",
-            "Cancellation reason": "Причина скасування",
 
             "company_budget": "Бюджет компанії",
             "invoice": "Рахунок",
@@ -476,7 +724,7 @@
             /* ==================== LANDING ==================== */
 
             "Sign in": "Увійти",
-            "Sign in to FinFlow": "Увійти до FinFlow",
+            "Sign in to ElixOR Connect": "Увійти до FinFlow",
 
             "Financial Operations Platform":
                 "Платформа фінансових операцій",
@@ -484,16 +732,7 @@
             "A modern self-hosted platform for managing budgets, invoices, payments, contracts, analytics, notifications and financial operations in one controlled environment.":
                 "Сучасна self-hosted платформа для керування бюджетами, рахунками, платежами, договорами, аналітикою, сповіщеннями та фінансовими операціями в одному контрольованому середовищі.",
 
-            "Financial control for contracts, invoices & budgets":
-                "Фінансовий контроль договорів, рахунків і бюджетів",
-
-            "Know where your budget stands.":
-                "Завжди знайте стан свого бюджету.",
-
-            "Track contract budgets, invoices and remaining spend in one place — with early warnings before a budget becomes a problem.":
-                "Контролюйте бюджети договорів, рахунки та залишок коштів в одному місці — з ранніми попередженнями до того, як проблема стане критичною.",
-
-            "Sign in to your FinFlow workspace":
+            "Sign in to your ElixOR Connect workspace":
                 "Увійдіть до робочого простору FinFlow",
 
             "Self-hosted":
@@ -966,6 +1205,36 @@
                     ? (translations.uk[key] || key)
                     : key;
         });
+
+
+        /* Explicit data-i18n-value support */
+
+        root.querySelectorAll &&
+        root.querySelectorAll("[data-i18n-value]").forEach(function (el) {
+
+            const key =
+                el.dataset.i18nValue;
+
+            const translated =
+                translations.uk[key] || key;
+
+            /*
+             * Only translate known default values.
+             * Any other value is considered user input
+             * and must never be overwritten.
+             */
+            if (
+                el.value === key ||
+                el.value === translated ||
+                el.value === "" ||
+                !el.value
+            ) {
+                el.value =
+                    lang === "uk"
+                        ? translated
+                        : key;
+            }
+        });
     }
 
 
@@ -1005,7 +1274,7 @@
     function addLanguageSwitcher() {
         /*
          * Dashboard language switcher is rendered statically
-         * inside the FinFlow sidebar.
+         * inside the ElixOR Connect sidebar.
          *
          * Keep this function for API compatibility, but do not
          * create another floating/button switcher here.

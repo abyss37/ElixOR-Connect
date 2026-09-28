@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="uk" class="dark" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>FinFlow — {{ error_code }}</title>
+    <title>ElixOR Connect — {{ error_code }}</title>
 
     <link
         rel="stylesheet"
-        href="{{ url_for('static', filename='css/finflow.css') }}?v=20260923-2"
+        href="{{ url_for('static', filename='css/finflow.css') }}?v=20260928-2"
     >
 
     <link
@@ -347,13 +347,13 @@
 <main class="error-shell">
     <div class="error-wrap">
 
-        <div class="brand" aria-label="FinFlow">
+        <div class="brand" aria-label="ElixOR Connect">
             <span class="brand-mark">
                 <i class="bi bi-grid-1x2-fill"></i>
             </span>
 
             <span class="brand-name">
-                Fin<span>Flow</span>
+                ElixOR <span>Connect</span>
             </span>
         </div>
 
@@ -365,11 +365,11 @@
 
             <p class="error-code">{{ error_code }}</p>
 
-            <h1 id="error-title" class="error-title">
+            <h1 id="error-title" class="error-title" data-error-title="{{ error_title }}">
                 {{ error_title }}
             </h1>
 
-            <p class="error-message">
+            <p class="error-message" data-error-message="{{ error_message }}">
                 {{ error_message }}
             </p>
 
@@ -380,7 +380,7 @@
                     class="action action-primary"
                 >
                     <i class="bi bi-grid-1x2-fill"></i>
-                    Back to Dashboard
+                    <span data-i18n-error="back">Повернутися до панелі</span>
                 </a>
 
                 <a
@@ -389,20 +389,20 @@
                     class="action action-secondary"
                 >
                     <i class="bi bi-box-arrow-right"></i>
-                    Logout
+                    <span data-i18n-error="logout">Вийти</span>
                 </a>
 
             </div>
 
             <div class="security-note">
                 <span class="security-dot"></span>
-                FinFlow system access
+                <span data-i18n-error="security">Безпечний доступ ElixOR Connect</span>
             </div>
 
         </section>
 
         <footer class="footer">
-            Financial management system
+            <span data-i18n-error="footer">Система фінансового управління</span>
         </footer>
 
         <form
@@ -420,6 +420,99 @@
 
     </div>
 </main>
+
+
+<script>
+(function () {
+    "use strict";
+
+    const translations = {
+        uk: {
+            back: "Повернутися до панелі",
+            logout: "Вийти",
+            security: "Безпечний доступ ElixOR Connect",
+            footer: "Система фінансового управління",
+
+            "Security check failed":
+                "Перевірку безпеки не пройдено",
+            "CSRF validation failed. Please reload the page and try again.":
+                "Не вдалося виконати перевірку CSRF. Перезавантажте сторінку та спробуйте ще раз.",
+
+            "Page not found":
+                "Сторінку не знайдено",
+            "The page you requested could not be found. It may have been moved or the address may be incorrect.":
+                "Сторінку, яку ви запитали, не знайдено. Можливо, її було переміщено або адреса неправильна.",
+
+            "Access denied":
+                "Доступ заборонено",
+            "You do not have permission to access this resource.":
+                "У вас немає дозволу на доступ до цього ресурсу.",
+            "You do not have permission to access this page.":
+                "У вас немає дозволу на доступ до цієї сторінки.",
+
+            "Something went wrong":
+                "Щось пішло не так",
+            "ElixOR Connect encountered an unexpected server error. Please try again or return to the dashboard.":
+                "У ElixOR Connect сталася неочікувана помилка сервера. Спробуйте ще раз або поверніться до панелі.",
+
+            "Invalid company name":
+                "Некоректна назва компанії",
+            "Company name is required.":
+                "Необхідно вказати назву компанії.",
+            "Company name must be 255 characters or fewer.":
+                "Назва компанії має містити не більше 255 символів."
+        },
+
+        en: {
+            back: "Back to Dashboard",
+            logout: "Logout",
+            security: "Secure ElixOR Connect access",
+            footer: "Financial management system"
+        }
+    };
+
+    function getLang() {
+        return localStorage.getItem("finflow-language") === "en"
+            ? "en"
+            : "uk";
+    }
+
+    function applyErrorLanguage() {
+        const lang = getLang();
+        const dict = translations[lang] || translations.uk;
+
+        document.documentElement.lang = lang;
+
+        document.querySelectorAll("[data-i18n-error]").forEach(function (el) {
+            const key = el.getAttribute("data-i18n-error");
+            if (dict[key]) {
+                el.textContent = dict[key];
+            }
+        });
+
+        const title = document.querySelector("[data-error-title]");
+        if (title) {
+            const value = title.getAttribute("data-error-title");
+            if (dict[value]) {
+                title.textContent = dict[value];
+            }
+        }
+
+        const message = document.querySelector("[data-error-message]");
+        if (message) {
+            const value = message.getAttribute("data-error-message");
+            if (dict[value]) {
+                message.textContent = dict[value];
+            }
+        }
+
+        document.title = "ElixOR Connect — " +
+            (document.querySelector(".error-code")?.textContent || "");
+    }
+
+    applyErrorLanguage();
+})();
+</script>
 
 </body>
 </html>

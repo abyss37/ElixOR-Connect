@@ -80,18 +80,21 @@
 
     function paymentLabel(status) {
         const labels = {
-            PAID: "Оплачен",
-            PARTIAL: "Частично",
-            UNPAID: "Не оплачен",
+            PAID: window.finflowI18n?.translateSmart("Paid") || "Paid",
+            PARTIAL: window.finflowI18n?.translateSmart("Partially paid") || "Partially paid",
+            UNPAID: window.finflowI18n?.translateSmart("Unpaid") || "Unpaid",
         };
 
-        return labels[status] || status || "Не оплачен";
+        return labels[status]
+            || status
+            || window.finflowI18n?.translateSmart("Unpaid")
+            || "Unpaid";
     }
 
     function statusLabel(status) {
         return status === "CANCELLED"
-            ? "Отменён"
-            : "Выставлен";
+            ? (window.finflowI18n?.translateSmart("Cancelled") || "Cancelled")
+            : (window.finflowI18n?.translateSmart("Issued") || "Issued");
     }
 
     function paymentClass(status) {
@@ -114,7 +117,7 @@
         }
 
         if (!invoice.completion_date) {
-            return '<span class="ff-invoice-muted">Не указан</span>';
+            return `<span class="ff-invoice-muted">${window.finflowI18n?.translateSmart("Not specified") || "Not specified"}</span>`;
         }
 
         const days = daysToDate(invoice.completion_date);
@@ -122,18 +125,18 @@
         if (days < 0) {
             return `
                 <span class="ff-invoice-deadline is-overdue">
-                    Просрочен на ${Math.abs(days)} д.
+                    ${window.finflowI18n?.translateSmart("Overdue by") || "Overdue by"} ${Math.abs(days)} ${window.finflowI18n?.translateSmart("days") || "days"}
                 </span>
             `;
         }
 
         if (days === 0) {
-            return '<span class="ff-invoice-deadline is-today">Сегодня</span>';
+            return `<span class="ff-invoice-deadline is-today">${window.finflowI18n?.translateSmart("Today") || "Today"}</span>`;
         }
 
         return `
             <span class="ff-invoice-deadline">
-                ${days} дн.
+                ${days} ${window.finflowI18n?.translateSmart("days") || "days"}
             </span>
         `;
     }
@@ -251,7 +254,7 @@
                 </span>
                 <div>
                     <strong>${issued}</strong>
-                    <span>Активных счетов</span>
+                    <span>${window.finflowI18n?.translateSmart("Active invoices") || "Active invoices"}</span>
                 </div>
             </div>
 
@@ -261,7 +264,7 @@
                 </span>
                 <div>
                     <strong>${paid}</strong>
-                    <span>Полностью оплачено</span>
+                    <span>${window.finflowI18n?.translateSmart("Fully paid") || "Fully paid"}</span>
                 </div>
             </div>
 
@@ -271,7 +274,7 @@
                 </span>
                 <div>
                     <strong>${overdue}</strong>
-                    <span>Требуют внимания</span>
+                    <span>${window.finflowI18n?.translateSmart("Need attention") || "Need attention"}</span>
                 </div>
             </div>
 
@@ -283,7 +286,7 @@
                     <strong class="ff-invoice-outstanding">
                         ${outstanding || "—"}
                     </strong>
-                    <span>Остаток к оплате</span>
+                    <span>${window.finflowI18n?.translateSmart("Outstanding balance") || "Outstanding balance"}</span>
                 </div>
             </div>
         `;
@@ -324,7 +327,7 @@
                         ${money(invoice.amount, invoice.currency)}
                     </strong>
                     <div class="ff-invoice-sub">
-                        оплачено ${money(invoice.paid_amount, invoice.currency)}
+                        ${window.finflowI18n?.translateSmart("paid") || "paid"} ${money(invoice.paid_amount, invoice.currency)}
                     </div>
                 </td>
 
@@ -350,7 +353,7 @@
                         class="ff-invoice-action"
                         data-invoice-action="open"
                         data-invoice-id="${invoice.id}"
-                        title="Открыть"
+                        title="${window.finflowI18n?.translateSmart("Open invoice") || "Open invoice"}"
                     >
                         <i class="bi bi-chevron-right"></i>
                     </button>
@@ -383,17 +386,17 @@
 
                 <div class="ff-invoice-card-grid">
                     <div>
-                        <span>Дата</span>
+                        <span>${window.finflowI18n?.translateSmart("Date") || "Date"}</span>
                         <strong>${formatDate(invoice.invoice_date)}</strong>
                     </div>
 
                     <div>
-                        <span>Оплачено</span>
+                        <span>${window.finflowI18n?.translateSmart("Paid") || "Paid"}</span>
                         <strong>${money(invoice.paid_amount, invoice.currency)}</strong>
                     </div>
 
                     <div>
-                        <span>Оплата</span>
+                        <span>${window.finflowI18n?.translateSmart("Payment") || "Payment"}</span>
                         <strong>
                             <span class="ff-invoice-badge ${paymentClass(invoice.payment_status)}">
                                 ${paymentLabel(invoice.payment_status)}
@@ -402,7 +405,7 @@
                     </div>
 
                     <div>
-                        <span>Срок</span>
+                        <span>${window.finflowI18n?.translateSmart("Deadline") || "Deadline"}</span>
                         <strong>${deadlineMarkup(invoice)}</strong>
                     </div>
                 </div>
@@ -418,7 +421,7 @@
                         data-invoice-action="open"
                         data-invoice-id="${invoice.id}"
                     >
-                        Открыть
+                        ${window.finflowI18n?.translateSmart("Open") || "Open"}
                     </button>
                 </div>
             </article>
@@ -447,7 +450,7 @@
                     type="button"
                     class="ff-invoice-detail-close"
                     id="invoiceDetailClose"
-                    title="Закрыть"
+                    title="${window.finflowI18n?.translateSmart("Close") || "Close"}"
                 >
                     <i class="bi bi-x-lg"></i>
                 </button>
@@ -456,42 +459,42 @@
             <div class="ff-invoice-detail-grid">
 
                 <div class="ff-invoice-detail-item">
-                    <span>Компания</span>
+                    <span>${window.finflowI18n?.translateSmart("Company") || "Company"}</span>
                     <strong>${escapeHtml(invoice.company_name || "—")}</strong>
                 </div>
 
                 <div class="ff-invoice-detail-item">
-                    <span>Продукт</span>
+                    <span>${window.finflowI18n?.translateSmart("Product") || "Product"}</span>
                     <strong>${escapeHtml(invoice.software || "—")}</strong>
                 </div>
 
                 <div class="ff-invoice-detail-item">
-                    <span>Дата счёта</span>
+                    <span>${window.finflowI18n?.translateSmart("Invoice date") || "Invoice date"}</span>
                     <strong>${formatDate(invoice.invoice_date)}</strong>
                 </div>
 
                 <div class="ff-invoice-detail-item">
-                    <span>Срок</span>
+                    <span>${window.finflowI18n?.translateSmart("Deadline") || "Deadline"}</span>
                     <strong>${formatDate(invoice.completion_date)}</strong>
                 </div>
 
                 <div class="ff-invoice-detail-item">
-                    <span>Сумма</span>
+                    <span>${window.finflowI18n?.translateSmart("Amount") || "Amount"}</span>
                     <strong>${money(invoice.amount, invoice.currency)}</strong>
                 </div>
 
                 <div class="ff-invoice-detail-item">
-                    <span>Оплачено</span>
+                    <span>${window.finflowI18n?.translateSmart("Paid") || "Paid"}</span>
                     <strong>${money(invoice.paid_amount, invoice.currency)}</strong>
                 </div>
 
                 <div class="ff-invoice-detail-item">
-                    <span>Остаток</span>
+                    <span>${window.finflowI18n?.translateSmart("Remaining") || "Remaining"}</span>
                     <strong>${money(invoice.outstanding_amount, invoice.currency)}</strong>
                 </div>
 
                 <div class="ff-invoice-detail-item">
-                    <span>Оплата</span>
+                    <span>${window.finflowI18n?.translateSmart("Payment") || "Payment"}</span>
                     <strong>
                         <span class="ff-invoice-badge ${paymentClass(invoice.payment_status)}">
                             ${paymentLabel(invoice.payment_status)}
@@ -500,7 +503,7 @@
                 </div>
 
                 <div class="ff-invoice-detail-item">
-                    <span>Статус</span>
+                    <span>${window.finflowI18n?.translateSmart("Status") || "Status"}</span>
                     <strong>
                         <span class="ff-invoice-badge ${statusClass(invoice.status)}">
                             ${statusLabel(invoice.status)}
@@ -509,7 +512,7 @@
                 </div>
 
                 <div class="ff-invoice-detail-item">
-                    <span>Срок выполнения</span>
+                    <span>${window.finflowI18n?.translateSmart("Contract completion") || "Contract completion"}</span>
                     <strong>${deadlineMarkup(invoice)}</strong>
                 </div>
 
@@ -519,7 +522,7 @@
                 invoice.contract_details
                     ? `
                         <div class="ff-invoice-detail-section">
-                            <span>Детали контракта</span>
+                            <span>${window.finflowI18n?.translateSmart("Contract details") || "Contract details"}</span>
                             <div>${escapeHtml(invoice.contract_details)}</div>
                         </div>
                     `
@@ -532,7 +535,7 @@
                         <div class="ff-invoice-detail-cancelled">
                             <div class="ff-invoice-detail-cancelled-title">
                                 <i class="bi bi-exclamation-circle"></i>
-                                Счёт отменён
+                                ${window.finflowI18n?.translateSmart("Invoice cancelled") || "Invoice cancelled"}
                             </div>
                             ${
                                 invoice.cancellation_reason
@@ -555,7 +558,7 @@
                                 data-invoice-id="${invoice.id}"
                             >
                                 <i class="bi bi-credit-card"></i>
-                                Обновить оплату
+                                ${window.finflowI18n?.translateSmart("Update payment") || "Update payment"}
                             </button>
 
                             <button
@@ -565,7 +568,7 @@
                                 data-invoice-id="${invoice.id}"
                             >
                                 <i class="bi bi-pencil"></i>
-                                Редактировать
+                                ${window.finflowI18n?.translateSmart("Edit") || "Edit"}
                             </button>
 
                             <button
@@ -575,7 +578,7 @@
                                 data-invoice-id="${invoice.id}"
                             >
                                 <i class="bi bi-x-circle"></i>
-                                Отменить счёт
+                                ${window.finflowI18n?.translateSmart("Cancel invoice") || "Cancel invoice"}
                             </button>
                         `
                         : ""
@@ -680,27 +683,49 @@
 
             if (editingInvoiceId) {
                 if (eyebrow) eyebrow.textContent = "EDIT INVOICE";
-                if (title) title.textContent = "Редактирование счёта";
+                if (title) {
+                    title.textContent =
+                        window.finflowI18n?.translateSmart("Edit invoice")
+                        || "Edit invoice";
+                }
                 if (description) {
                     description.textContent =
-                        "Изменение данных существующего счёта.";
+                        window.finflowI18n?.translateSmart("Change existing invoice data.")
+                        || "Change existing invoice data.";
                 }
                 if (submitButton) {
                     submitButton.innerHTML =
-                        '<i class="bi bi-check2"></i> Сохранить изменения';
+                        '<i class="bi bi-check2"></i> ' +
+                        (window.finflowI18n?.translateSmart("Save changes")
+                        || "Save changes");
                 }
             } else {
                 if (eyebrow) eyebrow.textContent = "NEW INVOICE";
-                if (title) title.textContent = "Новый счёт";
+                if (title) {
+                    title.textContent =
+                        window.finflowI18n?.translateSmart("New invoice")
+                        || "New invoice";
+                }
                 if (description) {
                     description.textContent =
-                        "Создание счёта непосредственно в реестре.";
+                        window.finflowI18n?.translateSmart(
+                            "Create an invoice directly in the registry."
+                        ) || "Create an invoice directly in the registry.";
                 }
                 if (submitButton) {
                     submitButton.innerHTML =
-                        '<i class="bi bi-check2"></i> Создать счёт';
+                        '<i class="bi bi-check2"></i> ' +
+                        (window.finflowI18n?.translateSmart("Create invoice")
+                        || "Create invoice");
                 }
             }
+        }
+
+        function defaultPaymentTerms() {
+            return (
+                window.finflowI18n?.translateSmart("15 days")
+                || "15 days"
+            );
         }
 
         function parseContractDetails(raw) {
@@ -810,7 +835,7 @@
                     type="button"
                     class="ff-invoice-item-remove"
                     data-remove-item
-                    title="Удалить позицию"
+                    title="${window.finflowI18n?.translateSmart("Delete item") || "Delete item"}"
                 >
                     <i class="bi bi-trash3"></i>
                 </button>
@@ -995,7 +1020,8 @@
 
                 form.elements.software.value = "";
                 form.elements.currency.value = "EUR";
-                form.elements.payment_terms.value = "15 days";
+                form.elements.payment_terms.value =
+                    defaultPaymentTerms();
 
                 const invoiceDate =
                     form.elements.invoice_date;
@@ -1110,7 +1136,9 @@
             ) {
                 if (els.createError) {
                     els.createError.textContent =
-                        "Заполните компанию, номер счёта, дату и сумму.";
+                        window.finflowI18n?.translateSmart(
+                            "Fill in company, invoice number, date and amount."
+                        ) || "Fill in company, invoice number, date and amount.";
                     els.createError.hidden = false;
                 }
                 return;
@@ -1123,7 +1151,9 @@
             if (!Number.isFinite(amount) || amount <= 0) {
                 if (els.createError) {
                     els.createError.textContent =
-                        "Сумма счёта должна быть больше нуля.";
+                        window.finflowI18n?.translateSmart(
+                            "Invoice amount must be greater than zero."
+                        ) || "Invoice amount must be greater than zero.";
                     els.createError.hidden = false;
                 }
                 return;
@@ -1191,7 +1221,8 @@
                     throw new Error(
                         data.message ||
                         data.error ||
-                        "Не удалось сохранить счёт."
+                        (window.finflowI18n?.translateSmart("Failed to save invoice.")
+                            || "Failed to save invoice.")
                     );
                 }
 
@@ -1200,7 +1231,8 @@
                 if (els.createError) {
                     els.createError.textContent =
                         error.message ||
-                        "Не удалось сохранить счёт.";
+                        (window.finflowI18n?.translateSmart("Failed to save invoice.")
+                            || "Failed to save invoice.");
 
                     els.createError.hidden = false;
                 }
@@ -1239,7 +1271,22 @@
                 });
             }
 
-            document.addEventListener("input", (event) => {
+            window.addEventListener("finflow-language-changed", () => {
+            const field = document.querySelector('input[name="payment_terms"]');
+
+            if (!field) {
+                return;
+            }
+
+            const ukDefault = "15 днів";
+            const enDefault = "15 days";
+
+            if (field.value === ukDefault || field.value === enDefault) {
+                field.value = defaultPaymentTerms();
+            }
+        });
+
+        document.addEventListener("input", (event) => {
                 const row = event.target.closest(
                     "#invoiceItems [data-item-row]"
                 );
@@ -1320,11 +1367,16 @@
             ).toUpperCase();
 
             const value = prompt(
-                `Оплачено по счёту #${invoice.invoice_number}\n` +
-                `Всего: ${money(amount, currency)}\n` +
-                `Оплачено сейчас: ${money(currentPaid, currency)}\n` +
-                `Остаток: ${money(currentDue, currency)}\n\n` +
-                `Введите общую сумму оплаты:`,
+                `${window.finflowI18n?.translateSmart("Paid on invoice")
+                    || "Paid on invoice"} #${invoice.invoice_number}\n` +
+                `${window.finflowI18n?.translateSmart("Total")
+                    || "Total"}: ${money(amount, currency)}\n` +
+                `${window.finflowI18n?.translateSmart("Paid now")
+                    || "Paid now"}: ${money(currentPaid, currency)}\n` +
+                `${window.finflowI18n?.translateSmart("Remaining")
+                    || "Remaining"}: ${money(currentDue, currency)}\n\n` +
+                `${window.finflowI18n?.translateSmart("Enter total payment amount:")
+                    || "Enter total payment amount:"}`,
                 currentPaid.toFixed(2)
             );
 
@@ -1336,14 +1388,18 @@
 
             if (!Number.isFinite(paid) || paid < 0) {
                 alert(
-                    "Введите корректную неотрицательную сумму."
+                    window.finflowI18n?.translateSmart(
+                        "Enter a valid non-negative amount."
+                    ) || "Enter a valid non-negative amount."
                 );
                 return;
             }
 
             if (paid > amount) {
                 alert(
-                    `Сумма оплаты не может превышать сумму счёта (${money(
+                    `${window.finflowI18n?.translateSmart(
+                        "Payment amount cannot exceed invoice amount"
+                    ) || "Payment amount cannot exceed invoice amount"} (${money(
                         amount,
                         currency
                     )}).`
@@ -1386,7 +1442,8 @@
                 if (!response.ok || data.status !== "ok") {
                     throw new Error(
                         data.message ||
-                        "Не удалось обновить оплату."
+                        (window.finflowI18n?.translateSmart("Failed to update payment.")
+                            || "Failed to update payment.")
                     );
                 }
 
@@ -1394,7 +1451,8 @@
             } catch (error) {
                 alert(
                     error.message ||
-                    "Не удалось обновить оплату."
+                    (window.finflowI18n?.translateSmart("Failed to update payment.")
+                        || "Failed to update payment.")
                 );
             }
         }
@@ -1403,7 +1461,8 @@
             if (!invoice || invoice.status === "CANCELLED") return;
 
             const reason = prompt(
-                "Причина отмены счёта:"
+                window.finflowI18n?.translateSmart("Invoice cancellation reason:")
+                || "Invoice cancellation reason:"
             );
 
             if (reason === null) return;
@@ -1411,14 +1470,21 @@
             const cleanReason = reason.trim();
 
             if (!cleanReason) {
-                alert("Причина отмены обязательна.");
+                alert(
+                    window.finflowI18n?.translateSmart(
+                        "Cancellation reason is required."
+                    ) || "Cancellation reason is required."
+                );
                 return;
             }
 
             if (
                 !confirm(
-                    "Отменить этот счёт?\n\n" +
-                    "Он останется в реестре со статусом CANCELLED."
+                    (window.finflowI18n?.translateSmart("Cancel this invoice?")
+                        || "Cancel this invoice?") + "\n\n" +
+                    (window.finflowI18n?.translateSmart(
+                        "It will remain in the registry with status CANCELLED."
+                    ) || "It will remain in the registry with status CANCELLED.")
                 )
             ) {
                 return;
@@ -1459,7 +1525,8 @@
                 if (!response.ok || data.status !== "ok") {
                     throw new Error(
                         data.message ||
-                        "Не удалось отменить счёт."
+                        (window.finflowI18n?.translateSmart("Failed to cancel invoice.")
+                            || "Failed to cancel invoice.")
                     );
                 }
 
@@ -1467,7 +1534,8 @@
             } catch (error) {
                 alert(
                     error.message ||
-                    "Не удалось отменить счёт."
+                    (window.finflowI18n?.translateSmart("Failed to cancel invoice.")
+                        || "Failed to cancel invoice.")
                 );
             }
         }

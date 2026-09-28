@@ -25,7 +25,7 @@ from reportlab.lib.units import mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (
-    Image,
+    Image as RLImage,
     Paragraph,
     Spacer,
     Table,
@@ -279,7 +279,7 @@ def csrf_protect():
 
 
 # Global HTTP error handlers.
-# Browser requests use the FinFlow Glass error page.
+# Browser requests use the ElixOR Connect Glass error page.
 # API requests keep JSON responses so frontend integrations are not broken.
 
 @app.errorhandler(404)
@@ -326,7 +326,7 @@ def handle_500(error):
         "error.html",
         error_code=500,
         error_title="Something went wrong",
-        error_message="FinFlow encountered an unexpected server error. Please try again or return to the dashboard.",
+        error_message="ElixOR Connect encountered an unexpected server error. Please try again or return to the dashboard.",
     ), 500
 
 
@@ -1045,16 +1045,6 @@ def build_company_cards(companies):
         cards.append({
             "id": company.id,
             "name": company.name,
-            "stamp_filename": company.stamp_filename or "",
-            "stamp_url": (
-                url_for(
-                    "static",
-                    filename=f"uploads/company-stamps/{company.stamp_filename}",
-                )
-                if company.stamp_filename
-                else ""
-            ),
-
             "products": products,
 
         })
@@ -1900,107 +1890,6 @@ def create_company():
         }), 400
 
 
-@app.route("/companies/<int:company_id>/stamp", methods=["POST"])
-@role_required("admin", "manager")
-def upload_company_stamp(company_id):
-    company = Company.query.get_or_404(company_id)
-
-    stamp = request.files.get("stamp")
-
-    if not stamp or not stamp.filename:
-        return jsonify({
-            "status": "error",
-            "message": "Файл печати не выбран.",
-        }), 400
-
-    original_name = stamp.filename.strip()
-    extension = (
-        original_name.rsplit(".", 1)[-1].lower()
-        if "." in original_name
-        else ""
-    )
-
-    if extension not in ALLOWED_STAMP_EXTENSIONS:
-        return jsonify({
-            "status": "error",
-            "message": "Допустимые форматы печати: PNG, JPG, JPEG, WebP.",
-        }), 400
-
-    stamp.stream.seek(0, os.SEEK_END)
-    file_size = stamp.stream.tell()
-    stamp.stream.seek(0)
-
-    if file_size > MAX_STAMP_FILE_SIZE:
-        return jsonify({
-            "status": "error",
-            "message": "Размер файла печати не должен превышать 5 МБ.",
-        }), 400
-
-    os.makedirs(COMPANY_STAMP_DIR, exist_ok=True)
-
-    old_filename = company.stamp_filename
-    filename = f"company-{company.id}-{secrets.token_hex(12)}.png"
-    destination = os.path.join(COMPANY_STAMP_DIR, filename)
-
-    try:
-        processed_stamp = process_company_stamp(stamp)
-
-        processed_stamp.save(
-            destination,
-            format="PNG",
-            optimize=True,
-        )
-
-        company.stamp_filename = filename
-
-        write_audit_log(
-            action="COMPANY_STAMP_UPDATED",
-            entity_type="company",
-            entity_id=company.id,
-            company_id=company.id,
-            description=f"Company stamp updated for {company.name}",
-            details={
-                "old_filename": old_filename or "",
-                "new_filename": filename,
-                "original_filename": original_name,
-                "original_extension": extension,
-                "processed_format": "PNG",
-            },
-        )
-
-        db.session.commit()
-
-    except Exception:
-        db.session.rollback()
-
-        if os.path.exists(destination):
-            os.remove(destination)
-
-        raise
-
-    if old_filename:
-        old_path = os.path.join(COMPANY_STAMP_DIR, old_filename)
-
-        if old_path != destination and os.path.isfile(old_path):
-            try:
-                os.remove(old_path)
-            except OSError:
-                pass
-
-    return jsonify({
-        "status": "ok",
-        "company": {
-            "id": company.id,
-            "name": company.name,
-            "stamp_filename": company.stamp_filename,
-            "stamp_url": url_for(
-                "static",
-                filename=f"uploads/company-stamps/{company.stamp_filename}",
-            ),
-        },
-    })
-
-
 @app.route("/companies/<int:company_id>/update", methods=["POST"])
 @role_required("admin", "manager")
 def update_company(company_id):
@@ -2718,7 +2607,7 @@ def _pdf_contract_data(raw):
 
 
 def build_invoice_pdf(invoice):
-    """Build a standalone A4 FinFlow invoice PDF from the current DB invoice."""
+    """Build a standalone A4 ElixOR Connect invoice PDF from the current DB invoice."""
     buffer = BytesIO()
 
     font_regular = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
@@ -2736,8 +2625,8 @@ def build_invoice_pdf(invoice):
         leftMargin=16 * mm,
         topMargin=15 * mm,
         bottomMargin=15 * mm,
-        title=f"FinFlow Invoice {invoice.invoice_number or invoice.id}",
-        author="FinFlow",
+        title=f"ElixOR Connect Invoice {invoice.invoice_number or invoice.id}",
+        author="ElixOR Connect",
         subject="Invoice",
     )
 
@@ -3115,7 +3004,7 @@ def build_invoice_pdf(invoice):
                         max_sig_h / sig_h,
                     )
 
-                    signature_flowable = Image(
+                    signature_flowable = RLImage(
                         signature_path,
                         width=sig_w * sig_scale,
                         height=sig_h * sig_scale,
@@ -3141,7 +3030,7 @@ def build_invoice_pdf(invoice):
                         max_stamp_h / stamp_h,
                     )
 
-                    stamp_flowable = Image(
+                    stamp_flowable = RLImage(
                         stamp_path,
                         width=stamp_w * stamp_scale,
                         height=stamp_h * stamp_scale,
@@ -3232,7 +3121,7 @@ def generator_pdf(invoice_id):
         pdf,
         mimetype="application/pdf",
         as_attachment=True,
-        download_name=f"FinFlow_{safe_name}.pdf",
+        download_name=f"ElixOR_Connect_{safe_name}.pdf",
     )
 
 

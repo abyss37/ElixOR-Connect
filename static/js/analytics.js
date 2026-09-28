@@ -70,7 +70,7 @@
         return (
             invoice.company?.name ||
             invoice.company_name ||
-            'Неизвестно'
+            'Unknown'
         );
     }
 
@@ -252,7 +252,7 @@
         if (!rows.length) {
             target.innerHTML = emptyState(
                 'bi-bar-chart',
-                'Нет данных о расходах'
+                'No expense data'
             );
             return;
         }
@@ -328,7 +328,7 @@
         if (!rows.length) {
             target.innerHTML = emptyState(
                 'bi-pie-chart',
-                'Нет данных о продуктах'
+                'No product data'
             );
             return;
         }
@@ -431,7 +431,7 @@
         if (!rows.length) {
             target.innerHTML = emptyState(
                 'bi-graph-up',
-                'Нет данных по месяцам'
+                'No monthly data'
             );
             return;
         }

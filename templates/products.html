@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}?v=20260923-4">
 {% endblock %}
 
-{% block title %}Продукты — FinFlow{% endblock %}
+{% block title %}Products — ElixOR Connect{% endblock %}
 
 {% block page_icon %}
 <span class="ff-page-icon">
@@ -12,10 +12,10 @@
 </span>
 {% endblock %}
 
-{% block page_title %}Продукты{% endblock %}
+{% block page_title %}<span data-i18n="Products">Products</span>{% endblock %}
 
 {% block page_subtitle %}
-Управление продуктами и продуктовыми направлениями FinFlow.
+<span data-i18n="Manage ElixOR Connect products and product lines.">Manage ElixOR Connect products and product lines.</span>
 {% endblock %}
 
 {% block content %}
@@ -35,27 +35,27 @@
                 <div
                     class="ff-product-filters"
                     role="group"
-                    aria-label="Фильтр продуктов">
+                    aria-label="Product filter" data-i18n-aria-label="Product filter">
 
                     <button
                         type="button"
                         class="ff-product-filter-button is-active"
                         data-product-filter="all">
-                        Все
+                        <span data-i18n="All">All</span>
                     </button>
 
                     <button
                         type="button"
                         class="ff-product-filter-button"
                         data-product-filter="active">
-                        Активные
+                        <span data-i18n="Active">Active</span>
                     </button>
 
                     <button
                         type="button"
                         class="ff-product-filter-button"
                         data-product-filter="archived">
-                        Архив
+                        <span data-i18n="Archived">Archived</span>
                     </button>
 
                 </div>
@@ -65,7 +65,7 @@
                     type="button"
                     class="ff-btn ff-btn-primary ff-products-create-button">
                     <i class="bi bi-plus-lg"></i>
-                    <span>Новый продукт</span>
+                    <span data-i18n="New product">New product</span>
                 </button>
 
             </div>
@@ -82,15 +82,15 @@
                 <input
                     id="productSearch"
                     type="search"
-                    placeholder="Поиск продуктов..."
+                    placeholder="Search products..." data-i18n-placeholder="Search products..."
                     autocomplete="off"
-                    aria-label="Поиск продуктов">
+                    aria-label="Search products" data-i18n-aria-label="Search products">
 
                 <button
                     type="button"
                     id="product-search-clear"
                     class="ff-search-clear hidden"
-                    aria-label="Очистить поиск">
+                    aria-label="Clear search" data-i18n-aria-label="Clear search">
                     <i class="bi bi-x-lg"></i>
                 </button>
 
@@ -102,24 +102,24 @@
                 <div
                     class="ff-view-switcher"
                     role="group"
-                    aria-label="Вид продуктов">
+                    aria-label="Product view" data-i18n-aria-label="Product view">
 
                     <button
                         type="button"
                         class="ff-view-button is-active"
                         data-products-view="grid"
-                        title="Плитка">
+                        title="Grid" data-i18n-title="Grid">
                         <i class="bi bi-grid-3x3-gap"></i>
-                        <span>Плитка</span>
+                        <span data-i18n="Grid">Grid</span>
                     </button>
 
                     <button
                         type="button"
                         class="ff-view-button"
                         data-products-view="list"
-                        title="Список">
+                        title="List" data-i18n-title="List">
                         <i class="bi bi-list-ul"></i>
-                        <span>Список</span>
+                        <span data-i18n="List">List</span>
                     </button>
 
                 </div>
@@ -127,7 +127,7 @@
 
                 <div class="ff-products-count">
                     <span id="products-visible-count">{{ products|length }}</span>
-                    <span>из</span>
+                    <span data-i18n="of">of</span>
                     <span>{{ products|length }}</span>
                 </div>
 
@@ -146,7 +146,7 @@
             </span>
             <div>
                 <strong id="productsTotalCount">{{ products|length }}</strong>
-                <span>Всего продуктов</span>
+                <span data-i18n="Total products">Total products</span>
             </div>
         </div>
 
@@ -158,7 +158,7 @@
                 <strong id="productsActiveCount">
                     {{ products|selectattr('status', 'equalto', 'ACTIVE')|list|length }}
                 </strong>
-                <span>Активных</span>
+                <span data-i18n="Active products">Active products</span>
             </div>
         </div>
 
@@ -170,7 +170,7 @@
                 <strong id="productsArchivedCount">
                     {{ products|selectattr('status', 'equalto', 'ARCHIVED')|list|length }}
                 </strong>
-                <span>В архиве</span>
+                <span data-i18n="Archived products">Archived products</span>
             </div>
         </div>
 
@@ -220,10 +220,10 @@
                 >
                     {% if product.status == 'ACTIVE' %}
                         <i class="bi bi-check-circle-fill"></i>
-                        Активен
+                        <span data-i18n="Active">Active</span>
                     {% else %}
                         <i class="bi bi-archive-fill"></i>
-                        Архив
+                        <span data-i18n="Archived">Archived</span>
                     {% endif %}
                 </span>
 
@@ -234,7 +234,7 @@
                 {% if product.description %}
                     {{ product.description }}
                 {% else %}
-                    <span>Описание не задано.</span>
+                    <span data-i18n="Description not specified.">Description not specified.</span>
                 {% endif %}
             </div>
 
@@ -245,7 +245,7 @@
                     <i class="bi bi-wallet2"></i>
                     <div>
                         <strong>{{ usage.budgets }}</strong>
-                        <span>Бюджетов</span>
+                        <span data-i18n="Budgets">Budgets</span>
                     </div>
                 </div>
 
@@ -255,7 +255,7 @@
                     <i class="bi bi-receipt"></i>
                     <div>
                         <strong>{{ usage.invoices }}</strong>
-                        <span>Счетов</span>
+                        <span data-i18n="Invoices">Invoices</span>
                     </div>
                 </div>
 
@@ -265,7 +265,7 @@
             <div class="ff-product-card-footer">
 
                 <div class="ff-product-created">
-                    <span>Создан</span>
+                    <span data-i18n="Created">Created</span>
                     <strong>
                         {{ product.created_at.strftime('%d.%m.%Y') if product.created_at else '—' }}
                     </strong>
@@ -279,8 +279,8 @@
                         type="button"
                         class="ff-product-action"
                         data-product-action="edit"
-                        title="Редактировать"
-                        aria-label="Редактировать {{ product.name }}"
+                        title="Edit" data-i18n-title="Edit"
+                        aria-label="Edit {{ product.name }}"
                     >
                         <i class="bi bi-pencil"></i>
                     </button>
@@ -290,8 +290,8 @@
                         type="button"
                         class="ff-product-action"
                         data-product-action="archive"
-                        title="Архивировать"
-                        aria-label="Архивировать {{ product.name }}"
+                        title="Archive" data-i18n-title="Archive"
+                        aria-label="Archive {{ product.name }}"
                     >
                         <i class="bi bi-archive"></i>
                     </button>
@@ -301,8 +301,8 @@
                         type="button"
                         class="ff-product-action ff-product-action-danger"
                         data-product-action="delete"
-                        title="Удалить"
-                        aria-label="Удалить {{ product.name }}"
+                        title="Delete" data-i18n-title="Delete"
+                        aria-label="Delete {{ product.name }}"
                     >
                         <i class="bi bi-trash3"></i>
                     </button>
@@ -321,9 +321,9 @@
             <div class="ff-products-empty-icon">
                 <i class="bi bi-box-seam"></i>
             </div>
-            <h3>Продуктов пока нет</h3>
+            <h3 data-i18n="No products yet">No products yet</h3>
             <p>
-                Создайте первый продукт, чтобы начать формировать каталог FinFlow.
+                <span data-i18n="Create your first product to get started.">Create your first product to get started.</span>
             </p>
 
             {% if current_user and current_user.role in ['admin', 'manager'] %}
@@ -333,7 +333,7 @@
                 id="createProductEmptyButton"
             >
                 <i class="bi bi-plus-lg"></i>
-                <span>Создать продукт</span>
+                <span data-i18n="Create product">Create product</span>
             </button>
             {% endif %}
         </div>
@@ -369,9 +369,9 @@
         <div class="ff-modal-header">
             <div>
                 <div class="ff-section-kicker">PRODUCT</div>
-                <h2 id="productModalTitle">Новый продукт</h2>
+                <h2 id="productModalTitle" data-i18n="New product">New product</h2>
                 <p id="productModalSubtitle">
-                    Добавьте продукт в каталог FinFlow.
+                    <span data-i18n="Add a product to the ElixOR Connect catalog.">Add a product to the ElixOR Connect catalog.</span>
                 </p>
             </div>
 
@@ -379,7 +379,7 @@
                 type="button"
                 class="ff-modal-close"
                 data-product-modal-close
-                aria-label="Закрыть"
+                aria-label="Close" data-i18n-aria-label="Close"
             >
                 <i class="bi bi-x-lg"></i>
             </button>
@@ -398,7 +398,7 @@
 
                 <div class="ff-form-field">
                     <label for="productCode">
-                        Код продукта
+                        <span data-i18n="Product code">Product code</span>
                     </label>
 
                     <input
@@ -407,19 +407,19 @@
                         type="text"
                         maxlength="50"
                         autocomplete="off"
-                        placeholder="Например, CRM"
+                        placeholder="For example, CRM" data-i18n-placeholder="For example, CRM"
                         required
                     >
 
                     <small>
-                        Стабильный технический идентификатор продукта.
+                        <span data-i18n="Stable technical identifier for the product.">Stable technical identifier for the product.</span>
                     </small>
                 </div>
 
 
                 <div class="ff-form-field">
                     <label for="productName">
-                        Название
+                        <span data-i18n="Name">Name</span>
                     </label>
 
                     <input
@@ -428,7 +428,7 @@
                         type="text"
                         maxlength="255"
                         autocomplete="off"
-                        placeholder="Например, FinFlow CRM"
+                        placeholder="For example, ElixOR Connect CRM" data-i18n-placeholder="For example, ElixOR Connect CRM"
                         required
                     >
                 </div>
@@ -436,7 +436,7 @@
 
                 <div class="ff-form-field ff-product-form-full">
                     <label for="productDescription">
-                        Описание
+                        <span data-i18n="Description">Description</span>
                     </label>
 
                     <textarea
@@ -444,7 +444,7 @@
                         name="description"
                         rows="5"
                         maxlength="10000"
-                        placeholder="Краткое описание продукта..."
+                        placeholder="Short product description..." data-i18n-placeholder="Short product description..."
                     ></textarea>
                 </div>
 
@@ -466,7 +466,7 @@
                     class="ff-btn ff-btn-secondary"
                     data-product-modal-close
                 >
-                    Отмена
+                    <span data-i18n="Cancel">Cancel</span>
                 </button>
 
                 <button
@@ -475,7 +475,7 @@
                     id="productSaveButton"
                 >
                     <i class="bi bi-check-lg"></i>
-                    <span>Сохранить</span>
+                    <span data-i18n="Save">Save</span>
                 </button>
 
             </div>

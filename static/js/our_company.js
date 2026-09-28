@@ -296,7 +296,7 @@
                 const uploadBase = grid?.dataset.assetUploadBase;
 
                 if (!uploadBase) {
-                    alert("Не удалось определить адрес загрузки.");
+                    alert(window.finflowI18n?.translateSmart("Upload URL could not be determined.") || "Upload URL could not be determined.");
                     input.value = "";
                     return;
                 }
@@ -304,7 +304,7 @@
                 const csrfInput = qs('input[name="csrf_token"]');
 
                 if (!csrfInput?.value) {
-                    alert("Не удалось получить CSRF-токен. Перезагрузите страницу.");
+                    alert(window.finflowI18n?.translateSmart("CSRF token could not be obtained. Reload the page.") || "CSRF token could not be obtained. Reload the page.");
                     input.value = "";
                     return;
                 }
@@ -324,7 +324,7 @@
                     button.disabled = true;
                     button.innerHTML = `
                         <i class="bi bi-arrow-repeat"></i>
-                        Загрузка…
+                        ${window.finflowI18n?.translateSmart("Uploading...") || "Uploading..."}
                     `;
                 }
 
@@ -343,7 +343,7 @@
                     if (!response.ok || !data || data.status !== "ok") {
                         throw new Error(
                             data?.message ||
-                            "Не удалось загрузить файл."
+                            "Failed to upload file."
                         );
                     }
 
@@ -357,7 +357,7 @@
 
                     alert(
                         error.message ||
-                        "Не удалось загрузить файл."
+                        "Failed to upload file."
                     );
 
                     if (button) {

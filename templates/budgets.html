@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Бюджеты · FinFlow{% endblock %}
+{% block title %}Budgets · ElixOR Connect{% endblock %}
 
 {% block head %}
 <link rel="stylesheet"
@@ -14,10 +14,10 @@
 </span>
 {% endblock %}
 
-{% block page_title %}Бюджеты{% endblock %}
+{% block page_title %}<span data-i18n="Budgets">Budgets</span>{% endblock %}
 
 {% block page_subtitle %}
-Управление бюджетами компаний, расходами и состоянием контрактов.
+<span data-i18n="Manage company budgets, expenses and contract status.">Manage company budgets, expenses and contract status.</span>
 {% endblock %}
 
 {% block content %}
@@ -31,7 +31,7 @@
             onclick="openCreateBudgetModal()"
         >
             <i class="bi bi-plus-lg"></i>
-            <span>Новый бюджет</span>
+            <span data-i18n="New budget">New budget</span>
         </button>
         {% endif %}
 
@@ -41,7 +41,7 @@
             onclick="refreshBudgets()"
         >
             <i class="bi bi-arrow-clockwise"></i>
-            <span>Обновить</span>
+            <span data-i18n="Refresh">Refresh</span>
         </button>
     </div>
 
@@ -51,7 +51,7 @@
                 <i class="bi bi-wallet2"></i>
             </div>
             <div>
-                <div class="ff-budget-stat-label">Бюджетов</div>
+                <div class="ff-budget-stat-label" data-i18n="Budgets">Budgets</div>
                 <div class="ff-budget-stat-value" id="statBudgetCount">0</div>
             </div>
         </div>
@@ -61,7 +61,7 @@
                 <i class="bi bi-buildings"></i>
             </div>
             <div>
-                <div class="ff-budget-stat-label">Компаний</div>
+                <div class="ff-budget-stat-label" data-i18n="Companies">Companies</div>
                 <div class="ff-budget-stat-value" id="statCompanyCount">0</div>
             </div>
         </div>
@@ -71,7 +71,7 @@
                 <i class="bi bi-speedometer2"></i>
             </div>
             <div>
-                <div class="ff-budget-stat-label">Под контролем</div>
+                <div class="ff-budget-stat-label" data-i18n="Under control">Under control</div>
                 <div class="ff-budget-stat-value" id="statHealthyCount">0</div>
             </div>
         </div>
@@ -81,7 +81,7 @@
                 <i class="bi bi-exclamation-triangle"></i>
             </div>
             <div>
-                <div class="ff-budget-stat-label">Требуют внимания</div>
+                <div class="ff-budget-stat-label" data-i18n="Need attention">Need attention</div>
                 <div class="ff-budget-stat-value" id="statAttentionCount">0</div>
             </div>
         </div>
@@ -94,21 +94,21 @@
             <input
                 id="budgetSearch"
                 type="search"
-                placeholder="Поиск компании..."
+                placeholder="Search companies..." data-i18n-placeholder="Search companies..."
                 autocomplete="off"
             >
         </div>
 
         <div class="ff-budget-filters">
             <select id="budgetCurrencyFilter" class="ff-budget-select">
-                <option value="ALL">Все валюты</option>
+                <option value="ALL" data-i18n="All currencies">All currencies</option>
                 <option value="EUR">EUR</option>
                 <option value="USD">USD</option>
                 <option value="UAH">UAH</option>
             </select>
 
             <select id="budgetSoftwareFilter" class="ff-budget-select">
-                <option value="ALL">Все продукты</option>
+                <option value="ALL" data-i18n="All products">All products</option>
                 {% for product in products %}
                     <option value="{{ product.code }}">{{ product.name }}</option>
                 {% endfor %}
@@ -119,7 +119,7 @@
                     type="button"
                     class="is-active"
                     data-budget-view="grid"
-                    title="Плитка"
+                    title="Grid" data-i18n-title="Grid"
                 >
                     <i class="bi bi-grid-3x3-gap"></i>
                 </button>
@@ -127,7 +127,7 @@
                 <button
                     type="button"
                     data-budget-view="list"
-                    title="Список"
+                    title="List" data-i18n-title="List"
                 >
                     <i class="bi bi-list"></i>
                 </button>
@@ -145,10 +145,10 @@
             <i class="bi bi-wallet2"></i>
         </div>
 
-        <h3>Бюджеты не найдены</h3>
+        <h3 data-i18n="No budgets found">No budgets found</h3>
 
         <p>
-            Попробуйте изменить фильтры или создать бюджет для компании.
+            <span data-i18n="Try changing the filters or create a budget for the company.">Try changing the filters or create a budget for the company.</span>
         </p>
     </section>
 
@@ -166,7 +166,7 @@
                     BUDGET CONTROL
                 </div>
 
-                <h2 id="budgetModalTitle">Редактировать бюджет</h2>
+                <h2 id="budgetModalTitle" data-i18n="Edit budget">Edit budget</h2>
                 <p id="budgetModalSubtitle"></p>
             </div>
 
@@ -184,9 +184,9 @@
 
             <div class="ff-budget-form-grid">
                 <label>
-                    <span>Компания</span>
+                    <span data-i18n="Company">Company</span>
                     <select id="budgetEditCompanyId" required>
-                        <option value="">Выберите компанию</option>
+                        <option value="" data-i18n="Select company">Select company</option>
                         {% for company in companies %}
                             <option value="{{ company.id }}">{{ company.name }}</option>
                         {% endfor %}
@@ -194,9 +194,9 @@
                 </label>
 
                 <label>
-                    <span>Продукт</span>
+                    <span data-i18n="Product">Product</span>
                     <select id="budgetEditSoftware" required>
-                        <option value="">Выберите продукт</option>
+                        <option value="" data-i18n="Select product">Select product</option>
                         {% for product in products %}
                             <option value="{{ product.code }}">{{ product.name }}</option>
                         {% endfor %}
@@ -204,7 +204,7 @@
                 </label>
 
                 <label>
-                    <span>Валюта</span>
+                    <span data-i18n="Currency">Currency</span>
                     <select id="budgetEditCurrency" required>
                         {% for currency in currency_symbols %}
                             <option value="{{ currency }}">{{ currency }}</option>
@@ -213,7 +213,7 @@
                 </label>
 
                 <label>
-                    <span>Бюджет</span>
+                    <span data-i18n="Budget">Budget</span>
                     <div class="ff-budget-input-wrap">
                         <input
                             id="budgetEditAmount"
@@ -227,7 +227,7 @@
                 </label>
 
                 <label>
-                    <span>Дата завершения</span>
+                    <span data-i18n="Completion date">Completion date</span>
                     <input
                         id="budgetEditCompletionDate"
                         type="date"
@@ -241,7 +241,7 @@
                     class="ff-glass-button"
                     onclick="closeBudgetModal()"
                 >
-                    Отмена
+                    <span data-i18n="Cancel">Cancel</span>
                 </button>
 
                 <button
@@ -249,7 +249,7 @@
                     class="ff-budget-primary-button"
                 >
                     <i class="bi bi-check2"></i>
-                    Сохранить
+                    <span data-i18n="Save">Save</span>
                 </button>
             </div>
         </form>

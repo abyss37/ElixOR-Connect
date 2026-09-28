@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{% block title %}FinFlow{% endblock %}</title>
-    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <title>{% block title %}ElixOR Connect{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='elixor-connect-favicon.svg') }}">
 
 
     <meta name="color-scheme" content="dark light">
@@ -14,10 +14,11 @@
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/finflow.css') }}?v=20260924-8">
+          href="{{ url_for('static', filename='css/finflow.css') }}?v=20260928-3">
 
     {% block head %}{% endblock %}
     {% block extra_head %}{% endblock %}
+    {% block extra_css %}{% endblock %}
 
     <script>
         (function () {
@@ -47,15 +48,20 @@
             <!-- BRAND -->
             <div class="ff-brand-row">
 
-                <a href="/" class="ff-brand" aria-label="FinFlow">
+                <a href="/" class="ff-brand" aria-label="ElixOR Connect">
 
                     <span class="ff-brand-mark">
-                        <i class="bi bi-bar-chart-line-fill"></i>
+                        <img
+                            src="{{ url_for('static', filename='elixor-connect-favicon.svg') }}"
+                            alt=""
+                            class="ff-brand-mark-image"
+                            aria-hidden="true"
+                        >
                     </span>
 
                     <span class="ff-brand-copy">
-                        <strong>FinFlow</strong>
-                        <small>Financial Control</small>
+                        <strong>ElixOR <span>Connect</span></strong>
+                        <small data-i18n="Financial control platform">Financial control platform</small>
                     </span>
 
                 </a>
@@ -64,24 +70,22 @@
 
 
             <!-- NAVIGATION -->
-            <nav class="ff-nav" aria-label="Main navigation">
+            <nav class="ff-nav" aria-label="Main navigation" data-i18n-aria-label="Main navigation">
 
                 <div class="ff-nav-section">
 
-                    <div class="ff-nav-label">
-                        WORKSPACE
-                    </div>
+                    <div class="ff-nav-label" data-i18n="Workspace">Workspace</div>
 
                     <a
                         href="/"
                         class="ff-nav-item {% if request.endpoint == 'index' %}is-active{% endif %}"
-                        data-tooltip="Обзор">
+                        data-tooltip="Overview" data-i18n-tooltip="Overview">
 
                         <span class="ff-nav-icon">
                             <i class="bi bi-grid-1x2-fill"></i>
                         </span>
 
-                        <span class="ff-nav-text">Обзор</span>
+                        <span class="ff-nav-text" data-i18n="Overview">Overview</span>
 
                     </a>
 
@@ -89,13 +93,13 @@
                     <a
                         href="/products"
                         class="ff-nav-item {% if request.endpoint == 'products_page' %}is-active{% endif %}"
-                        data-tooltip="Продукты">
+                        data-tooltip="Products" data-i18n-tooltip="Products">
 
                         <span class="ff-nav-icon">
                             <i class="bi bi-box-seam"></i>
                         </span>
 
-                        <span class="ff-nav-text">Продукты</span>
+                        <span class="ff-nav-text" data-i18n="Products">Products</span>
 
                     </a>
 
@@ -103,13 +107,13 @@
                     <a
                         href="/companies"
                         class="ff-nav-item {% if request.endpoint == 'companies' %}is-active{% endif %}"
-                        data-tooltip="Компании">
+                        data-tooltip="Companies" data-i18n-tooltip="Companies">
 
                         <span class="ff-nav-icon">
                             <i class="bi bi-buildings"></i>
                         </span>
 
-                        <span class="ff-nav-text">Компании</span>
+                        <span class="ff-nav-text" data-i18n="Companies">Companies</span>
 
                     </a>
 
@@ -117,13 +121,13 @@
                     <a
                         href="/budgets"
                         class="ff-nav-item {% if request.endpoint == 'budgets' %}is-active{% endif %}"
-                        data-tooltip="Бюджеты">
+                        data-tooltip="Budgets" data-i18n-tooltip="Budgets">
 
                         <span class="ff-nav-icon">
                             <i class="bi bi-wallet2"></i>
                         </span>
 
-                        <span class="ff-nav-text">Бюджеты</span>
+                        <span class="ff-nav-text" data-i18n="Budgets">Budgets</span>
 
                     </a>
 
@@ -131,13 +135,13 @@
                     <a
                         href="/invoices"
                         class="ff-nav-item {% if request.endpoint == 'invoices' %}is-active{% endif %}"
-                        data-tooltip="Счета">
+                        data-tooltip="Invoices" data-i18n-tooltip="Invoices">
 
                         <span class="ff-nav-icon">
                             <i class="bi bi-receipt"></i>
                         </span>
 
-                        <span class="ff-nav-text">Счета</span>
+                        <span class="ff-nav-text" data-i18n="Invoices">Invoices</span>
 
                     </a>
 
@@ -146,21 +150,19 @@
 
                 <div class="ff-nav-section ff-nav-section-spaced">
 
-                    <div class="ff-nav-label">
-                        INSIGHTS
-                    </div>
+                    <div class="ff-nav-label" data-i18n="Insights">Insights</div>
 
 
                     <a
                         href="/analytics"
                         class="ff-nav-item {% if request.endpoint == 'analytics' %}is-active{% endif %}"
-                        data-tooltip="Аналитика">
+                        data-tooltip="Analytics" data-i18n-tooltip="Analytics">
 
                         <span class="ff-nav-icon">
                             <i class="bi bi-graph-up-arrow"></i>
                         </span>
 
-                        <span class="ff-nav-text">Аналитика</span>
+                        <span class="ff-nav-text" data-i18n="Analytics">Analytics</span>
 
                     </a>
 
@@ -168,13 +170,13 @@
                     <a
                         href="/audit-log"
                         class="ff-nav-item {% if request.endpoint == 'audit_log' %}is-active{% endif %}"
-                        data-tooltip="Аудит">
+                        data-tooltip="Audit" data-i18n-tooltip="Audit">
 
                         <span class="ff-nav-icon">
                             <i class="bi bi-shield-check"></i>
                         </span>
 
-                        <span class="ff-nav-text">Аудит</span>
+                        <span class="ff-nav-text" data-i18n="Audit">Audit</span>
 
                     </a>
 
@@ -182,13 +184,13 @@
                     <a
                         href="/notifications"
                         class="ff-nav-item {% if request.endpoint == 'notifications' %}is-active{% endif %}"
-                        data-tooltip="Оповещения">
+                        data-tooltip="Alerts" data-i18n-tooltip="Alerts">
 
                         <span class="ff-nav-icon">
                             <i class="bi bi-bell"></i>
                         </span>
 
-                        <span class="ff-nav-text">Оповещения</span>
+                        <span class="ff-nav-text" data-i18n="Alerts">Alerts</span>
 
                         <span
                             id="ff-notification-badge"
@@ -212,13 +214,13 @@
                     <a
                         href="/users"
                         class="ff-nav-item {% if request.endpoint == 'users' %}is-active{% endif %}"
-                        data-tooltip="Пользователи">
+                        data-tooltip="Users" data-i18n-tooltip="Users">
 
                         <span class="ff-nav-icon">
                             <i class="bi bi-people"></i>
                         </span>
 
-                        <span class="ff-nav-text">Пользователи</span>
+                        <span class="ff-nav-text" data-i18n="Users">Users</span>
 
                     </a>
 
@@ -237,13 +239,13 @@
                     <a
                         href="/our-company"
                         class="ff-nav-item {% if request.endpoint == 'our_company' %}is-active{% endif %}"
-                        data-tooltip="Наша организация">
+                        data-tooltip="Our organization" data-i18n-tooltip="Our organization">
 
                         <span class="ff-nav-icon">
                             <i class="bi bi-building-check"></i>
                         </span>
 
-                        <span class="ff-nav-text">Наша организация</span>
+                        <span class="ff-nav-text" data-i18n="Our organization">Our organization</span>
 
                     </a>
 
@@ -367,7 +369,7 @@
 
                             <i class="bi bi-box-arrow-right"></i>
 
-                            <span data-i18n="Logout">Вийти</span>
+                            <span data-i18n="Logout">Logout</span>
 
                         </button>
 
@@ -429,12 +431,12 @@
                     <div class="ff-page-heading-copy">
 
                         <h1>
-                            {% block page_title %}Обзор{% endblock %}
+                            {% block page_title %}<span data-i18n="Overview">Overview</span>{% endblock %}
                         </h1>
 
                         <p>
                             {% block page_subtitle %}
-                            Финансовый контроль и состояние системы
+                            Financial control and system status
                             {% endblock %}
                         </p>
 
@@ -464,7 +466,7 @@
 </div>
 
 
-<script src="{{ url_for('static', filename='js/finflow-i18n.js') }}?v=20260924-1"></script>
+<script src="{{ url_for('static', filename='js/finflow-i18n.js') }}?v=20260928-3"></script>
 <script src="{{ url_for('static', filename='js/finflow-money.js') }}?v=20260923-1"></script>
 <script src="{{ url_for('static', filename='js/main.js') }}?v=20260924-1"></script>
 

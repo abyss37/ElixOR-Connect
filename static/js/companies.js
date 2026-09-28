@@ -394,7 +394,8 @@
         }
 
         if (!completionDate) {
-            node.textContent = "Дата не указана";
+            node.textContent =
+                window.finflowI18n?.translateSmart("Date not specified");
 
             if (statusNode) {
                 statusNode.textContent = "";
@@ -413,7 +414,7 @@
 
         if (days < 0) {
             statusNode.textContent =
-                `завершён ${Math.abs(days)} дн. назад`;
+                `${Math.abs(days)} ${window.finflowI18n?.translateSmart("days ago")}`;
 
             statusNode.className =
                 "ff-contract-status is-expired";
@@ -422,7 +423,9 @@
         }
 
         if (days === 0) {
-            statusNode.textContent = "сегодня";
+            statusNode.textContent =
+                window.finflowI18n?.translateSmart("today");
+
             statusNode.className =
                 "ff-contract-status is-critical";
             return;
@@ -430,7 +433,7 @@
 
         if (days <= 30) {
             statusNode.textContent =
-                `${days} дн. осталось`;
+                `${days} ${window.finflowI18n?.translateSmart("days remaining")}`;
 
             statusNode.className =
                 "ff-contract-status is-warning";
@@ -439,7 +442,7 @@
         }
 
         statusNode.textContent =
-            `${days} дн. осталось`;
+            `${days} ${window.finflowI18n?.translateSmart("days remaining")}`;
 
         statusNode.className =
             "ff-contract-status is-ok";
@@ -541,9 +544,9 @@
             paymentStatus(invoice);
 
         const labels = {
-            PAID: "Оплачен",
-            PARTIAL: "Частично",
-            UNPAID: "Не оплачен",
+            PAID: window.finflowI18n?.translateSmart("Paid") || "Paid",
+            PARTIAL: window.finflowI18n?.translateSmart("Partially paid") || "Partially paid",
+            UNPAID: window.finflowI18n?.translateSmart("Unpaid") || "Unpaid",
         };
 
         const classes = {
@@ -711,25 +714,25 @@
 
                 <div class="ff-invoice-currency-title">
                     <strong>${escapeHtml(group.currency)}</strong>
-                    <span>Итого</span>
+                    <span>${window.finflowI18n?.translateSmart("Total") || "Total"}</span>
                 </div>
 
                 <div class="ff-invoice-total-row">
-                    <span>Счета</span>
+                    <span>${window.finflowI18n?.translateSmart("Invoices") || "Invoices"}</span>
                     <strong>
                         ${money(group.invoiced, group.currency)}
                     </strong>
                 </div>
 
                 <div class="ff-invoice-total-row">
-                    <span>Оплачено</span>
+                    <span>${window.finflowI18n?.translateSmart("Paid") || "Paid"}</span>
                     <strong>
                         ${money(group.paid, group.currency)}
                     </strong>
                 </div>
 
                 <div class="ff-invoice-total-row">
-                    <span>Остаток</span>
+                    <span>${window.finflowI18n?.translateSmart("Remaining") || "Remaining"}</span>
                     <strong>
                         ${money(group.outstanding, group.currency)}
                     </strong>
@@ -779,8 +782,8 @@
             countNode.textContent =
                 `${companyInvoices.length} ${
                     companyInvoices.length === 1
-                        ? "счёт"
-                        : "счетов"
+                        ? window.finflowI18n?.translateSmart("invoice") || "invoice"
+                        : window.finflowI18n?.translateSmart("invoices") || "invoices"
                 }`;
         }
 
@@ -790,7 +793,7 @@
             container.innerHTML = `
                 <div class="ff-invoices-empty">
                     <i class="bi bi-receipt"></i>
-                    Счетов нет
+                    ${window.finflowI18n?.translateSmart("No invoices") || "No invoices"}
                 </div>
             `;
             return;
@@ -830,13 +833,13 @@
         if (cancelled) {
             statusHtml = `
                 <span class="ff-status-badge ff-status-cancelled">
-                    Отменён
+                    ${window.finflowI18n?.translateSmart("Cancelled") || "Cancelled"}
                 </span>
             `;
         } else if (overdue) {
             statusHtml = `
                 <span class="ff-status-badge ff-status-overdue">
-                    Просрочен · ${overdueDays(invoice)} дн.
+                    ${window.finflowI18n?.translateSmart("Overdue") || "Overdue"} · ${overdueDays(invoice)} ${window.finflowI18n?.translateSmart("days") || "days"}
                 </span>
             `;
         } else {
@@ -855,7 +858,7 @@
                     class="ff-invoice-action"
                     data-invoice-payment="${invoice.id}">
                     <i class="bi bi-credit-card"></i>
-                    Оплата
+                    ${window.finflowI18n?.translateSmart("Payment") || "Payment"}
                 </button>
             `);
 
@@ -865,7 +868,7 @@
                     class="ff-invoice-action is-danger"
                     data-invoice-cancel="${invoice.id}">
                     <i class="bi bi-x-circle"></i>
-                    Отменить
+                    ${window.finflowI18n?.translateSmart("Cancel") || "Cancel"}
                 </button>
             `);
         }
@@ -878,7 +881,7 @@
         ) {
             cancellationHtml = `
                 <div class="ff-invoice-cancellation">
-                    <strong>Причина отмены:</strong>
+                    <strong>${window.finflowI18n?.translateSmart("Cancellation reason") || "Cancellation reason"}:</strong>
                     ${escapeHtml(invoice.cancellation_reason)}
                 </div>
             `;
@@ -927,7 +930,7 @@
                     ${statusHtml}
 
                     <strong>
-                        Оплачено:
+                        ${window.finflowI18n?.translateSmart("Paid") || "Paid"}:
                         ${money(
                             paid,
                             invoice.currency
@@ -935,7 +938,7 @@
                     </strong>
 
                     <small>
-                        Остаток:
+                        ${window.finflowI18n?.translateSmart("Remaining") || "Remaining"}:
                         ${money(
                             outstanding,
                             invoice.currency
@@ -1267,189 +1270,6 @@
        CREATE / EDIT COMPANY
        ========================================================= */
 
-    /* =========================================================
-       COMPANY STAMP UI
-       ========================================================= */
-
-    function resetCompanyStampUI() {
-        const input = $("#company-stamp-input");
-        const preview = $("#company-stamp-preview");
-        const status = $("#company-stamp-status");
-        const button = $("#company-stamp-button");
-
-        if (input) {
-            input.value = "";
-        }
-
-        if (preview) {
-            preview.innerHTML = "";
-            preview.classList.add("hidden");
-        }
-
-        if (status) {
-            status.textContent = "Не загружена";
-            status.classList.remove("is-ready");
-        }
-
-        if (button) {
-            button.disabled = false;
-
-            const label = button.querySelector("span");
-
-            if (label) {
-                label.textContent = "Загрузить печать";
-            }
-        }
-    }
-
-
-    function renderCompanyStamp(company) {
-        const preview = $("#company-stamp-preview");
-        const status = $("#company-stamp-status");
-        const button = $("#company-stamp-button");
-
-        if (!preview || !status || !button) {
-            return;
-        }
-
-        preview.innerHTML = "";
-
-        const stampUrl = String(
-            company?.stamp_url || ""
-        ).trim();
-
-        if (!stampUrl) {
-            preview.classList.add("hidden");
-
-            status.textContent = "Не загружена";
-            status.classList.remove("is-ready");
-
-            const label = button.querySelector("span");
-
-            if (label) {
-                label.textContent = "Загрузить печать";
-            }
-
-            return;
-        }
-
-        const image = document.createElement("img");
-
-        image.src = stampUrl;
-        image.alt = "Печать компании";
-        image.loading = "lazy";
-
-        preview.appendChild(image);
-        preview.classList.remove("hidden");
-
-        status.textContent = "Загружена";
-        status.classList.add("is-ready");
-
-        const label = button.querySelector("span");
-
-        if (label) {
-            label.textContent = "Заменить печать";
-        }
-    }
-
-
-    function previewCompanyStampFile(file) {
-        const preview = $("#company-stamp-preview");
-        const status = $("#company-stamp-status");
-        const button = $("#company-stamp-button");
-
-        if (!preview || !status || !button) {
-            return;
-        }
-
-        if (!file) {
-            return;
-        }
-
-        const allowedTypes = [
-            "image/png",
-            "image/jpeg",
-            "image/webp",
-        ];
-
-        if (!allowedTypes.includes(file.type)) {
-            showFormError(
-                "Допустимые форматы печати: PNG, JPG, JPEG или WebP."
-            );
-
-            const input = $("#company-stamp-input");
-
-            if (input) {
-                input.value = "";
-            }
-
-            return;
-        }
-
-        if (file.size > 5 * 1024 * 1024) {
-            showFormError(
-                "Размер файла печати не должен превышать 5 МБ."
-            );
-
-            const input = $("#company-stamp-input");
-
-            if (input) {
-                input.value = "";
-            }
-
-            return;
-        }
-
-        const reader = new FileReader();
-
-        reader.onload = () => {
-            preview.innerHTML = "";
-
-            const image = document.createElement("img");
-
-            image.src = String(reader.result || "");
-            image.alt = "Предпросмотр печати";
-
-            preview.appendChild(image);
-            preview.classList.remove("hidden");
-
-            status.textContent = "Новая печать";
-            status.classList.add("is-ready");
-
-            const label = button.querySelector("span");
-
-            if (label) {
-                label.textContent = "Заменить печать";
-            }
-        };
-
-        reader.readAsDataURL(file);
-    }
-
-
-    function openCompanyStampPicker() {
-        const input = $("#company-stamp-input");
-
-        if (!input) {
-            return;
-        }
-
-        try {
-            if (typeof input.showPicker === "function") {
-                input.showPicker();
-                return;
-            }
-
-            input.click();
-        } catch (error) {
-            console.error(
-                "FinFlow: failed to open company stamp picker",
-                error
-            );
-
-            input.click();
-        }
-    }
 
 
     function openCompanyDialog(companyId = null) {
@@ -1488,7 +1308,6 @@
             idInput.value = company.id;
             nameInput.value = company.name;
 
-            renderCompanyStamp(company);
 
             if (title) {
                 title.textContent =
@@ -1498,7 +1317,6 @@
             idInput.value = "";
             nameInput.value = "";
 
-            resetCompanyStampUI();
 
             if (title) {
                 title.textContent =
@@ -1622,47 +1440,6 @@
                     id ||
                     0
                 );
-
-            const stampInput =
-                $("#company-stamp-input");
-
-            const stampFile =
-                stampInput?.files?.[0] || null;
-
-            if (stampFile && savedCompanyId) {
-                const formData =
-                    new FormData();
-
-                formData.append(
-                    "stamp",
-                    stampFile
-                );
-
-                const stampResponse =
-                    await fetch(
-                        `/companies/${savedCompanyId}/stamp`,
-                        {
-                            method: "POST",
-                            headers: {
-                                "X-CSRF-Token":
-                                    csrfToken(),
-                            },
-                            body: formData,
-                        }
-                    );
-
-                const stampResult =
-                    await stampResponse
-                        .json()
-                        .catch(() => ({}));
-
-                if (!stampResponse.ok) {
-                    throw new Error(
-                        stampResult.message ||
-                        "Компания сохранена, но печать загрузить не удалось."
-                    );
-                }
-            }
 
             closeCompanyDialog();
 
@@ -2366,33 +2143,6 @@
         companyForm.addEventListener(
             "submit",
             saveCompany
-        );
-    }
-
-
-    const companyStampButton =
-        $("#company-stamp-button");
-
-    if (companyStampButton) {
-        companyStampButton.addEventListener(
-            "click",
-            openCompanyStampPicker
-        );
-    }
-
-
-    const companyStampInput =
-        $("#company-stamp-input");
-
-    if (companyStampInput) {
-        companyStampInput.addEventListener(
-            "change",
-            event => {
-                const file =
-                    event.target.files?.[0] || null;
-
-                previewCompanyStampFile(file);
-            }
         );
     }
 

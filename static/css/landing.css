@@ -1,0 +1,1541 @@
+:root {
+    --elixor-bg: #070b13;
+    --elixor-bg-soft: #0b111d;
+    --elixor-panel: rgba(15, 24, 40, 0.72);
+    --elixor-panel-strong: rgba(17, 28, 47, 0.88);
+    --elixor-border: rgba(148, 163, 184, 0.13);
+    --elixor-border-bright: rgba(96, 165, 250, 0.28);
+    --elixor-text: #f5f7fb;
+    --elixor-muted: #94a3b8;
+    --elixor-soft: #64748b;
+    --elixor-blue: #3b82f6;
+    --elixor-cyan: #38bdf8;
+    --elixor-green: #34d399;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    background:
+        radial-gradient(circle at 50% -20%, rgba(37, 99, 235, 0.12), transparent 38%),
+        var(--elixor-bg);
+    color: var(--elixor-text);
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+}
+
+.elixor-site {
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+.elixor-container {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+}
+
+.elixor-bg-glow {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 999px;
+    filter: blur(80px);
+    opacity: 0.18;
+}
+
+.elixor-bg-glow-a {
+    width: 420px;
+    height: 420px;
+    top: 500px;
+    left: -220px;
+    background: #2563eb;
+}
+
+.elixor-bg-glow-b {
+    width: 360px;
+    height: 360px;
+    top: 1700px;
+    right: -180px;
+    background: #0891b2;
+}
+
+/* Navigation */
+
+.elixor-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+    background: rgba(7, 11, 19, 0.72);
+    backdrop-filter: blur(22px);
+}
+
+.elixor-nav-inner {
+    min-height: 76px;
+    display: flex;
+    align-items: center;
+    gap: 34px;
+}
+
+.elixor-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 245px;
+}
+
+.elixor-brand-mark {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--elixor-border-bright);
+    border-radius: 11px;
+    background: rgba(15, 23, 42, 0.78);
+    box-shadow: 0 0 26px rgba(37, 99, 235, 0.16);
+}
+
+.elixor-brand-mark img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
+.elixor-brand-text {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    font-size: 15px;
+    letter-spacing: -0.02em;
+}
+
+.elixor-brand-text strong {
+    font-weight: 700;
+}
+
+.elixor-brand-text span {
+    color: #60a5fa;
+    font-weight: 500;
+}
+
+.elixor-brand small {
+    margin-left: 5px;
+    color: var(--elixor-soft);
+    font-size: 8px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.elixor-nav-links {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+}
+
+.elixor-nav-links a {
+    color: var(--elixor-muted);
+    font-size: 12px;
+    transition: color 160ms ease;
+}
+
+.elixor-nav-links a:hover {
+    color: var(--elixor-text);
+}
+
+.elixor-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.elixor-language {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--elixor-soft);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+}
+
+.elixor-language button {
+    border: 0;
+    padding: 4px 0;
+    background: transparent;
+    color: var(--elixor-soft);
+    cursor: pointer;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+}
+
+.elixor-language button.is-active {
+    color: #e2e8f0;
+    font-weight: 700;
+}
+
+.elixor-nav-login {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 14px;
+    border: 1px solid var(--elixor-border);
+    border-radius: 9px;
+    background: rgba(15, 23, 42, 0.55);
+    font-size: 11px;
+    transition:
+        border-color 160ms ease,
+        background 160ms ease,
+        transform 160ms ease;
+}
+
+.elixor-nav-login:hover {
+    border-color: var(--elixor-border-bright);
+    background: rgba(30, 41, 59, 0.72);
+    transform: translateY(-1px);
+}
+
+/* Hero */
+
+.elixor-hero {
+    position: relative;
+    padding: 104px 0 80px;
+}
+
+.elixor-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.16fr);
+    align-items: center;
+    gap: 62px;
+}
+
+.elixor-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 11px;
+    border: 1px solid rgba(96, 165, 250, 0.18);
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.52);
+    color: #7dd3fc;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+}
+
+.elixor-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--elixor-green);
+    box-shadow: 0 0 12px rgba(52, 211, 153, 0.8);
+}
+
+.elixor-hero h1 {
+    max-width: 650px;
+    margin: 24px 0 22px;
+    font-size: clamp(42px, 5vw, 68px);
+    line-height: 0.98;
+    letter-spacing: -0.055em;
+    font-weight: 650;
+}
+
+.elixor-hero h1 strong {
+    display: block;
+    color: #60a5fa;
+    font-weight: 650;
+}
+
+.elixor-hero-description {
+    max-width: 570px;
+    margin: 0;
+    color: var(--elixor-muted);
+    font-size: 16px;
+    line-height: 1.72;
+}
+
+.elixor-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 11px;
+    margin-top: 30px;
+}
+
+.elixor-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 0 17px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 650;
+    transition:
+        transform 160ms ease,
+        border-color 160ms ease,
+        background 160ms ease;
+}
+
+.elixor-button:hover {
+    transform: translateY(-2px);
+}
+
+.elixor-button-primary {
+    border: 1px solid rgba(96, 165, 250, 0.55);
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    box-shadow: 0 12px 35px rgba(37, 99, 235, 0.23);
+}
+
+.elixor-button-secondary {
+    border: 1px solid var(--elixor-border);
+    background: rgba(15, 23, 42, 0.62);
+    color: #cbd5e1;
+}
+
+.elixor-button-secondary:hover {
+    border-color: var(--elixor-border-bright);
+    background: rgba(30, 41, 59, 0.72);
+}
+
+.elixor-hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 17px;
+    margin-top: 25px;
+    color: var(--elixor-soft);
+    font-size: 9px;
+}
+
+.elixor-hero-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.elixor-hero-meta i {
+    color: #60a5fa;
+    font-size: 11px;
+}
+
+/* Dashboard mockup */
+
+.elixor-hero-visual {
+    position: relative;
+}
+
+.elixor-dashboard-window {
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-radius: 18px;
+    background: rgba(10, 16, 28, 0.82);
+    box-shadow:
+        0 35px 100px rgba(0, 0, 0, 0.42),
+        0 0 70px rgba(37, 99, 235, 0.10);
+    backdrop-filter: blur(25px);
+    transform: perspective(1300px) rotateY(-3deg) rotateX(1deg);
+}
+
+.elixor-window-top {
+    height: 53px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 17px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+    background: rgba(15, 23, 42, 0.68);
+}
+
+.elixor-window-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+}
+
+.elixor-window-brand span {
+    color: #60a5fa;
+}
+
+.elixor-mini-mark {
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+}
+
+.elixor-mini-mark img {
+    width: 21px;
+    height: 21px;
+}
+
+.elixor-window-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #94a3b8;
+    font-size: 8px;
+}
+
+.elixor-window-status span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--elixor-green);
+    box-shadow: 0 0 9px rgba(52, 211, 153, 0.75);
+}
+
+.elixor-window-body {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    min-height: 390px;
+}
+
+.elixor-mini-sidebar {
+    padding: 18px 8px;
+    border-right: 1px solid rgba(148, 163, 184, 0.07);
+    background: rgba(8, 13, 23, 0.65);
+}
+
+.elixor-mini-nav {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 7px;
+    margin-bottom: 4px;
+    border-radius: 7px;
+    color: #64748b;
+    font-size: 7px;
+}
+
+.elixor-mini-nav i {
+    font-size: 10px;
+}
+
+.elixor-mini-nav.active {
+    color: #dbeafe;
+    background: rgba(37, 99, 235, 0.16);
+}
+
+.elixor-mini-content {
+    padding: 23px;
+}
+
+.elixor-mini-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.elixor-mini-heading small,
+.elixor-showcase-header small {
+    color: #475569;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+}
+
+.elixor-mini-heading h3 {
+    margin: 4px 0 0;
+    font-size: 17px;
+    letter-spacing: -0.03em;
+}
+
+.elixor-entity-pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 10px;
+    border: 1px solid rgba(148, 163, 184, 0.10);
+    border-radius: 8px;
+    background: rgba(15, 23, 42, 0.64);
+    color: #94a3b8;
+    font-size: 8px;
+}
+
+.elixor-entity-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #60a5fa;
+}
+
+.elixor-mini-kpis {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+    margin-top: 18px;
+}
+
+.elixor-mini-card {
+    min-height: 93px;
+    padding: 13px;
+    border: 1px solid rgba(148, 163, 184, 0.09);
+    border-radius: 11px;
+    background: rgba(15, 23, 42, 0.56);
+}
+
+.elixor-mini-card > span {
+    display: block;
+    color: #64748b;
+    font-size: 6px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+}
+
+.elixor-mini-card strong {
+    display: block;
+    margin-top: 9px;
+    font-size: 19px;
+    letter-spacing: -0.04em;
+}
+
+.elixor-mini-card small {
+    display: block;
+    margin-top: 5px;
+    color: #34d399;
+    font-size: 7px;
+}
+
+.elixor-progress {
+    height: 4px;
+    margin-top: 14px;
+    overflow: hidden;
+    border-radius: 99px;
+    background: rgba(51, 65, 85, 0.65);
+}
+
+.elixor-progress i {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: #3b82f6;
+}
+
+.elixor-mini-lower {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    margin-top: 9px;
+}
+
+.elixor-mini-panel {
+    padding: 13px;
+    border: 1px solid rgba(148, 163, 184, 0.09);
+    border-radius: 11px;
+    background: rgba(15, 23, 42, 0.48);
+}
+
+.elixor-panel-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #94a3b8;
+    font-size: 8px;
+}
+
+.elixor-summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+    color: #cbd5e1;
+    font-size: 8px;
+}
+
+.elixor-summary-row i {
+    color: #60a5fa;
+    font-size: 9px;
+}
+
+.elixor-system-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+    font-size: 7px;
+}
+
+.elixor-system-row span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #94a3b8;
+}
+
+.elixor-system-row b {
+    color: #34d399;
+    font-weight: 600;
+}
+
+.elixor-visual-glow {
+    position: absolute;
+    z-index: 1;
+    width: 75%;
+    height: 75%;
+    right: 0;
+    bottom: -8%;
+    background: rgba(37, 99, 235, 0.19);
+    filter: blur(75px);
+}
+
+/* Value */
+
+.elixor-value-section {
+    padding: 0 0 40px;
+}
+
+.elixor-value-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--elixor-border);
+    border-radius: 15px;
+    background: rgba(15, 23, 42, 0.43);
+    overflow: hidden;
+}
+
+.elixor-value-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 82px;
+    padding: 15px 19px;
+    border-right: 1px solid var(--elixor-border);
+}
+
+.elixor-value-card:last-child {
+    border-right: 0;
+}
+
+.elixor-value-card > i {
+    color: #60a5fa;
+    font-size: 18px;
+}
+
+.elixor-value-card strong,
+.elixor-value-card span {
+    display: block;
+}
+
+.elixor-value-card strong {
+    font-size: 10px;
+}
+
+.elixor-value-card span {
+    margin-top: 4px;
+    color: #64748b;
+    font-size: 8px;
+}
+
+/* Sections */
+
+.elixor-section {
+    scroll-margin-top: 96px;
+    padding: 110px 0;
+}
+
+.elixor-section-heading {
+    max-width: 710px;
+    margin-bottom: 45px;
+}
+
+.elixor-section-heading.compact {
+    margin-bottom: 35px;
+}
+
+.elixor-section-kicker {
+    margin-bottom: 12px;
+    color: #60a5fa;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+}
+
+.elixor-section-heading h2 {
+    margin: 0;
+    font-size: clamp(31px, 4vw, 47px);
+    line-height: 1.05;
+    letter-spacing: -0.045em;
+}
+
+.elixor-section-heading h2 strong {
+    color: #60a5fa;
+    font-weight: inherit;
+}
+
+.elixor-section-heading p {
+    max-width: 650px;
+    margin: 18px 0 0;
+    color: var(--elixor-muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Product showcase */
+
+.elixor-product-showcase {
+    display: grid;
+    grid-template-columns: 155px 1fr;
+    min-height: 430px;
+    overflow: hidden;
+    border: 1px solid var(--elixor-border);
+    border-radius: 17px;
+    background: rgba(10, 16, 28, 0.75);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+}
+
+.elixor-showcase-sidebar {
+    padding: 20px 11px;
+    border-right: 1px solid var(--elixor-border);
+    background: rgba(8, 13, 23, 0.72);
+}
+
+.elixor-showcase-logo {
+    width: 33px;
+    height: 33px;
+    display: grid;
+    place-items: center;
+    margin: 0 0 28px 5px;
+}
+
+.elixor-showcase-logo img {
+    width: 29px;
+    height: 29px;
+}
+
+.elixor-showcase-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px;
+    margin-bottom: 4px;
+    border-radius: 8px;
+    color: #64748b;
+    font-size: 9px;
+}
+
+.elixor-showcase-item i {
+    font-size: 11px;
+}
+
+.elixor-showcase-item.active {
+    color: #dbeafe;
+    background: rgba(37, 99, 235, 0.15);
+}
+
+.elixor-showcase-main {
+    padding: 30px;
+}
+
+.elixor-showcase-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.elixor-showcase-header h3 {
+    margin: 6px 0 0;
+    font-size: 21px;
+    letter-spacing: -0.035em;
+}
+
+.elixor-showcase-date {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 11px;
+    border: 1px solid var(--elixor-border);
+    border-radius: 8px;
+    color: #94a3b8;
+    font-size: 9px;
+}
+
+.elixor-showcase-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 9px;
+    margin-top: 25px;
+}
+
+.elixor-showcase-stats > div {
+    padding: 15px;
+    border: 1px solid var(--elixor-border);
+    border-radius: 10px;
+    background: rgba(15, 23, 42, 0.50);
+}
+
+.elixor-showcase-stats span {
+    display: block;
+    color: #64748b;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+}
+
+.elixor-showcase-stats strong {
+    display: block;
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.elixor-showcase-chart {
+    margin-top: 10px;
+    padding: 17px;
+    border: 1px solid var(--elixor-border);
+    border-radius: 10px;
+    background: rgba(15, 23, 42, 0.40);
+}
+
+.elixor-chart-heading {
+    display: flex;
+    justify-content: space-between;
+    color: #cbd5e1;
+    font-size: 9px;
+}
+
+.elixor-chart-heading span:last-child {
+    color: #34d399;
+}
+
+.elixor-chart-bars {
+    height: 155px;
+    display: flex;
+    align-items: end;
+    gap: 10px;
+    margin-top: 19px;
+    padding: 0 8px;
+}
+
+.elixor-chart-bars i {
+    flex: 1;
+    min-width: 4px;
+    border-radius: 4px 4px 1px 1px;
+    background: linear-gradient(to top, #1d4ed8, #38bdf8);
+    opacity: 0.72;
+}
+
+/* Features */
+
+.elixor-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 11px;
+}
+
+.elixor-feature-card {
+    min-height: 220px;
+    padding: 24px;
+    border: 1px solid var(--elixor-border);
+    border-radius: 14px;
+    background: rgba(15, 23, 42, 0.48);
+    transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        background 180ms ease;
+}
+
+.elixor-feature-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(96, 165, 250, 0.28);
+    background: rgba(17, 28, 47, 0.68);
+}
+
+.elixor-feature-icon {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 27px;
+    border: 1px solid rgba(96, 165, 250, 0.16);
+    border-radius: 10px;
+    background: rgba(37, 99, 235, 0.10);
+    color: #60a5fa;
+}
+
+.elixor-feature-icon i {
+    font-size: 16px;
+}
+
+.elixor-feature-card h3 {
+    margin: 0;
+    font-size: 14px;
+}
+
+.elixor-feature-card p {
+    margin: 11px 0 0;
+    color: #64748b;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+/* Security */
+
+.elixor-security-section {
+    scroll-margin-top: 96px;
+    border-top: 1px solid rgba(148, 163, 184, 0.05);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.05);
+    background: rgba(10, 16, 28, 0.30);
+}
+
+.elixor-security-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    align-items: center;
+    gap: 70px;
+}
+
+.elixor-security-copy h2 {
+    max-width: 570px;
+    margin: 0;
+    font-size: clamp(34px, 4vw, 51px);
+    line-height: 1.02;
+    letter-spacing: -0.05em;
+}
+
+.elixor-security-copy h2 strong {
+    display: block;
+    color: #60a5fa;
+    font-weight: inherit;
+}
+
+.elixor-security-copy p {
+    max-width: 540px;
+    margin: 20px 0 0;
+    color: var(--elixor-muted);
+    font-size: 13px;
+    line-height: 1.75;
+}
+
+.elixor-security-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 26px;
+}
+
+.elixor-security-tags span {
+    padding: 7px 9px;
+    border: 1px solid var(--elixor-border);
+    border-radius: 7px;
+    background: rgba(15, 23, 42, 0.55);
+    color: #94a3b8;
+    font-size: 8px;
+}
+
+.elixor-terminal {
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.13);
+    border-radius: 14px;
+    background: #080d16;
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.32);
+}
+
+.elixor-terminal-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 42px;
+    padding: 0 14px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.elixor-terminal-top > span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #334155;
+}
+
+.elixor-terminal-top b {
+    margin-left: auto;
+    color: #475569;
+    font-size: 8px;
+    font-weight: 500;
+}
+
+.elixor-terminal-body {
+    padding: 25px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+.elixor-terminal-title {
+    margin-bottom: 22px;
+    color: #60a5fa;
+    font-size: 9px;
+    letter-spacing: 0.10em;
+}
+
+.elixor-terminal-line {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 20px;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.05);
+    font-size: 9px;
+}
+
+.elixor-terminal-line span {
+    color: #475569;
+}
+
+.elixor-terminal-line strong {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.elixor-terminal-line strong::first-letter {
+    color: #34d399;
+}
+
+.elixor-terminal-cursor {
+    display: flex;
+    gap: 8px;
+    margin-top: 22px;
+    color: #64748b;
+    font-size: 8px;
+}
+
+.elixor-terminal-cursor i {
+    width: 6px;
+    height: 12px;
+    display: inline-block;
+    background: #3b82f6;
+    animation: elixorBlink 1s steps(2, start) infinite;
+}
+
+@keyframes elixorBlink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Architecture */
+
+.elixor-architecture {
+    position: relative;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    align-items: center;
+    gap: 45px;
+    min-height: 280px;
+    padding: 28px;
+    border: 1px solid var(--elixor-border);
+    border-radius: 17px;
+    background: rgba(15, 23, 42, 0.40);
+}
+
+.elixor-architecture-core {
+    position: relative;
+    z-index: 2;
+    min-height: 190px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border: 1px solid rgba(96, 165, 250, 0.22);
+    border-radius: 14px;
+    background: rgba(15, 23, 42, 0.72);
+    box-shadow: 0 0 45px rgba(37, 99, 235, 0.10);
+    text-align: center;
+}
+
+.elixor-architecture-logo {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 15px;
+}
+
+.elixor-architecture-logo img {
+    width: 45px;
+    height: 45px;
+}
+
+.elixor-architecture-core strong {
+    font-size: 15px;
+}
+
+.elixor-architecture-core span {
+    margin-top: 6px;
+    color: #64748b;
+    font-size: 8px;
+}
+
+.elixor-architecture-branches {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.elixor-architecture-node {
+    min-height: 165px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    border: 1px solid var(--elixor-border);
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.46);
+}
+
+.elixor-architecture-node i {
+    margin-bottom: 22px;
+    color: #60a5fa;
+    font-size: 18px;
+}
+
+.elixor-architecture-node strong {
+    font-size: 12px;
+}
+
+.elixor-architecture-node span {
+    margin-top: 7px;
+    color: #64748b;
+    font-size: 8px;
+    line-height: 1.5;
+}
+
+.elixor-roadmap {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-top: 17px;
+    color: #475569;
+    font-size: 8px;
+    letter-spacing: 0.13em;
+}
+
+.elixor-roadmap > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.elixor-roadmap b {
+    padding: 6px 9px;
+    border: 1px solid rgba(148, 163, 184, 0.08);
+    border-radius: 6px;
+    background: rgba(15, 23, 42, 0.45);
+    color: #64748b;
+    font-size: 7px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+/* Use cases */
+
+.elixor-usecases-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 11px;
+}
+
+.elixor-usecase {
+    position: relative;
+    min-height: 275px;
+    padding: 27px;
+    overflow: hidden;
+    border: 1px solid var(--elixor-border);
+    border-radius: 14px;
+    background: rgba(15, 23, 42, 0.45);
+}
+
+.elixor-usecase > span {
+    position: absolute;
+    top: 22px;
+    right: 23px;
+    color: #334155;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.elixor-usecase > i {
+    display: block;
+    margin-top: 35px;
+    color: #60a5fa;
+    font-size: 22px;
+}
+
+.elixor-usecase h3 {
+    margin: 24px 0 0;
+    font-size: 16px;
+}
+
+.elixor-usecase p {
+    max-width: 310px;
+    margin: 10px 0 0;
+    color: #64748b;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+/* Final */
+
+.elixor-final-section {
+    padding: 40px 0 100px;
+}
+
+.elixor-final-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 370px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 45px 30px;
+    border: 1px solid rgba(96, 165, 250, 0.17);
+    border-radius: 20px;
+    background:
+        radial-gradient(circle at 50% 45%, rgba(37, 99, 235, 0.13), transparent 42%),
+        rgba(10, 16, 28, 0.75);
+    text-align: center;
+}
+
+.elixor-final-glow {
+    position: absolute;
+    width: 360px;
+    height: 180px;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(37, 99, 235, 0.15);
+    filter: blur(80px);
+}
+
+.elixor-final-mark {
+    position: relative;
+    width: 55px;
+    height: 55px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 20px;
+}
+
+.elixor-final-mark img {
+    width: 50px;
+    height: 50px;
+}
+
+.elixor-final-card .elixor-section-kicker {
+    position: relative;
+}
+
+.elixor-final-card h2 {
+    position: relative;
+    max-width: 720px;
+    margin: 0;
+    font-size: clamp(32px, 4vw, 51px);
+    line-height: 1.04;
+    letter-spacing: -0.05em;
+}
+
+.elixor-final-card p {
+    position: relative;
+    margin: 17px 0 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.elixor-final-actions {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 28px;
+}
+
+/* Footer */
+
+.elixor-footer {
+    border-top: 1px solid rgba(148, 163, 184, 0.08);
+    background: rgba(5, 9, 16, 0.82);
+}
+
+.elixor-footer-inner {
+    min-height: 100px;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 35px;
+}
+
+.elixor-footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.elixor-footer-logo {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+}
+
+.elixor-footer-logo img {
+    width: 27px;
+    height: 27px;
+}
+
+.elixor-footer-brand strong,
+.elixor-footer-brand span {
+    display: block;
+}
+
+.elixor-footer-brand strong {
+    font-size: 10px;
+}
+
+.elixor-footer-brand span {
+    margin-top: 4px;
+    color: #475569;
+    font-size: 7px;
+}
+
+.elixor-footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.elixor-footer-links a {
+    color: #64748b;
+    font-size: 8px;
+}
+
+.elixor-footer-links a:hover {
+    color: #cbd5e1;
+}
+
+.elixor-footer-meta {
+    display: flex;
+    gap: 10px;
+    color: #334155;
+    font-size: 7px;
+}
+
+/* Responsive */
+
+@media (max-width: 1050px) {
+    .elixor-nav-links {
+        display: none;
+    }
+
+    .elixor-hero-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .elixor-hero-copy {
+        max-width: 760px;
+    }
+
+    .elixor-dashboard-window {
+        transform: none;
+    }
+
+    .elixor-security-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .elixor-architecture {
+        grid-template-columns: 1fr;
+    }
+
+    .elixor-architecture-core {
+        max-width: 320px;
+        margin: 0 auto;
+        width: 100%;
+    }
+}
+
+@media (max-width: 800px) {
+    .elixor-container {
+        width: min(100% - 28px, 680px);
+    }
+
+    .elixor-nav-inner {
+        min-height: 67px;
+        gap: 10px;
+    }
+
+    .elixor-brand {
+        min-width: 0;
+    }
+
+    .elixor-brand small {
+        display: none;
+    }
+
+    .elixor-nav-actions {
+        margin-left: auto;
+        gap: 10px;
+    }
+
+    .elixor-nav-login {
+        padding: 8px 10px;
+    }
+
+    .elixor-hero {
+        padding: 70px 0 55px;
+    }
+
+    .elixor-hero h1 {
+        font-size: clamp(39px, 12vw, 58px);
+    }
+
+    .elixor-value-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .elixor-value-card:nth-child(2) {
+        border-right: 0;
+    }
+
+    .elixor-value-card:nth-child(-n + 2) {
+        border-bottom: 1px solid var(--elixor-border);
+    }
+
+    .elixor-feature-grid,
+    .elixor-usecases-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .elixor-feature-card,
+    .elixor-usecase {
+        min-height: auto;
+    }
+
+    .elixor-showcase-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .elixor-architecture-branches {
+        grid-template-columns: 1fr;
+    }
+
+    .elixor-footer-inner {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 25px 0;
+    }
+
+    .elixor-footer-links {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 600px) {
+    .elixor-hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .elixor-button {
+        width: 100%;
+    }
+
+    .elixor-hero-meta {
+        flex-direction: column;
+        gap: 9px;
+    }
+
+    .elixor-window-body {
+        grid-template-columns: 1fr;
+    }
+
+    .elixor-mini-sidebar {
+        display: none;
+    }
+
+    .elixor-mini-content {
+        padding: 16px;
+    }
+
+    .elixor-mini-kpis,
+    .elixor-mini-lower {
+        grid-template-columns: 1fr;
+    }
+
+    .elixor-entity-pill {
+        display: none;
+    }
+
+    .elixor-product-showcase {
+        grid-template-columns: 1fr;
+    }
+
+    .elixor-showcase-sidebar {
+        display: none;
+    }
+
+    .elixor-showcase-main {
+        padding: 18px;
+    }
+
+    .elixor-showcase-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .elixor-chart-bars {
+        gap: 5px;
+    }
+
+    .elixor-value-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .elixor-value-card {
+        border-right: 0;
+        border-bottom: 1px solid var(--elixor-border);
+    }
+
+    .elixor-value-card:last-child {
+        border-bottom: 0;
+    }
+
+    .elixor-terminal-line {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    .elixor-section {
+        padding: 75px 0;
+    }
+
+    .elixor-final-section {
+        padding: 20px 0 70px;
+    }
+}

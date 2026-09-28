@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Наша организация — FinFlow{% endblock %}
+{% block title %}Our organization — ElixOR Connect{% endblock %}
 
 {% block page_icon %}
 <span class="ff-page-icon">
@@ -8,10 +8,10 @@
 </span>
 {% endblock %}
 
-{% block page_title %}Наша организация{% endblock %}
+{% block page_title %}<span data-i18n="Our organization">Our organization</span>{% endblock %}
 
 {% block page_subtitle %}
-Юридические лица FinFlow, реквизиты, подписи и печати для оформления документов.
+        <span data-i18n="Legal entities, company details, signatures and stamps used for documents.">Legal entities, company details, signatures and stamps used for documents.</span>
 {% endblock %}
 
 {% block content %}
@@ -27,7 +27,7 @@
             id="our-company-create-button"
         >
             <i class="bi bi-building-add"></i>
-            <span>Создать организацию</span>
+            <span data-i18n="Create organization">Create organization</span>
         </button>
         {% endif %}
 
@@ -42,11 +42,11 @@
 
             <div>
                 <h2 class="ff-panel-title">
-                    Юридические лица
+                    <span data-i18n="Legal entities">Legal entities</span>
                 </h2>
 
                 <p class="ff-panel-description">
-                    Компании, от имени которых FinFlow формирует документы и операции.
+                    <span data-i18n="Companies on whose behalf ElixOR Connect creates documents and operations.">Companies on whose behalf ElixOR Connect creates documents and operations.</span>
                 </p>
             </div>
 
@@ -54,11 +54,11 @@
                 <span>{{ our_companies|length }}</span>
                 <small>
                     {% if our_companies|length == 1 %}
-                        компания
+                        <span data-i18n="Products count one">product</span>
                     {% elif our_companies|length < 5 %}
-                        компании
+                        <span data-i18n="Products count few">products</span>
                     {% else %}
-                        компаний
+                        <span data-i18n="Products count many">products</span>
                     {% endif %}
                 </small>
             </div>
@@ -111,12 +111,12 @@
                                 {% if company.status == 'ACTIVE' %}
 
                                 <span class="ff-status-dot is-success"></span>
-                                <span>Активна</span>
+                                <span data-i18n="Active">Active</span>
 
                                 {% else %}
 
                                 <span class="ff-status-dot"></span>
-                                <span>Неактивна</span>
+                                <span data-i18n="Inactive">Inactive</span>
 
                                 {% endif %}
 
@@ -142,7 +142,7 @@
 
                         <div class="our-company-card-field">
 
-                            <span>Руководитель</span>
+                            <span data-i18n="Director">Director</span>
 
                             <strong>
                                 {{ company.director_name }}
@@ -163,7 +163,7 @@
 
                         <div class="our-company-card-field">
 
-                            <span>Контакты</span>
+                            <span data-i18n="Contacts">Contacts</span>
 
                             {% if company.phone %}
                             <strong>
@@ -194,11 +194,11 @@
                                 <strong>{{ company.details|length }}</strong>
                                 <span>
                                     {% if company.details|length == 1 %}
-                                        набор реквизитов
+                                        <span data-i18n="Details sets one">details set</span>
                                     {% elif company.details|length < 5 %}
-                                        набора реквизитов
+                                        <span data-i18n="Details sets few">details sets</span>
                                     {% else %}
-                                        наборов реквизитов
+                                        <span data-i18n="Details sets many">details sets</span>
                                     {% endif %}
                                 </span>
                             </div>
@@ -209,25 +209,25 @@
                         <div class="our-company-summary-assets">
 
                             {% if company.logo_filename %}
-                            <span title="Логотип">
+                            <span title="Logo" data-i18n-title="Logo">
                                 <i class="bi bi-image"></i>
                             </span>
                             {% endif %}
 
                             {% if company.signature_filename %}
-                            <span title="Подпись">
+                            <span title="Signature" data-i18n-title="Signature">
                                 <i class="bi bi-pen"></i>
                             </span>
                             {% endif %}
 
                             {% if company.stamp_filename %}
-                            <span title="Печать">
+                            <span title="Stamp" data-i18n-title="Stamp">
                                 <i class="bi bi-patch-check"></i>
                             </span>
                             {% endif %}
 
                             {% if company.ecp_reference %}
-                            <span title="ЭЦП">
+                            <span title="Digital signature" data-i18n-title="Digital signature">
                                 <i class="bi bi-key"></i>
                             </span>
                             {% endif %}
@@ -242,7 +242,7 @@
                 <div class="our-company-card-footer">
 
                     <span>
-                        Открыть данные компании
+                        <span data-i18n="Open company data">Open company data</span>
                     </span>
 
                     <i class="bi bi-arrow-right"></i>
@@ -271,12 +271,11 @@
             <div class="our-company-empty-copy">
 
                 <strong>
-                    Компания ещё не создана
+                    <span data-i18n="Company not created yet">Company not created yet</span>
                 </strong>
 
                 <span>
-                    Добавьте юридическое лицо, от имени которого FinFlow будет
-                    оформлять документы.
+                    <span data-i18n="Add a legal entity on whose behalf ElixOR Connect will issue documents.">Add a legal entity on whose behalf ElixOR Connect will issue documents.</span>
                 </span>
 
             </div>
@@ -320,11 +319,11 @@
                     <div>
 
                         <h2 id="create-our-company-title">
-                            Создать организацию
+                            <span data-i18n="Create organization">Create organization</span>
                         </h2>
 
                         <p>
-                            Основные данные юридического лица.
+                            <span data-i18n="Legal entity data">Legal entity data</span>
                         </p>
 
                     </div>
@@ -336,7 +335,7 @@
                     type="button"
                     class="ff-modal-close"
                     data-modal-close="create-our-company-modal"
-                    aria-label="Закрыть"
+                    aria-label="Close" data-i18n-aria-label="Close"
                 >
                     <i class="bi bi-x-lg"></i>
                 </button>
@@ -367,8 +366,8 @@
                         </div>
 
                         <div>
-                            <strong>Основная информация</strong>
-                            <span>Данные юридического лица</span>
+                            <strong data-i18n="Basic information">Basic information</strong>
+                            <span data-i18n="Legal entity data">Legal entity data</span>
                         </div>
 
                     </div>
@@ -379,7 +378,7 @@
                         <div class="ff-form-field ff-form-field-wide">
 
                             <label for="our-company-name">
-                                Название компании
+                                <span data-i18n="Company name">Company name</span>
                             </label>
 
                             <input
@@ -388,7 +387,7 @@
                                 name="name"
                                 maxlength="255"
                                 autocomplete="organization"
-                                placeholder="Например, ООО «Кайзерин»"
+                                placeholder="For example, Acme Corporation"
                                 required
                             >
 
@@ -398,7 +397,7 @@
                         <div class="ff-form-field">
 
                             <label for="our-company-director-name">
-                                Директор
+                                <span data-i18n="Director">Director</span>
                             </label>
 
                             <input
@@ -407,7 +406,7 @@
                                 name="director_name"
                                 maxlength="255"
                                 autocomplete="name"
-                                placeholder="ФИО директора"
+                                placeholder="Director full name" data-i18n-placeholder="Director full name"
                             >
 
                         </div>
@@ -416,7 +415,7 @@
                         <div class="ff-form-field">
 
                             <label for="our-company-director-position">
-                                Должность
+                                <span data-i18n="Director position">Director position</span>
                             </label>
 
                             <input
@@ -424,7 +423,7 @@
                                 type="text"
                                 name="director_position"
                                 maxlength="255"
-                                placeholder="Генеральный директор"
+                                placeholder="For example, General Director" data-i18n-placeholder="For example, General Director"
                             >
 
                         </div>
@@ -443,8 +442,8 @@
                         </div>
 
                         <div>
-                            <strong>Контакты</strong>
-                            <span>Контактные данные юридического лица</span>
+                            <strong data-i18n="Contacts">Contacts</strong>
+                            <span data-i18n="Contact details of the legal entity">Contact details of the legal entity</span>
                         </div>
 
                     </div>
@@ -455,7 +454,7 @@
                         <div class="ff-form-field">
 
                             <label for="our-company-phone">
-                                Телефон
+                                <span data-i18n="Phone">Phone</span>
                             </label>
 
                             <input
@@ -501,8 +500,8 @@
                         </div>
 
                         <div>
-                            <strong>Доступность для новых документов</strong>
-                            <span>Организация будет доступна для выбора при создании новых документов.</span>
+                            <strong data-i18n="Availability for new documents">Availability for new documents</strong>
+                            <span><span data-i18n="The organization will be available when creating new documents.">The organization will be available when creating new documents.</span></span>
                         </div>
 
                     </div>
@@ -530,8 +529,8 @@
                             </span>
 
                             <span class="our-company-checkbox-copy">
-                                <strong>Доступна</strong>
-                                <small>Можно использовать в новых документах</small>
+                                <strong data-i18n="Available">Available</strong>
+                                <small data-i18n="Can be used in new documents">Can be used in new documents</small>
                             </span>
 
                         </label>
@@ -548,7 +547,7 @@
                         class="ff-btn ff-btn-secondary"
                         data-modal-close="create-our-company-modal"
                     >
-                        Отмена
+                        <span data-i18n="Cancel">Cancel</span>
                     </button>
 
 
@@ -557,7 +556,7 @@
                         class="ff-btn ff-btn-primary"
                     >
                         <i class="bi bi-building-add"></i>
-                        <span>Создать организацию</span>
+                        <span data-i18n="Create organization">Create organization</span>
                     </button>
 
                 </div>
