@@ -1,4 +1,4 @@
-# FinFlow 💼
+# ElixOR-Connect 💼
 
 <p align="center">
   <img src="static/finflow-logo.png" alt="FinFlow" width="220">
