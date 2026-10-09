@@ -26,7 +26,7 @@ Financial control and accounting management platform for companies, invoices, bu
 
 **Stack:** Flask · PostgreSQL · Jinja2 · Tailwind CSS · JavaScript
 
-🌐 **Live application:** https://finflow.lexxkato.win/
+🌐 **Live application:** https://elixor-connect.lexxkato.win
 
 <p align="center">
   <img src="https://finflow.lexxkato.win/finflow-preview.png" alt="FinFlow Dashboard Preview">
