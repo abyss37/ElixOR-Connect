@@ -1,7 +1,7 @@
 # ElixOR-Connect 💼
 
 <p align="center">
-  <img src="static/finflow-logo.png" alt="FinFlow" width="220">
+  <img src="static/elixor-connect-logo.jpeg" alt="FinFlow" width="220">
 </p>
 
 <p align="center">
@@ -29,7 +29,7 @@ Financial control and accounting management platform for companies, invoices, bu
 🌐 **Live application:** https://elixor-connect.lexxkato.win
 
 <p align="center">
-  <img src="https://finflow.lexxkato.win/finflow-preview.png" alt="FinFlow Dashboard Preview">
+  <img src="https://elixor-connect.lexxkato.win/static/elixor-connect-og-preview.jpeg" alt="FinFlow Dashboard Preview">
 </p>
 
 ---
