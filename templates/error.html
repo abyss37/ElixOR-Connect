@@ -1,14 +1,25 @@
 <!DOCTYPE html>
-<html lang="uk" class="dark" data-theme="dark">
+<html lang="uk" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script>
+        (() => {
+            try {
+                const theme = localStorage.getItem("finflow-theme");
+                if (theme === "light" || theme === "dark") {
+                    document.documentElement.setAttribute("data-theme", theme);
+                }
+            } catch (e) {}
+        })();
+    </script>
 
     <title>ElixOR Connect — {{ error_code }}</title>
 
     <link
         rel="stylesheet"
-        href="{{ url_for('static', filename='css/finflow.css') }}?v=20260928-2"
+        href="{{ url_for('static', filename='css/finflow.css') }}?v=20261016-3"
     >
 
     <link
@@ -55,6 +66,26 @@
                     transparent 28%
                 ),
                 #050c16;
+        }
+
+        html[data-theme="light"] {
+            color-scheme: light;
+        }
+
+        html[data-theme="light"] body {
+            color: var(--ff-text-primary);
+            background:
+                radial-gradient(
+                    circle at 50% 18%,
+                    rgba(37, 99, 235, .10),
+                    transparent 34%
+                ),
+                radial-gradient(
+                    circle at 15% 85%,
+                    rgba(8, 145, 178, .06),
+                    transparent 28%
+                ),
+                var(--ff-app-background);
         }
 
         body::before {
@@ -306,6 +337,62 @@
             text-transform: uppercase;
         }
 
+        html[data-theme="light"] .brand {
+            color: var(--ff-text-primary);
+        }
+
+        html[data-theme="light"] .brand-mark,
+        html[data-theme="light"] .status-icon {
+            border-color: var(--ff-border-control);
+            background: var(--ff-surface-control);
+            box-shadow: var(--ff-shadow-card);
+        }
+
+        html[data-theme="light"] .brand-mark i,
+        html[data-theme="light"] .status-icon i {
+            color: #2563eb;
+        }
+
+        html[data-theme="light"] .brand-name span {
+            color: #2563eb;
+        }
+
+        html[data-theme="light"] .card {
+            border-color: var(--ff-border-modal);
+            background: var(--ff-surface-modal);
+            box-shadow: var(--ff-shadow-modal);
+        }
+
+        html[data-theme="light"] .error-code,
+        html[data-theme="light"] .error-title {
+            color: var(--ff-text-primary);
+            text-shadow: none;
+        }
+
+        html[data-theme="light"] .error-message {
+            color: var(--ff-text-secondary);
+        }
+
+        html[data-theme="light"] .action-secondary {
+            color: var(--ff-text-secondary);
+            border-color: var(--ff-border-button);
+            background: var(--ff-button-secondary-background);
+        }
+
+        html[data-theme="light"] .action-secondary:hover {
+            color: var(--ff-text-primary);
+            border-color: var(--ff-border-button-hover);
+            background: var(--ff-button-secondary-hover);
+        }
+
+        html[data-theme="light"] .security-note {
+            color: var(--ff-text-muted);
+        }
+
+        html[data-theme="light"] .footer {
+            color: var(--ff-text-muted);
+        }
+
         @media (max-width: 560px) {
             .error-shell {
                 padding: 22px 14px;
@@ -472,9 +559,13 @@
     };
 
     function getLang() {
-        return localStorage.getItem("finflow-language") === "en"
-            ? "en"
-            : "uk";
+        try {
+            return localStorage.getItem("finflow-language") === "en"
+                ? "en"
+                : "uk";
+        } catch (error) {
+            return "uk";
+        }
     }
 
     function applyErrorLanguage() {

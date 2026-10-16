@@ -180,6 +180,21 @@
     background: rgba(14, 116, 144, .055);
 }
 
+.ff-notification-item.is-unread::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    left: 0;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: #22d3ee;
+}
+
+.ff-notification-item.is-unread .ff-notification-item-heading strong {
+    font-weight: 900;
+}
+
 .ff-notification-item-icon {
     width: 38px;
     height: 38px;

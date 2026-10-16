@@ -4,7 +4,7 @@
 
 {% block head %}
 <link rel="stylesheet"
-      href="{{ url_for('static', filename='css/companies.css') }}?v=20260930-1">
+      href="{{ url_for('static', filename='css/companies.css') }}?v=20261016-3">
 {% endblock %}
 
 
@@ -829,6 +829,6 @@ Companies, contracts and financial relationships in one workspace.
     window.FIN_FLOW_CSRF_TOKEN = {{ csrf_token()|tojson }};
 </script>
 
-<script src="{{ url_for('static', filename='js/companies.js') }}?v=20260924-1"></script>
+<script src="{{ url_for('static', filename='js/companies.js') }}?v=20261016-1"></script>
 
 {% endblock %}

@@ -236,19 +236,28 @@
     position: relative;
     z-index: 1;
     display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
     gap: 5px;
     margin-bottom: 14px;
     padding: 4px;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-inline: contain;
     border: 1px solid var(--gen-border);
     border-radius: 12px;
     background: rgba(2, 6, 23, 0.24);
 }
 
 .ff-generator-filter {
-    flex: 1;
-    min-width: 0;
+    flex: 0 0 auto;
+    min-width: 56px;
+    max-width: 220px;
     height: 30px;
     padding: 0 9px;
+    overflow: hidden;
     border: 0;
     border-radius: 8px;
     background: transparent;
@@ -257,6 +266,8 @@
     font: inherit;
     font-size: 0.68rem;
     font-weight: 750;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     transition:
         background 150ms ease,
         color 150ms ease,
@@ -365,28 +376,26 @@
 }
 
 .ff-generator-archive-main strong {
-    overflow: hidden;
+    min-width: 0;
     color: var(--gen-text);
     font-size: 0.78rem;
     font-weight: 750;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
 }
 
 .ff-generator-archive-main span {
-    overflow: hidden;
+    min-width: 0;
     color: #cbd5e1;
     font-size: 0.7rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
 }
 
 .ff-generator-archive-main small {
-    overflow: hidden;
+    min-width: 0;
     color: var(--gen-soft);
     font-size: 0.62rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
 }
 
 .ff-generator-archive-meta {
@@ -512,10 +521,12 @@
 
 .ff-generator-preview-toolbar strong {
     display: block;
+    max-width: 100%;
     margin-top: 5px;
     color: var(--gen-text);
     font-size: 0.8rem;
     font-weight: 750;
+    overflow-wrap: anywhere;
 }
 
 .ff-generator-preview-status {
@@ -707,6 +718,8 @@
 }
 
 .ff-paper-title strong {
+    max-width: 100%;
+    overflow-wrap: anywhere;
     color: #0f172a;
     font-size: 1.15rem;
     font-weight: 850;
@@ -768,6 +781,7 @@
 
 .ff-paper-org-info > strong {
     display: block;
+    overflow-wrap: anywhere;
     color: #0f172a;
     font-size: 0.92rem;
     font-weight: 850;
@@ -779,6 +793,7 @@
     color: #64748b;
     font-size: 0.59rem;
     line-height: 1.55;
+    overflow-wrap: anywhere;
 }
 
 .ff-paper-org-contact {
@@ -786,6 +801,7 @@
     color: #94a3b8;
     font-size: 0.56rem;
     line-height: 1.4;
+    overflow-wrap: anywhere;
 }
 
 .ff-paper-org-header .ff-paper-title {
@@ -1153,6 +1169,10 @@
         flex-direction: column;
     }
 
+    .ff-generator-preview-status {
+        white-space: normal;
+    }
+
     .ff-generator-stage {
         padding: 12px;
     }
@@ -1378,12 +1398,17 @@
    ============================================================ */
 
 [data-theme="light"] .ff-generator-page {
-    --gen-border: rgba(71, 85, 105, .14);
-    --gen-border-strong: rgba(71, 85, 105, .20);
+    --gen-border: var(--ff-border-subtle);
+    --gen-border-strong: var(--ff-border-control-hover);
+    --gen-text: var(--ff-text-primary);
+    --gen-muted: var(--ff-text-secondary);
+    --gen-soft: var(--ff-text-muted);
+    --gen-success: var(--ff-state-success);
+    --gen-danger: var(--ff-state-danger);
     --gen-accent-soft: rgba(37, 99, 235, .08);
     --gen-success-soft: rgba(16, 185, 129, .08);
     --gen-danger-soft: rgba(244, 63, 94, .08);
-    color: #0f172a;
+    color: var(--ff-text-primary);
 }
 
 /* ============================================================
@@ -1457,7 +1482,7 @@
    ============================================================ */
 
 [data-theme="light"] .ff-generator-panel-head h2 {
-    color: #0f172a;
+    color: var(--ff-text-primary);
 }
 
 [data-theme="light"] .ff-generator-count {
@@ -1471,15 +1496,15 @@
    ============================================================ */
 
 [data-theme="light"] .ff-generator-search {
-    color: #64748b;
+    color: var(--ff-text-muted);
 }
 
 [data-theme="light"] .ff-generator-search i {
-    color: #64748b;
+    color: var(--ff-text-muted);
 }
 
 [data-theme="light"] .ff-generator-search input {
-    color: #0f172a;
+    color: var(--ff-text-input);
     background: rgba(255,255,255,.72);
     border-color: rgba(71,85,105,.14);
     box-shadow:
@@ -1487,11 +1512,11 @@
 }
 
 [data-theme="light"] .ff-generator-search input::placeholder {
-    color: #94a3b8;
+    color: var(--ff-text-muted);
 }
 
 [data-theme="light"] .ff-generator-search input:focus {
-    color: #0f172a;
+    color: var(--ff-text-input);
     background: rgba(255,255,255,.92);
     border-color: rgba(37,99,235,.30);
     box-shadow:
@@ -1509,11 +1534,11 @@
 }
 
 [data-theme="light"] .ff-generator-filter {
-    color: #64748b;
+    color: var(--ff-text-muted);
 }
 
 [data-theme="light"] .ff-generator-filter:hover {
-    color: #334155;
+    color: var(--ff-text-secondary);
     background: rgba(255,255,255,.70);
 }
 
@@ -1535,7 +1560,7 @@
    ============================================================ */
 
 [data-theme="light"] .ff-generator-archive-item {
-    color: #334155;
+    color: var(--ff-text-secondary);
     background:
         linear-gradient(
             145deg,
@@ -1582,19 +1607,19 @@
 }
 
 [data-theme="light"] .ff-generator-archive-main strong {
-    color: #0f172a;
+    color: var(--ff-text-primary);
 }
 
 [data-theme="light"] .ff-generator-archive-main span {
-    color: #475569;
+    color: var(--ff-text-nav);
 }
 
 [data-theme="light"] .ff-generator-archive-main small {
-    color: #64748b;
+    color: var(--ff-text-muted);
 }
 
 [data-theme="light"] .ff-generator-archive-meta time {
-    color: #64748b;
+    color: var(--ff-text-muted);
 }
 
 /* ============================================================
@@ -1618,15 +1643,15 @@
    ============================================================ */
 
 [data-theme="light"] .ff-generator-empty {
-    color: #64748b;
+    color: var(--ff-text-muted);
 }
 
 [data-theme="light"] .ff-generator-empty strong {
-    color: #334155;
+    color: var(--ff-text-secondary);
 }
 
 [data-theme="light"] .ff-generator-empty span {
-    color: #64748b;
+    color: var(--ff-text-muted);
 }
 
 [data-theme="light"] .ff-generator-empty .ff-empty-icon {
@@ -1645,11 +1670,11 @@
 }
 
 [data-theme="light"] .ff-generator-preview-toolbar strong {
-    color: #0f172a;
+    color: var(--ff-text-primary);
 }
 
 [data-theme="light"] .ff-generator-preview-status {
-    color: #64748b;
+    color: var(--ff-text-muted);
 }
 
 [data-theme="light"] .ff-generator-preview-status.is-ready {

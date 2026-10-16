@@ -4,6 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <script>
+        (() => {
+            try {
+                const theme = localStorage.getItem("finflow-theme");
+                if (theme === "light" || theme === "dark") {
+                    document.documentElement.setAttribute("data-theme", theme);
+                }
+            } catch (e) {}
+        })();
+    </script>
+
     <title>ElixOR Connect — Вхід</title>
 
     <style>
@@ -757,17 +768,6 @@
             ElixOR Connect
         </footer>
     </main>
-
-    <script>
-        (() => {
-            try {
-                const theme = localStorage.getItem("finflow-theme");
-                if (theme === "light" || theme === "dark") {
-                    document.documentElement.setAttribute("data-theme", theme);
-                }
-            } catch (e) {}
-        })();
-    </script>
 
     <script>
         (() => {

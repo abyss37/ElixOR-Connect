@@ -729,12 +729,10 @@
 
 .ff-audit-company-name,
 .ff-audit-user-name {
-    overflow: hidden;
     color: #cbd5e1;
     font-size: 10px;
     font-weight: 700;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
 }
 
 .ff-audit-company-id,

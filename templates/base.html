@@ -4,6 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <script>
+        (function () {
+            try {
+                var theme = localStorage.getItem('finflow-theme');
+                if (theme === 'light' || theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', theme);
+                }
+            } catch (error) {
+                /* Keep the dark theme declared on <html> as the fallback. */
+            }
+        })();
+    </script>
+
     <title>{% block title %}ElixOR Connect{% endblock %}</title>
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='elixor-connect-favicon.svg') }}">
 
@@ -14,7 +27,7 @@
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/finflow.css') }}?v=20261016-1">
+          href="{{ url_for('static', filename='css/finflow.css') }}?v=20261016-3">
 
     {% block head %}{% endblock %}
     {% block extra_head %}{% endblock %}

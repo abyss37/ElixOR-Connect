@@ -22,6 +22,59 @@
     --ff-accent: #60a5fa;
     --ff-accent-2: #22d3ee;
 
+    /* Semantic application surfaces and controls (dark defaults). */
+    --ff-app-background: linear-gradient(135deg, #050b15 0%, #07111f 50%, #091522 100%);
+    --ff-surface-card: linear-gradient(135deg, rgba(30, 41, 59, .68), rgba(15, 23, 42, .48));
+    --ff-surface-panel: linear-gradient(145deg, rgba(30, 41, 59, .66), rgba(15, 23, 42, .5));
+    --ff-surface-control: linear-gradient(180deg, rgba(15, 23, 42, .68), rgba(15, 23, 42, .52));
+    --ff-surface-filter: rgba(15, 23, 42, .58);
+    --ff-surface-filter-focus: rgba(15, 23, 42, .78);
+    --ff-surface-control-hover: linear-gradient(180deg, rgba(30, 41, 59, .72), rgba(15, 23, 42, .58));
+    --ff-surface-control-focus: linear-gradient(180deg, rgba(30, 41, 59, .76), rgba(15, 23, 42, .64));
+    --ff-surface-modal: linear-gradient(145deg, rgba(30, 41, 59, .96), rgba(15, 23, 42, .97));
+    /* Dashboard surfaces retain their established dark appearance. */
+    --ff-surface-overview: linear-gradient(145deg, rgba(22, 43, 66, .72) 0%, rgba(10, 25, 42, .64) 55%, rgba(7, 19, 33, .70) 100%);
+    --ff-surface-overview-panel: linear-gradient(145deg, rgba(19, 40, 62, .74), rgba(7, 21, 36, .68));
+    --ff-surface-overview-link: linear-gradient(145deg, rgba(16, 34, 54, .48), rgba(7, 20, 34, .40));
+    --ff-border-overview-card: rgba(125, 170, 207, .11);
+    --ff-border-overview-panel: rgba(125, 170, 207, .105);
+    --ff-border-overview-link: rgba(125, 170, 207, .075);
+    --ff-shadow-overview: 0 20px 50px rgba(0, 0, 0, .15), inset 0 1px 0 rgba(255, 255, 255, .035);
+    --ff-shadow-overview-hover: 0 24px 55px rgba(0, 0, 0, .20), 0 0 30px rgba(59, 130, 246, .035), inset 0 1px 0 rgba(255, 255, 255, .04);
+    --ff-text-primary: #f1f5f9;
+    --ff-text-secondary: #cbd5e1;
+    --ff-text-input: #e2e8f0;
+    --ff-text-nav: #9eafc2;
+    --ff-border-subtle: rgba(148, 163, 184, .11);
+    --ff-border-panel-divider: rgba(148, 163, 184, .09);
+    --ff-border-control: rgba(148, 163, 184, .13);
+    --ff-border-control-hover: rgba(148, 163, 184, .21);
+    --ff-border-button: rgba(148, 163, 184, .14);
+    --ff-border-button-hover: rgba(148, 163, 184, .22);
+    --ff-border-filter-control: rgba(148, 163, 184, .14);
+    --ff-border-modal: rgba(148, 163, 184, .14);
+    --ff-focus-border: rgba(139, 92, 246, .48);
+    --ff-focus-filter-border: rgba(139, 92, 246, .5);
+    --ff-focus-filter-ring: 0 0 0 3px rgba(139, 92, 246, .1);
+    --ff-radius-filter-control: 10px;
+    --ff-focus-ring: 0 0 0 3px rgba(139, 92, 246, .09), 0 8px 24px rgba(2, 6, 23, .16);
+    --ff-shadow-card: inset 0 1px 0 rgba(255, 255, 255, .035), 0 12px 32px rgba(0, 0, 0, .13);
+    --ff-shadow-panel: inset 0 1px 0 rgba(255, 255, 255, .035), 0 18px 48px rgba(0, 0, 0, .15);
+    --ff-shadow-modal: 0 30px 90px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .04);
+    --ff-button-primary-background: linear-gradient(135deg, #7c3aed, #6366f1);
+    --ff-button-primary-hover: linear-gradient(135deg, #8b5cf6, #6366f1);
+    --ff-button-primary-border: rgba(139, 92, 246, .45);
+    --ff-button-primary-shadow: 0 8px 26px rgba(99, 102, 241, .22);
+    --ff-button-primary-hover-shadow: 0 10px 30px rgba(99, 102, 241, .3);
+    --ff-button-secondary-background: rgba(30, 41, 59, .6);
+    --ff-button-secondary-hover: rgba(51, 65, 85, .72);
+    --ff-state-success: #34d399;
+    --ff-state-warning: #fbbf24;
+    --ff-state-danger: #fb7185;
+    --ff-radius-card: 18px;
+    --ff-radius-panel: 20px;
+    --ff-radius-control: 11px;
+
     --ff-radius: 16px;
     --ff-radius-sm: 11px;
 
@@ -1155,25 +1208,25 @@ body.ff-sidebar-collapsed .ff-nav-item:hover::after {
 
 .ff-btn-primary {
     color: #fff;
-    background: linear-gradient(135deg, #7c3aed, #6366f1);
-    border-color: rgba(139, 92, 246, .45);
-    box-shadow: 0 8px 26px rgba(99, 102, 241, .22);
+    background: var(--ff-button-primary-background);
+    border-color: var(--ff-button-primary-border);
+    box-shadow: var(--ff-button-primary-shadow);
 }
 
 .ff-btn-primary:hover {
-    background: linear-gradient(135deg, #8b5cf6, #6366f1);
-    box-shadow: 0 10px 30px rgba(99, 102, 241, .3);
+    background: var(--ff-button-primary-hover);
+    box-shadow: var(--ff-button-primary-hover-shadow);
 }
 
 .ff-btn-secondary {
-    color: #cbd5e1;
-    background: rgba(30, 41, 59, .6);
-    border-color: rgba(148, 163, 184, .14);
+    color: var(--ff-text-secondary);
+    background: var(--ff-button-secondary-background);
+    border-color: var(--ff-border-button);
 }
 
 .ff-btn-secondary:hover {
-    background: rgba(51, 65, 85, .72);
-    border-color: rgba(148, 163, 184, .22);
+    background: var(--ff-button-secondary-hover);
+    border-color: var(--ff-border-button-hover);
 }
 
 
@@ -1195,15 +1248,10 @@ body.ff-sidebar-collapsed .ff-nav-item:hover::after {
     min-height: 104px;
     padding: 18px;
     overflow: hidden;
-    border: 1px solid rgba(148, 163, 184, .11);
-    border-radius: 18px;
-    background:
-        linear-gradient(135deg,
-            rgba(30, 41, 59, .68),
-            rgba(15, 23, 42, .48));
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, .035),
-        0 12px 32px rgba(0, 0, 0, .13);
+    border: 1px solid var(--ff-border-subtle);
+    border-radius: var(--ff-radius-card);
+    background: var(--ff-surface-card);
+    box-shadow: var(--ff-shadow-card);
     backdrop-filter: blur(18px);
 }
 
@@ -1283,15 +1331,10 @@ body.ff-sidebar-collapsed .ff-nav-item:hover::after {
 
 .ff-panel {
     overflow: hidden;
-    border: 1px solid rgba(148, 163, 184, .11);
-    border-radius: 20px;
-    background:
-        linear-gradient(145deg,
-            rgba(30, 41, 59, .66),
-            rgba(15, 23, 42, .5));
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, .035),
-        0 18px 48px rgba(0, 0, 0, .15);
+    border: 1px solid var(--ff-border-subtle);
+    border-radius: var(--ff-radius-panel);
+    background: var(--ff-surface-panel);
+    box-shadow: var(--ff-shadow-panel);
     backdrop-filter: blur(20px);
 }
 
@@ -1301,12 +1344,12 @@ body.ff-sidebar-collapsed .ff-nav-item:hover::after {
     justify-content: space-between;
     gap: 24px;
     padding: 22px 22px 18px;
-    border-bottom: 1px solid rgba(148, 163, 184, .09);
+    border-bottom: 1px solid var(--ff-border-panel-divider);
 }
 
 .ff-panel-title {
     margin: 0;
-    color: #f1f5f9;
+    color: var(--ff-text-primary);
     font-size: 17px;
     font-weight: 680;
     letter-spacing: -.015em;
@@ -1353,11 +1396,11 @@ body.ff-sidebar-collapsed .ff-nav-item:hover::after {
 .ff-form-field select {
     width: 100%;
     min-height: 40px;
-    color: #e2e8f0;
-    border: 1px solid rgba(148, 163, 184, .14);
-    border-radius: 10px;
+    color: var(--ff-text-input);
+    border: 1px solid var(--ff-border-filter-control);
+    border-radius: var(--ff-radius-filter-control);
     outline: none;
-    background: rgba(15, 23, 42, .58);
+    background: var(--ff-surface-filter);
     transition:
         border-color .18s ease,
         box-shadow .18s ease,
@@ -1377,9 +1420,9 @@ body.ff-sidebar-collapsed .ff-nav-item:hover::after {
 .ff-select:focus,
 .ff-form-field input:focus,
 .ff-form-field select:focus {
-    border-color: rgba(139, 92, 246, .5);
-    background: rgba(15, 23, 42, .78);
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, .1);
+    border-color: var(--ff-focus-filter-border);
+    background: var(--ff-surface-filter-focus);
+    box-shadow: var(--ff-focus-filter-ring);
 }
 
 .users-search-clear {
@@ -1443,7 +1486,7 @@ body.ff-sidebar-collapsed .ff-nav-item:hover::after {
     height: 70px;
     padding: 0 18px;
     border-bottom: 1px solid rgba(148, 163, 184, .065);
-    color: #cbd5e1;
+    color: var(--ff-text-secondary);
     font-size: 12px;
     vertical-align: middle;
 }
@@ -1766,15 +1809,10 @@ body.ff-sidebar-collapsed .ff-nav-item:hover::after {
     z-index: 1;
     width: min(100%, 480px);
     overflow: hidden;
-    border: 1px solid rgba(148, 163, 184, .14);
+    border: 1px solid var(--ff-border-modal);
     border-radius: 20px;
-    background:
-        linear-gradient(145deg,
-            rgba(30, 41, 59, .96),
-            rgba(15, 23, 42, .97));
-    box-shadow:
-        0 30px 90px rgba(0, 0, 0, .45),
-        inset 0 1px 0 rgba(255, 255, 255, .04);
+    background: var(--ff-surface-modal);
+    box-shadow: var(--ff-shadow-modal);
 }
 
 .ff-modal-header {
@@ -1783,7 +1821,7 @@ body.ff-sidebar-collapsed .ff-nav-item:hover::after {
     justify-content: space-between;
     gap: 18px;
     padding: 22px;
-    border-bottom: 1px solid rgba(148, 163, 184, .09);
+    border-bottom: 1px solid var(--ff-border-panel-divider);
 }
 
 .ff-modal-heading {
@@ -3309,16 +3347,11 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
     min-width: 0;
     min-height: 42px;
     padding: 0 12px;
-    border: 1px solid rgba(148, 163, 184, .13);
-    border-radius: 11px;
+    border: 1px solid var(--ff-border-control);
+    border-radius: var(--ff-radius-control);
     outline: none;
-    color: #e2e8f0;
-    background:
-        linear-gradient(
-            180deg,
-            rgba(15, 23, 42, .68),
-            rgba(15, 23, 42, .52)
-        );
+    color: var(--ff-text-input);
+    background: var(--ff-surface-control);
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, .018);
     font-family: inherit;
@@ -3345,28 +3378,16 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
 .ff-form-field input:hover,
 .ff-form-field select:hover,
 .ff-form-field textarea:hover {
-    border-color: rgba(148, 163, 184, .21);
-    background:
-        linear-gradient(
-            180deg,
-            rgba(30, 41, 59, .72),
-            rgba(15, 23, 42, .58)
-        );
+    border-color: var(--ff-border-control-hover);
+    background: var(--ff-surface-control-hover);
 }
 
 .ff-form-field input:focus,
 .ff-form-field select:focus,
 .ff-form-field textarea:focus {
-    border-color: rgba(139, 92, 246, .48);
-    background:
-        linear-gradient(
-            180deg,
-            rgba(30, 41, 59, .76),
-            rgba(15, 23, 42, .64)
-        );
-    box-shadow:
-        0 0 0 3px rgba(139, 92, 246, .09),
-        0 8px 24px rgba(2, 6, 23, .16);
+    border-color: var(--ff-focus-border);
+    background: var(--ff-surface-control-focus);
+    box-shadow: var(--ff-focus-ring);
 }
 
 .ff-form-field small {
@@ -3789,6 +3810,54 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
 }
 
 [data-theme="light"] {
+    --ff-app-background: linear-gradient(135deg, #eef3f8 0%, #f7fafd 52%, #edf3f8 100%);
+    --ff-surface-card: linear-gradient(145deg, rgba(255, 255, 255, .88), rgba(246, 249, 253, .76));
+    --ff-surface-panel: linear-gradient(145deg, rgba(255, 255, 255, .82), rgba(246, 249, 252, .74));
+    --ff-surface-control: linear-gradient(180deg, rgba(255, 255, 255, .76), rgba(248, 250, 252, .62));
+    --ff-surface-filter: rgba(255, 255, 255, .76);
+    --ff-surface-filter-focus: #fff;
+    --ff-surface-control-hover: rgba(255, 255, 255, .84);
+    --ff-surface-control-focus: rgba(239, 246, 255, .82);
+    --ff-surface-modal: linear-gradient(145deg, rgba(255, 255, 255, .96), rgba(246, 249, 252, .90));
+    --ff-surface-overview: linear-gradient(145deg, rgba(255, 255, 255, .78), rgba(246, 249, 252, .68));
+    --ff-surface-overview-panel: linear-gradient(145deg, rgba(255, 255, 255, .78), rgba(246, 249, 252, .68));
+    --ff-surface-overview-link: linear-gradient(145deg, rgba(255, 255, 255, .78), rgba(246, 249, 252, .68));
+    --ff-border-overview-card: rgba(71, 85, 105, .14);
+    --ff-border-overview-panel: rgba(71, 85, 105, .14);
+    --ff-border-overview-link: rgba(71, 85, 105, .14);
+    --ff-shadow-overview: 0 20px 50px rgba(15, 23, 42, .09), inset 0 1px 0 rgba(255, 255, 255, .88);
+    --ff-shadow-overview-hover: 0 24px 55px rgba(15, 23, 42, .12), inset 0 1px 0 rgba(255, 255, 255, .92);
+    --ff-border-overview-hover: rgba(37, 99, 235, .20);
+    --ff-text-primary: #0f172a;
+    --ff-text-secondary: #334155;
+    --ff-text-input: #0f172a;
+    --ff-text-nav: #475569;
+    --ff-border-subtle: rgba(71, 85, 105, .13);
+    --ff-border-panel-divider: rgba(71, 85, 105, .10);
+    --ff-border-control: rgba(71, 85, 105, .15);
+    --ff-border-control-hover: rgba(71, 85, 105, .22);
+    --ff-border-button: rgba(71, 85, 105, .17);
+    --ff-border-button-hover: rgba(37, 99, 235, .24);
+    --ff-border-filter-control: rgba(71, 85, 105, .17);
+    --ff-border-modal: rgba(71, 85, 105, .14);
+    --ff-focus-border: rgba(37, 99, 235, .35);
+    --ff-focus-filter-border: rgba(37, 99, 235, .42);
+    --ff-focus-filter-ring: 0 0 0 3px rgba(37, 99, 235, .085);
+    --ff-radius-filter-control: 10px;
+    --ff-focus-ring: 0 0 0 3px rgba(37, 99, 235, .08), 0 8px 24px rgba(15, 23, 42, .07);
+    --ff-shadow-card: inset 0 1px 0 rgba(255, 255, 255, .94), 0 8px 26px rgba(15, 23, 42, .045);
+    --ff-shadow-panel: inset 0 1px 0 rgba(255, 255, 255, .92), 0 12px 34px rgba(15, 23, 42, .045);
+    --ff-shadow-modal: 0 35px 90px rgba(15, 23, 42, .18), inset 0 1px 0 rgba(255, 255, 255, .94);
+    --ff-button-primary-background: linear-gradient(135deg, #7c3aed, #6366f1);
+    --ff-button-primary-hover: linear-gradient(135deg, #8b5cf6, #6366f1);
+    --ff-button-primary-border: rgba(139, 92, 246, .45);
+    --ff-button-primary-shadow: 0 8px 26px rgba(99, 102, 241, .22);
+    --ff-button-primary-hover-shadow: 0 10px 30px rgba(99, 102, 241, .3);
+    --ff-button-secondary-background: linear-gradient(145deg, rgba(255, 255, 255, .88), rgba(241, 245, 249, .76));
+    --ff-button-secondary-hover: rgba(239, 246, 255, .94);
+    --ff-state-success: #059669;
+    --ff-state-warning: #b45309;
+    --ff-state-danger: #e11d48;
     --ff-bg: #eef3f8;
     --ff-bg-2: #f6f9fc;
     --ff-glass: rgba(255, 255, 255, .62);
@@ -3852,11 +3921,11 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
    ========================================================= */
 
 [data-theme="light"] body.ff-body {
-    color: #0f172a;
+    color: var(--ff-text-primary);
     background:
         radial-gradient(circle at 12% 8%, rgba(37,99,235,.07), transparent 28%),
         radial-gradient(circle at 88% 14%, rgba(8,145,178,.06), transparent 30%),
-        linear-gradient(135deg, #eef3f8 0%, #f7fafd 52%, #edf3f8 100%);
+        var(--ff-app-background);
 }
 
 [data-theme="light"] .ff-app {
@@ -3900,7 +3969,7 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
 }
 
 [data-theme="light"] .ff-header-left {
-    color: #0f172a;
+    color: var(--ff-text-primary);
 }
 
 [data-theme="light"] .ff-nav-label {
@@ -3908,7 +3977,7 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
 }
 
 [data-theme="light"] .ff-nav-item {
-    color: #475569;
+    color: var(--ff-text-nav);
 }
 
 [data-theme="light"] .ff-nav-item:hover {
@@ -4058,14 +4127,10 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
 }
 
 
-[data-theme="light"] .ff-page-title { color: #0f172a; }
-[data-theme="light"] .ff-page-description { color: #64748b; }
-
-[data-theme="light"] .ff-page-heading h1 { color: #0f172a; }
-[data-theme="light"] .ff-page-heading p { color: #64748b; }
-
-[data-theme="light"] .ff-page-heading h1 { color: #0f172a !important; }
-[data-theme="light"] .ff-page-heading p { color: #64748b !important; }
+[data-theme="light"] .ff-page-title { color: var(--ff-text-primary); }
+[data-theme="light"] .ff-page-description { color: var(--ff-text-muted); }
+[data-theme="light"] .ff-page-heading h1 { color: var(--ff-text-primary) !important; }
+[data-theme="light"] .ff-page-heading p { color: var(--ff-text-muted) !important; }
 [data-theme="light"] .ff-page-icon { color: #2563eb; background: linear-gradient(145deg, rgba(37,99,235,.09), rgba(8,145,178,.055)); border-color: rgba(37,99,235,.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.88), 0 8px 20px rgba(15,23,42,.07); }
 
 /* ELIXOR CONNECT — LIGHT GLASS / OUR COMPANY */
@@ -4078,15 +4143,15 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
     background: linear-gradient(145deg, rgba(255,255,255,.82), rgba(246,249,252,.70)) !important;
     border-color: rgba(71,85,105,.14) !important;
     box-shadow: 0 22px 55px rgba(15,23,42,.09), inset 0 1px 0 rgba(255,255,255,.90) !important;
-    color: #334155;
+    color: var(--ff-text-secondary);
 }
 [data-theme="light"] .our-company-panel,
 [data-theme="light"] .our-company-card,
-[data-theme="light"] .our-company-detail-section { color: #334155; }
+[data-theme="light"] .our-company-detail-section { color: var(--ff-text-secondary); }
 [data-theme="light"] .our-company-card-title,
 [data-theme="light"] .our-company-name,
 [data-theme="light"] .our-company-detail-title,
-[data-theme="light"] .our-company-details-card-header h3 { color: #0f172a !important; }
+[data-theme="light"] .our-company-details-card-header h3 { color: var(--ff-text-primary) !important; }
 
 /* ELIXOR CONNECT — LIGHT GLASS / ORGANIZATION PANELS */
 [data-theme="light"] .our-company-detail-page .ff-panel {
@@ -4099,10 +4164,10 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
     background: rgba(255,255,255,.38);
 }
 [data-theme="light"] .our-company-detail-page .our-company-detail-field > span {
-    color: #64748b;
+    color: var(--ff-text-muted);
 }
 [data-theme="light"] .our-company-detail-page .our-company-detail-field strong {
-    color: #0f172a;
+    color: var(--ff-text-primary);
 }
 
 /* ELIXOR CONNECT — LIGHT / OUR COMPANY TEXT + BUTTONS */
@@ -4114,11 +4179,11 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
 [data-theme="light"] .our-company-detail-page .our-company-details-additional p,
 [data-theme="light"] .our-company-detail-page .our-company-asset-content > span,
 [data-theme="light"] .our-company-detail-page .our-company-asset-content .ff-panel-description {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
 }
 [data-theme="light"] .our-company-detail-page .ff-btn-secondary,
 [data-theme="light"] .our-company-detail-page .ff-button-secondary {
-    color: #334155 !important;
+    color: var(--ff-text-secondary) !important;
     background: rgba(255,255,255,.62) !important;
     border-color: rgba(71,85,105,.14) !important;
     box-shadow: inset 0 1px 0 rgba(255,255,255,.86), 0 6px 18px rgba(15,23,42,.05) !important;
@@ -4407,7 +4472,7 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
 }
 /* ELIXOR CONNECT — LIGHT GLASS / OUR COMPANY MODALS */
 [data-theme="light"] .ff-modal-backdrop { background: rgba(226,232,240,.58); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-[data-theme="light"] .ff-modal-dialog { background: linear-gradient(145deg, rgba(255,255,255,.96), rgba(246,249,252,.90)) !important; border-color: rgba(71,85,105,.14) !important; box-shadow: 0 35px 90px rgba(15,23,42,.18), inset 0 1px 0 rgba(255,255,255,.94) !important; color: #0f172a !important; }
+[data-theme="light"] .ff-modal-dialog { background: var(--ff-surface-modal) !important; border-color: var(--ff-border-modal) !important; box-shadow: var(--ff-shadow-modal) !important; color: var(--ff-text-primary) !important; }
 [data-theme="light"] .ff-modal-header { border-bottom-color: rgba(71,85,105,.10); background: rgba(255,255,255,.36); }
 [data-theme="light"] .ff-modal-heading h2 { color: #0f172a; }
 [data-theme="light"] .ff-modal-heading p { color: #64748b; }
@@ -4429,10 +4494,11 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
 [data-theme="light"] .ff-form-section-heading i { color: #2563eb; background: rgba(37,99,235,.07); border-color: rgba(37,99,235,.13); }
 [data-theme="light"] .ff-form-field > span, [data-theme="light"] .ff-form-field label { color: #334155; }
 [data-theme="light"] .ff-form-field > span b { color: #2563eb; }
-[data-theme="light"] .ff-form-field input, [data-theme="light"] .ff-form-field select, [data-theme="light"] .ff-form-field textarea { color: #0f172a; background: linear-gradient(180deg, rgba(255,255,255,.76), rgba(248,250,252,.62)); border-color: rgba(71,85,105,.15); box-shadow: inset 0 1px 0 rgba(255,255,255,.90); }
+[data-theme="light"] .ff-form-field input, [data-theme="light"] .ff-form-field select, [data-theme="light"] .ff-form-field textarea { color: var(--ff-text-input); background: var(--ff-surface-control); border-color: var(--ff-border-control); box-shadow: inset 0 1px 0 rgba(255,255,255,.90); }
+[data-theme="light"] .ff-form-field select, [data-theme="light"] .ff-select { color-scheme: light; }
 [data-theme="light"] .ff-form-field input::placeholder, [data-theme="light"] .ff-form-field textarea::placeholder { color: #94a3b8; }
-[data-theme="light"] .ff-form-field input:hover, [data-theme="light"] .ff-form-field select:hover, [data-theme="light"] .ff-form-field textarea:hover { background: rgba(255,255,255,.84); border-color: rgba(71,85,105,.22); }
-[data-theme="light"] .ff-form-field input:focus, [data-theme="light"] .ff-form-field select:focus, [data-theme="light"] .ff-form-field textarea:focus { background: rgba(239,246,255,.82); border-color: rgba(37,99,235,.35); box-shadow: 0 0 0 3px rgba(37,99,235,.08), 0 8px 24px rgba(15,23,42,.07); }
+[data-theme="light"] .ff-form-field input:hover, [data-theme="light"] .ff-form-field select:hover, [data-theme="light"] .ff-form-field textarea:hover { background: var(--ff-surface-control-hover); border-color: var(--ff-border-control-hover); }
+[data-theme="light"] .ff-form-field input:focus, [data-theme="light"] .ff-form-field select:focus, [data-theme="light"] .ff-form-field textarea:focus { background: var(--ff-surface-control-focus); border-color: var(--ff-focus-border); box-shadow: var(--ff-focus-ring); }
 [data-theme="light"] .ff-form-field small { color: #64748b; }
 [data-theme="light"] .ff-modal-footer { border-top-color: rgba(71,85,105,.09); background: rgba(255,255,255,.24); }
 /* ELIXOR CONNECT — LIGHT / ORGANIZATION AVAILABILITY */
@@ -4459,15 +4525,15 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
     color: #059669;
 }
 [data-theme="light"] .our-company-checkbox-copy strong {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 [data-theme="light"] .our-company-checkbox-copy small {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
 }
 
 /* ELIXOR CONNECT — LIGHT GLASS / OUR COMPANY MODAL POLISH */
 [data-theme="light"] .our-company-page .ff-modal .our-company-availability {
-    color: #334155 !important;
+    color: var(--ff-text-secondary) !important;
     background: rgba(255,255,255,.42);
     border: 1px solid rgba(71,85,105,.10);
     border-radius: 12px;
@@ -4479,13 +4545,13 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
     box-shadow: inset 0 1px 0 rgba(255,255,255,.90), 0 4px 12px rgba(15,23,42,.06) !important;
 }
 [data-theme="light"] .our-company-page .ff-modal .our-company-checkbox-copy strong {
-    color: #334155 !important;
+    color: var(--ff-text-secondary) !important;
 }
 [data-theme="light"] .our-company-page .ff-modal .our-company-checkbox-copy small {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
 }
 [data-theme="light"] .our-company-page .ff-modal .ff-btn-secondary {
-    color: #334155 !important;
+    color: var(--ff-text-secondary) !important;
     background: rgba(255,255,255,.68) !important;
     border-color: rgba(71,85,105,.14) !important;
     box-shadow: inset 0 1px 0 rgba(255,255,255,.88), 0 6px 18px rgba(15,23,42,.05) !important;
@@ -4496,10 +4562,10 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
     border-color: rgba(37,99,235,.18) !important;
 }
 [data-theme="light"] .our-company-page .ff-modal .ff-form-section-heading strong {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 [data-theme="light"] .our-company-page .ff-modal .ff-form-section-heading span {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
 }
 
 /* ELIXOR CONNECT — USERS PAGE LIGHT GLASS */

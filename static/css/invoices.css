@@ -120,6 +120,10 @@
     gap: 12px;
 }
 
+.ff-invoice-stat > div {
+    min-width: 0;
+}
+
 .ff-invoice-stat-icon {
     width: 40px;
     height: 40px;
@@ -151,6 +155,8 @@
     font-size: 18px;
     font-weight: 800;
     line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
 }
 
 .ff-invoice-stat div > span {
@@ -266,6 +272,7 @@
     font-size: 12px;
     border-bottom: 1px solid rgba(148, 163, 184, .07);
     vertical-align: middle;
+    overflow-wrap: anywhere;
 }
 
 .ff-invoice-table tbody tr {
@@ -277,12 +284,14 @@
 }
 
 .ff-invoice-number {
+    overflow-wrap: anywhere;
     color: #f8fafc;
     font-weight: 800;
     font-size: 13px;
 }
 
 .ff-invoice-company {
+    overflow-wrap: anywhere;
     color: #cbd5e1;
     font-weight: 600;
 }
@@ -301,6 +310,8 @@
 .ff-invoice-amount {
     color: #f8fafc;
     font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
 }
 
 .ff-product-badge,
@@ -392,6 +403,7 @@
 
 .ff-invoice-card-top,
 .ff-invoice-card-footer {
+    min-width: 0;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -404,6 +416,8 @@
     font-size: 22px;
     font-weight: 800;
     letter-spacing: -.025em;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
 }
 
 .ff-invoice-card-grid {
@@ -420,6 +434,7 @@
 }
 
 .ff-invoice-card-grid strong {
+    overflow-wrap: anywhere;
     color: #cbd5e1;
     font-size: 12px;
 }
@@ -553,7 +568,12 @@
     border-bottom: 1px solid rgba(148, 163, 184, .09);
 }
 
+.ff-invoice-detail-head > div:first-child {
+    min-width: 0;
+}
+
 .ff-invoice-detail-head h2 {
+    overflow-wrap: anywhere;
     margin: 0;
     color: #f8fafc;
     font-size: 22px;
@@ -562,6 +582,7 @@
 }
 
 .ff-invoice-detail-head p {
+    overflow-wrap: anywhere;
     margin: 5px 0 0;
     color: #94a3b8;
     font-size: 12px;
@@ -594,6 +615,7 @@
 }
 
 .ff-invoice-detail-item {
+    min-width: 0;
     min-height: 72px;
     padding: 13px;
     background: rgba(2, 6, 23, .25);
@@ -610,6 +632,8 @@
 }
 
 .ff-invoice-detail-item strong {
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
     color: #e2e8f0;
     font-size: 12px;
 }
@@ -637,6 +661,7 @@
     font-size: 12px;
     line-height: 1.6;
     white-space: pre-wrap;
+    overflow-wrap: anywhere;
 }
 
 .ff-invoice-detail-cancelled {
@@ -1110,9 +1135,9 @@
 
 [data-theme="light"] .ff-invoices-page-actions .ff-btn-secondary,
 [data-theme="light"] .ff-invoice-toolbar .ff-filter-select {
-    color: #334155 !important;
-    background: rgba(255,255,255,.92) !important;
-    border-color: rgba(71,85,105,.13) !important;
+    color: var(--ff-text-secondary) !important;
+    background: var(--ff-surface-filter) !important;
+    border-color: var(--ff-border-filter-control) !important;
     box-shadow:
         0 8px 24px rgba(15,23,42,.055),
         inset 0 1px 0 rgba(255,255,255,.96) !important;
@@ -1120,34 +1145,28 @@
 
 [data-theme="light"] .ff-invoices-page-actions .ff-btn-secondary:hover,
 [data-theme="light"] .ff-invoice-toolbar .ff-filter-select:hover {
-    color: #0f172a !important;
-    background: rgba(248,250,252,.98) !important;
+    color: var(--ff-text-primary) !important;
+    background: var(--ff-surface-control-hover) !important;
 }
 
 [data-theme="light"] .ff-invoice-stats {
-    color: #334155 !important;
+    color: var(--ff-text-secondary) !important;
 }
 
 [data-theme="light"] .ff-invoice-stat,
 [data-theme="light"] .ff-invoice-toolbar,
 [data-theme="light"] .ff-invoice-content {
-    background: linear-gradient(
-        145deg,
-        rgba(255,255,255,.90),
-        rgba(248,250,252,.82)
-    ) !important;
-    border-color: rgba(71,85,105,.12) !important;
-    box-shadow:
-        0 18px 42px rgba(15,23,42,.065),
-        inset 0 1px 0 rgba(255,255,255,.96) !important;
+    background: var(--ff-surface-card) !important;
+    border-color: var(--ff-border-subtle) !important;
+    box-shadow: var(--ff-shadow-card) !important;
 }
 
 [data-theme="light"] .ff-invoice-stat strong {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 
 [data-theme="light"] .ff-invoice-stat div > span {
-    color: #475569 !important;
+    color: var(--ff-text-nav) !important;
 }
 
 [data-theme="light"] .ff-invoice-stat-icon {
@@ -1175,27 +1194,27 @@
 }
 
 [data-theme="light"] .ff-invoice-search i {
-    color: #475569 !important;
+    color: var(--ff-text-nav) !important;
 }
 
 [data-theme="light"] .ff-invoice-search input {
-    color: #0f172a !important;
+    color: var(--ff-text-input) !important;
     background: transparent !important;
 }
 
 [data-theme="light"] .ff-invoice-search input::placeholder {
-    color: #94a3b8 !important;
+    color: var(--ff-text-muted) !important;
 }
 
 [data-theme="light"] .ff-filter-select {
-    color: #334155 !important;
-    background-color: rgba(255,255,255,.94) !important;
-    border-color: rgba(71,85,105,.14) !important;
+    color: var(--ff-text-input) !important;
+    background-color: var(--ff-surface-filter) !important;
+    border-color: var(--ff-border-control) !important;
 }
 
 [data-theme="light"] .ff-filter-select:focus {
-    border-color: rgba(37,99,235,.38) !important;
-    box-shadow: 0 0 0 3px rgba(37,99,235,.08) !important;
+    border-color: var(--ff-focus-filter-border) !important;
+    box-shadow: var(--ff-focus-filter-ring) !important;
 }
 
 [data-theme="light"] .ff-invoice-view-toggle {
@@ -1223,17 +1242,17 @@
 }
 
 [data-theme="light"] .ff-invoice-table {
-    color: #334155 !important;
+    color: var(--ff-text-secondary) !important;
 }
 
 [data-theme="light"] .ff-invoice-table th {
-    color: #475569 !important;
+    color: var(--ff-text-nav) !important;
     background: rgba(248,250,252,.94) !important;
     border-color: rgba(71,85,105,.10) !important;
 }
 
 [data-theme="light"] .ff-invoice-table td {
-    color: #334155 !important;
+    color: var(--ff-text-secondary) !important;
     border-color: rgba(71,85,105,.08) !important;
 }
 
@@ -1248,13 +1267,13 @@
 [data-theme="light"] .ff-invoice-number,
 [data-theme="light"] .ff-invoice-company,
 [data-theme="light"] .ff-invoice-amount {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 
 [data-theme="light"] .ff-invoice-sub,
 [data-theme="light"] .ff-invoice-date,
 [data-theme="light"] .ff-invoice-muted {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
 }
 
 [data-theme="light"] .ff-invoice-card {
@@ -1270,15 +1289,15 @@
 }
 
 [data-theme="light"] .ff-invoice-card-amount {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 
 [data-theme="light"] .ff-invoice-card-grid span:not(.ff-invoice-badge) {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
 }
 
 [data-theme="light"] .ff-invoice-card-grid strong {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 
 [data-theme="light"] .ff-invoice-action {
@@ -1336,6 +1355,13 @@
     box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
 }
 
+[data-theme="light"] .ff-invoice-badge.is-cancelled {
+    color: var(--ff-text-muted) !important;
+    background: rgba(100,116,139,.09) !important;
+    border-color: rgba(100,116,139,.20) !important;
+    box-shadow: none;
+}
+
 [data-theme="light"] .ff-invoice-deadline {
     color: #334155 !important;
     font-weight: 800 !important;
@@ -1369,16 +1395,10 @@
    ========================================================= */
 
 [data-theme="light"] .ff-invoice-create {
-    background: linear-gradient(
-        145deg,
-        rgba(255,255,255,.90),
-        rgba(248,250,252,.84)
-    ) !important;
-    border-color: rgba(71,85,105,.12) !important;
-    box-shadow:
-        0 24px 60px rgba(15,23,42,.08),
-        inset 0 1px 0 rgba(255,255,255,.96) !important;
-    color: #0f172a !important;
+    background: var(--ff-surface-card) !important;
+    border-color: var(--ff-border-subtle) !important;
+    box-shadow: var(--ff-shadow-card) !important;
+    color: var(--ff-text-primary) !important;
 }
 
 [data-theme="light"] .ff-invoice-create-head {
@@ -1386,23 +1406,17 @@
 }
 
 [data-theme="light"] .ff-invoice-create-head h2 {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 
 [data-theme="light"] .ff-invoice-create-head p {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
 }
 
 [data-theme="light"] .ff-invoice-editor-section {
-    background: linear-gradient(
-        145deg,
-        rgba(255,255,255,.78),
-        rgba(248,250,252,.68)
-    ) !important;
-    border-color: rgba(71,85,105,.11) !important;
-    box-shadow:
-        0 14px 34px rgba(15,23,42,.045),
-        inset 0 1px 0 rgba(255,255,255,.92) !important;
+    background: var(--ff-surface-panel) !important;
+    border-color: var(--ff-border-subtle) !important;
+    box-shadow: var(--ff-shadow-panel) !important;
 }
 
 [data-theme="light"] .ff-invoice-editor-section-head {
@@ -1410,11 +1424,11 @@
 }
 
 [data-theme="light"] .ff-invoice-editor-section-head h3 {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 
 [data-theme="light"] .ff-invoice-editor-section-head p {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
 }
 
 [data-theme="light"] .ff-invoice-editor-kicker {
@@ -1423,12 +1437,12 @@
 
 [data-theme="light"] .ff-field,
 [data-theme="light"] .ff-invoice-form-grid label {
-    color: #334155 !important;
+    color: var(--ff-text-secondary) !important;
 }
 
 [data-theme="light"] .ff-field > span,
 [data-theme="light"] .ff-invoice-form-grid label > span {
-    color: #475569 !important;
+    color: var(--ff-text-nav) !important;
 }
 
 [data-theme="light"] .ff-field input,
@@ -1437,9 +1451,9 @@
 [data-theme="light"] .ff-invoice-form-grid input,
 [data-theme="light"] .ff-invoice-form-grid select,
 [data-theme="light"] .ff-invoice-form-grid textarea {
-    color: #0f172a !important;
-    background: rgba(255,255,255,.92) !important;
-    border-color: rgba(71,85,105,.15) !important;
+    color: var(--ff-text-input) !important;
+    background: var(--ff-surface-control) !important;
+    border-color: var(--ff-border-control) !important;
     box-shadow:
         inset 0 1px 2px rgba(15,23,42,.025),
         0 4px 14px rgba(15,23,42,.025) !important;
@@ -1449,7 +1463,7 @@
 [data-theme="light"] .ff-field textarea::placeholder,
 [data-theme="light"] .ff-invoice-form-grid input::placeholder,
 [data-theme="light"] .ff-invoice-form-grid textarea::placeholder {
-    color: #94a3b8 !important;
+    color: var(--ff-text-muted) !important;
 }
 
 [data-theme="light"] .ff-field input:focus,
@@ -1458,12 +1472,10 @@
 [data-theme="light"] .ff-invoice-form-grid input:focus,
 [data-theme="light"] .ff-invoice-form-grid select:focus,
 [data-theme="light"] .ff-invoice-form-grid textarea:focus {
-    color: #0f172a !important;
-    background: #ffffff !important;
-    border-color: rgba(37,99,235,.42) !important;
-    box-shadow:
-        0 0 0 3px rgba(37,99,235,.08),
-        0 8px 20px rgba(15,23,42,.035) !important;
+    color: var(--ff-text-input) !important;
+    background: var(--ff-surface-control-focus) !important;
+    border-color: var(--ff-focus-border) !important;
+    box-shadow: var(--ff-focus-ring) !important;
 }
 
 [data-theme="light"] .ff-invoice-items-head {
@@ -1476,13 +1488,13 @@
 }
 
 [data-theme="light"] .ff-invoice-items-header {
-    color: #475569 !important;
+    color: var(--ff-text-nav) !important;
     background: rgba(241,245,249,.72) !important;
     border-bottom-color: rgba(71,85,105,.10) !important;
 }
 
 [data-theme="light"] .ff-invoice-items-header span {
-    color: #475569 !important;
+    color: var(--ff-text-nav) !important;
 }
 
 [data-theme="light"] .ff-invoice-item {
@@ -1491,19 +1503,19 @@
 }
 
 [data-theme="light"] .ff-invoice-item input {
-    color: #0f172a !important;
-    background: rgba(255,255,255,.94) !important;
-    border-color: rgba(71,85,105,.13) !important;
+    color: var(--ff-text-input) !important;
+    background: var(--ff-surface-control) !important;
+    border-color: var(--ff-border-control) !important;
 }
 
 [data-theme="light"] .ff-invoice-item input:focus {
-    background: #ffffff !important;
-    border-color: rgba(37,99,235,.40) !important;
-    box-shadow: 0 0 0 3px rgba(37,99,235,.07) !important;
+    background: var(--ff-surface-control-focus) !important;
+    border-color: var(--ff-focus-border) !important;
+    box-shadow: var(--ff-focus-ring) !important;
 }
 
 [data-theme="light"] .ff-invoice-item-total {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
     font-weight: 800 !important;
 }
 
@@ -1534,20 +1546,14 @@
    INVOICES — LIGHT GLASS / EDITOR TYPOGRAPHY
    ========================================================= */
 
-[data-theme="light"] .ff-invoice-create,
-[data-theme="light"] .ff-invoice-create * {
-    --ff-light-text: #1e293b;
-    --ff-light-muted: #526277;
-}
-
 [data-theme="light"] .ff-invoice-create-head h2,
 [data-theme="light"] .ff-invoice-editor-section-head h3 {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 
 [data-theme="light"] .ff-invoice-create-head p,
 [data-theme="light"] .ff-invoice-editor-section-head p {
-    color: #526277 !important;
+    color: var(--ff-text-muted) !important;
 }
 
 [data-theme="light"] .ff-invoice-editor-kicker {
@@ -1559,7 +1565,7 @@
 [data-theme="light"] .ff-invoice-form-grid label > span,
 [data-theme="light"] .ff-invoice-items-head,
 [data-theme="light"] .ff-invoice-items-header span {
-    color: #334155 !important;
+    color: var(--ff-text-secondary) !important;
     font-weight: 700 !important;
 }
 
@@ -1570,46 +1576,42 @@
 [data-theme="light"] .ff-invoice-form-grid select,
 [data-theme="light"] .ff-invoice-form-grid textarea,
 [data-theme="light"] .ff-invoice-item input {
-    color: #172033 !important;
+    color: var(--ff-text-input) !important;
 }
 
 [data-theme="light"] .ff-field input::placeholder,
 [data-theme="light"] .ff-field textarea::placeholder,
 [data-theme="light"] .ff-invoice-form-grid input::placeholder,
 [data-theme="light"] .ff-invoice-form-grid textarea::placeholder {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
     opacity: 1 !important;
 }
 
 [data-theme="light"] .ff-invoice-items-header {
-    color: #334155 !important;
+    color: var(--ff-text-secondary) !important;
 }
 
 [data-theme="light"] .ff-invoice-item-total {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 
 [data-theme="light"] .ff-invoice-create-actions {
-    color: #334155 !important;
+    color: var(--ff-text-secondary) !important;
 }
 
 /* Editor helper / implementation note */
 [data-theme="light"] .ff-invoice-editor-section p,
 [data-theme="light"] .ff-invoice-editor-section small,
 [data-theme="light"] .ff-invoice-editor-section .ff-invoice-sub {
-    color: #526277 !important;
+    color: var(--ff-text-muted) !important;
     opacity: 1 !important;
 }
 
-
-[data-theme="light"] .ff-invoice-items-head p { color: #526277 !important; opacity: 1 !important; }
-
-[data-theme="light"] .ff-invoice-create .ff-invoice-items-head p[data-i18n] { color: #526277 !important; opacity: 1 !important; font-weight: 400 !important; }
-
-[data-theme="light"] .ff-invoice-create .ff-invoice-editor-section-head .ff-invoice-items-head p,
-[data-theme="light"] .ff-invoice-create .ff-invoice-items-head p { color: #526277 !important; opacity: 1 !important; font-weight: 400 !important; }
-
-[data-theme="light"] .ff-invoice-create .ff-invoice-items-head p { color: #526277 !important; opacity: 1 !important; font-weight: 400 !important; }
+[data-theme="light"] .ff-invoice-create .ff-invoice-items-head p {
+    color: var(--ff-text-muted) !important;
+    font-weight: 400 !important;
+    opacity: 1 !important;
+}
 
 /* ============================================================
    ELIXOR CONNECT — INVOICES / LIGHT GLASS
@@ -1627,7 +1629,7 @@
     box-shadow:
         0 24px 70px rgba(15,23,42,.12),
         inset 0 1px 0 rgba(255,255,255,.94) !important;
-    color: #0f172a;
+    color: var(--ff-text-primary);
 }
 
 [data-theme="light"] .ff-invoice-detail-head {
@@ -1635,11 +1637,11 @@
 }
 
 [data-theme="light"] .ff-invoice-detail-head h2 {
-    color: #0f172a;
+    color: var(--ff-text-primary);
 }
 
 [data-theme="light"] .ff-invoice-detail-head p {
-    color: #64748b;
+    color: var(--ff-text-muted);
 }
 
 /* Close */
@@ -1683,11 +1685,11 @@
 }
 
 [data-theme="light"] .ff-invoice-detail-item > span:first-child {
-    color: #64748b;
+    color: var(--ff-text-muted);
 }
 
 [data-theme="light"] .ff-invoice-detail-item strong {
-    color: #0f172a;
+    color: var(--ff-text-primary);
 }
 
 /* Contract details */
@@ -1702,11 +1704,11 @@
 }
 
 [data-theme="light"] .ff-invoice-detail-section > span {
-    color: #64748b;
+    color: var(--ff-text-muted);
 }
 
 [data-theme="light"] .ff-invoice-detail-section > div {
-    color: #334155;
+    color: var(--ff-text-secondary);
 }
 
 /* Cancelled invoice */

@@ -773,15 +773,41 @@
        LANGUAGE
        ========================================================= */
 
-    function getLang() {
-        const stored = localStorage.getItem("finflow-language");
+    let sessionLanguage = null;
+    let sessionTheme = null;
 
-        if (stored === "ru") {
-            localStorage.setItem("finflow-language", "uk");
-            return "uk";
+    function readPreference(key) {
+        try {
+            return localStorage.getItem(key);
+        } catch (error) {
+            return null;
+        }
+    }
+
+    function writePreference(key, value) {
+        try {
+            localStorage.setItem(key, value);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    function getLang() {
+        const stored = readPreference("finflow-language");
+
+        if (stored === "uk" || stored === "en") {
+            sessionLanguage = stored;
+            return stored;
         }
 
-        return stored === "en" ? "en" : "uk";
+        if (stored === "ru") {
+            sessionLanguage = "uk";
+            writePreference("finflow-language", sessionLanguage);
+            return sessionLanguage;
+        }
+
+        return sessionLanguage || "uk";
     }
 
 
@@ -793,7 +819,8 @@
     function setLang(lang) {
         lang = lang === "en" ? "en" : "uk";
 
-        localStorage.setItem("finflow-language", lang);
+        sessionLanguage = lang;
+        writePreference("finflow-language", lang);
 
         applyLanguage(lang);
 
@@ -1512,24 +1539,24 @@
     const THEME_STORAGE_KEY = "finflow-theme";
 
     function getTheme() {
-        const saved = localStorage.getItem(THEME_STORAGE_KEY);
+        const saved = readPreference(THEME_STORAGE_KEY);
 
         if (saved === "light" || saved === "dark") {
+            sessionTheme = saved;
             return saved;
         }
 
-        return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches
-            ? "light"
-            : "dark";
+        return sessionTheme || "dark";
     }
 
     function applyTheme(theme, persist = true) {
         const nextTheme = theme === "light" ? "light" : "dark";
 
+        sessionTheme = nextTheme;
         document.documentElement.setAttribute("data-theme", nextTheme);
 
         if (persist) {
-            localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+            writePreference(THEME_STORAGE_KEY, nextTheme);
         }
 
         window.dispatchEvent(

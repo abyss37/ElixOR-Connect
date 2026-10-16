@@ -713,27 +713,27 @@
    ========================================================= */
 
 html[data-theme="light"] .ff-budgets-page {
-    color: #0f172a;
+    color: var(--ff-text-primary);
 }
 
 /* Hero */
 html[data-theme="light"] .ff-budgets-page .ff-page-eyebrow {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
 }
 
 html[data-theme="light"] .ff-budgets-page .ff-page-title {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 
 html[data-theme="light"] .ff-budgets-page .ff-page-subtitle {
-    color: #475569 !important;
+    color: var(--ff-text-nav) !important;
 }
 
 /* Buttons */
 html[data-theme="light"] .ff-glass-button,
 html[data-theme="light"] .ff-budget-primary-button {
     background: rgba(255,255,255,.88) !important;
-    color: #334155 !important;
+    color: var(--ff-text-secondary) !important;
     border-color: rgba(71,85,105,.16) !important;
     box-shadow: 0 4px 14px rgba(15,23,42,.06) !important;
 }
@@ -763,7 +763,7 @@ html[data-theme="light"] .ff-budget-stat {
         rgba(255,255,255,.94),
         rgba(248,250,252,.82)
     ) !important;
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
     border-color: rgba(71,85,105,.13) !important;
     box-shadow: 0 8px 24px rgba(15,23,42,.06) !important;
 }
@@ -775,11 +775,11 @@ html[data-theme="light"] .ff-budget-stat-icon {
 }
 
 html[data-theme="light"] .ff-budget-stat-label {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
 }
 
 html[data-theme="light"] .ff-budget-stat-value {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 
 /* Toolbar */
@@ -795,7 +795,7 @@ html[data-theme="light"] .ff-budget-search {
 }
 
 html[data-theme="light"] .ff-budget-search i {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
 }
 
 html[data-theme="light"] .ff-budget-search input,
@@ -803,7 +803,7 @@ html[data-theme="light"] .ff-budget-select,
 html[data-theme="light"] .ff-budget-input-wrap input,
 html[data-theme="light"] .ff-budget-form-grid input[type="date"] {
     background: rgba(255,255,255,.94) !important;
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
     border-color: rgba(71,85,105,.18) !important;
 }
 
@@ -827,7 +827,7 @@ html[data-theme="light"] .ff-budget-view-toggle {
 }
 
 html[data-theme="light"] .ff-budget-view-toggle button {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
 }
 
 html[data-theme="light"] .ff-budget-view-toggle button:hover {
@@ -848,7 +848,7 @@ html[data-theme="light"] .ff-budget-card {
         rgba(255,255,255,.94),
         rgba(248,250,252,.80)
     ) !important;
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
     border-color: rgba(71,85,105,.13) !important;
     box-shadow: 0 10px 28px rgba(15,23,42,.065) !important;
 }
@@ -868,15 +868,15 @@ html[data-theme="light"] .ff-budget-card-head {
 
 html[data-theme="light"] .ff-budget-card-company,
 html[data-theme="light"] .ff-budget-company {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 
 html[data-theme="light"] .ff-budget-card-finance {
-    color: #334155 !important;
+    color: var(--ff-text-secondary) !important;
 }
 
 html[data-theme="light"] .ff-budget-product {
-    color: #475569 !important;
+    color: var(--ff-text-nav) !important;
 }
 
 html[data-theme="light"] .ff-budget-product-dot {
@@ -915,21 +915,21 @@ html[data-theme="light"] .ff-budget-health.exceeded {
 
 html[data-theme="light"] .ff-budget-health.empty {
     background: #f1f5f9 !important;
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
     border-color: #cbd5e1 !important;
 }
 
 /* Finance values */
 html[data-theme="light"] .ff-budget-finance-label {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
 }
 
 html[data-theme="light"] .ff-budget-finance-value {
-    color: #334155 !important;
+    color: var(--ff-text-secondary) !important;
 }
 
 html[data-theme="light"] .ff-budget-finance-value.main {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 
 /* Progress */
@@ -955,11 +955,11 @@ html[data-theme="light"] .ff-budget-progress.exceeded > span {
 
 /* Dates */
 html[data-theme="light"] .ff-budget-date {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
 }
 
 html[data-theme="light"] .ff-budget-date strong {
-    color: #334155 !important;
+    color: var(--ff-text-secondary) !important;
 }
 
 html[data-theme="light"] .ff-budget-date.expiring strong {
@@ -973,7 +973,7 @@ html[data-theme="light"] .ff-budget-date.overdue strong {
 /* Edit action */
 html[data-theme="light"] .ff-budget-edit {
     background: rgba(248,250,252,.92) !important;
-    color: #475569 !important;
+    color: var(--ff-text-nav) !important;
     border-color: rgba(71,85,105,.14) !important;
 }
 
@@ -986,27 +986,27 @@ html[data-theme="light"] .ff-budget-edit:hover {
 /* List view */
 html[data-theme="light"] .ff-budget-list-row {
     background: rgba(255,255,255,.90) !important;
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
     border-color: rgba(71,85,105,.12) !important;
     box-shadow: 0 5px 16px rgba(15,23,42,.045) !important;
 }
 
 html[data-theme="light"] .ff-budget-list-company {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 
 html[data-theme="light"] .ff-budget-list-meta {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
 }
 
 html[data-theme="light"] .ff-budget-list-value {
-    color: #334155 !important;
+    color: var(--ff-text-secondary) !important;
 }
 
 /* Empty state */
 html[data-theme="light"] .ff-budget-empty {
     background: rgba(255,255,255,.88) !important;
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
     border-color: rgba(71,85,105,.13) !important;
     box-shadow: 0 8px 24px rgba(15,23,42,.05) !important;
 }
@@ -1018,11 +1018,11 @@ html[data-theme="light"] .ff-budget-empty-icon {
 }
 
 html[data-theme="light"] .ff-budget-empty h3 {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 
 html[data-theme="light"] .ff-budget-empty p {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
 }
 
 /* Modal */
@@ -1038,7 +1038,7 @@ html[data-theme="light"] .ff-budget-modal-card {
         rgba(255,255,255,.98),
         rgba(248,250,252,.96)
     ) !important;
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
     border-color: rgba(71,85,105,.16) !important;
     box-shadow:
         0 24px 70px rgba(15,23,42,.18),
@@ -1050,16 +1050,16 @@ html[data-theme="light"] .ff-budget-modal-header {
 }
 
 html[data-theme="light"] .ff-budget-modal-header h2 {
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 
 html[data-theme="light"] .ff-budget-modal-header p {
-    color: #64748b !important;
+    color: var(--ff-text-muted) !important;
 }
 
 html[data-theme="light"] .ff-budget-modal-close {
     background: rgba(241,245,249,.90) !important;
-    color: #475569 !important;
+    color: var(--ff-text-nav) !important;
     border-color: rgba(71,85,105,.12) !important;
 }
 
@@ -1071,11 +1071,11 @@ html[data-theme="light"] .ff-budget-modal-close:hover {
 
 /* Modal form */
 html[data-theme="light"] .ff-budget-form-grid label > span {
-    color: #475569 !important;
+    color: var(--ff-text-nav) !important;
 }
 
 html[data-theme="light"] .ff-budget-input-wrap strong {
-    color: #475569 !important;
+    color: var(--ff-text-nav) !important;
 }
 
 html[data-theme="light"] .ff-budget-form-actions {
@@ -1085,7 +1085,7 @@ html[data-theme="light"] .ff-budget-form-actions {
 /* Native select dropdown readability */
 html[data-theme="light"] .ff-budget-select option {
     background: #fff !important;
-    color: #0f172a !important;
+    color: var(--ff-text-primary) !important;
 }
 
 /* =========================================================
@@ -1098,7 +1098,7 @@ html[data-theme="light"] .ff-budget-select option {
 
 [data-theme="light"] .ff-budget-modal-card {
     background: #ffffff;
-    color: #0f172a;
+    color: var(--ff-text-primary);
     border-color: #e2e8f0;
     box-shadow:
         0 24px 70px rgba(15, 23, 42, 0.18),
@@ -1110,11 +1110,11 @@ html[data-theme="light"] .ff-budget-select option {
 }
 
 [data-theme="light"] .ff-budget-modal-header h2 {
-    color: #0f172a;
+    color: var(--ff-text-primary);
 }
 
 [data-theme="light"] .ff-budget-modal-header p {
-    color: #64748b;
+    color: var(--ff-text-muted);
 }
 
 [data-theme="light"] .ff-budget-modal-card .ff-page-eyebrow {
@@ -1123,20 +1123,20 @@ html[data-theme="light"] .ff-budget-select option {
 
 /* Modal close */
 [data-theme="light"] .ff-budget-modal-close {
-    color: #64748b;
+    color: var(--ff-text-muted);
     background: #f8fafc;
     border-color: #e2e8f0;
 }
 
 [data-theme="light"] .ff-budget-modal-close:hover {
-    color: #0f172a;
+    color: var(--ff-text-primary);
     background: #f1f5f9;
     border-color: #cbd5e1;
 }
 
 /* Form labels */
 [data-theme="light"] .ff-budget-form-grid label > span {
-    color: #334155;
+    color: var(--ff-text-secondary);
 }
 
 /* =========================================================
@@ -1147,7 +1147,7 @@ html[data-theme="light"] .ff-budget-select option {
 [data-theme="light"] #budgetEditCompanyId,
 [data-theme="light"] #budgetEditSoftware,
 [data-theme="light"] #budgetEditCurrency {
-    color: #0f172a;
+    color: var(--ff-text-primary);
     background-color: #ffffff;
     border: 1px solid #cbd5e1;
     color-scheme: light;
@@ -1159,7 +1159,7 @@ html[data-theme="light"] .ff-budget-select option {
 [data-theme="light"] #budgetEditCompanyId:focus,
 [data-theme="light"] #budgetEditSoftware:focus,
 [data-theme="light"] #budgetEditCurrency:focus {
-    color: #0f172a;
+    color: var(--ff-text-primary);
     background-color: #ffffff;
     border-color: #2563eb;
     outline: none;
@@ -1175,7 +1175,7 @@ html[data-theme="light"] .ff-budget-select option {
 [data-theme="light"] #budgetEditCompanyId option,
 [data-theme="light"] #budgetEditSoftware option,
 [data-theme="light"] #budgetEditCurrency option {
-    color: #0f172a;
+    color: var(--ff-text-primary);
     background-color: #ffffff;
 }
 
@@ -1183,14 +1183,14 @@ html[data-theme="light"] .ff-budget-select option {
 [data-theme="light"] #budgetEditCompanyId option:checked,
 [data-theme="light"] #budgetEditSoftware option:checked,
 [data-theme="light"] #budgetEditCurrency option:checked {
-    color: #0f172a;
+    color: var(--ff-text-primary);
     background-color: #e2e8f0;
 }
 
 /* Budget amount / date inputs */
 [data-theme="light"] .ff-budget-form-grid input,
 [data-theme="light"] .ff-budget-input-wrap input {
-    color: #0f172a;
+    color: var(--ff-text-primary);
     background-color: #ffffff;
     border-color: #cbd5e1;
     color-scheme: light;
@@ -1201,7 +1201,7 @@ html[data-theme="light"] .ff-budget-select option {
 }
 
 [data-theme="light"] .ff-budget-form-grid input:focus {
-    color: #0f172a;
+    color: var(--ff-text-primary);
     background-color: #ffffff;
     border-color: #2563eb;
     outline: none;
@@ -1209,7 +1209,7 @@ html[data-theme="light"] .ff-budget-select option {
 }
 
 [data-theme="light"] .ff-budget-input-wrap strong {
-    color: #475569;
+    color: var(--ff-text-nav);
 }
 
 /* =========================================================
@@ -1219,7 +1219,7 @@ html[data-theme="light"] .ff-budget-select option {
 [data-theme="light"] .ff-budget-health,
 [data-theme="light"] .ff-budget-status,
 [data-theme="light"] .ff-budget-badge {
-    color: #334155;
+    color: var(--ff-text-secondary);
     background: #f1f5f9;
     border-color: #cbd5e1;
 }

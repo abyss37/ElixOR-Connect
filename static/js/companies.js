@@ -414,7 +414,7 @@
 
         if (days < 0) {
             statusNode.textContent =
-                `${Math.abs(days)} ${window.finflowI18n?.translateSmart("days ago")}`;
+                `${Math.abs(days)} ${companyDaysLabel("days ago")}`;
 
             statusNode.className =
                 "ff-contract-status is-expired";
@@ -433,7 +433,7 @@
 
         if (days <= 30) {
             statusNode.textContent =
-                `${days} ${window.finflowI18n?.translateSmart("days remaining")}`;
+                `${days} ${companyDaysLabel("days remaining")}`;
 
             statusNode.className =
                 "ff-contract-status is-warning";
@@ -442,10 +442,40 @@
         }
 
         statusNode.textContent =
-            `${days} ${window.finflowI18n?.translateSmart("days remaining")}`;
+            `${days} ${companyDaysLabel("days remaining")}`;
 
         statusNode.className =
             "ff-contract-status is-ok";
+    }
+
+    function companyDaysLabel(key) {
+        const translate = window.finflowI18n?.translateSmart;
+        const translated = typeof translate === "function"
+            ? translate(key)
+            : "";
+
+        if (
+            typeof translated === "string" &&
+            translated.trim() &&
+            translated.trim().toLowerCase() !== "undefined"
+        ) {
+            return translated;
+        }
+
+        let language = "uk";
+        try {
+            language = localStorage.getItem("finflow-language") === "en"
+                ? "en"
+                : "uk";
+        } catch (_) {
+            // Keep the application default when storage is unavailable.
+        }
+
+        const fallbacks = {
+            uk: { "days ago": "дн. тому", "days remaining": "дн. залишилося" },
+            en: { "days ago": "days ago", "days remaining": "days remaining" },
+        };
+        return fallbacks[language][key] || key;
     }
 
 
@@ -912,7 +942,7 @@
 
                 </div>
 
-                <div>
+                <div class="ff-invoice-product">
                     <span class="ff-invoice-software">
                         ${escapeHtml(software || "—")}
                     </span>
@@ -947,13 +977,13 @@
 
                 </div>
 
-                <div>
+                <div class="ff-invoice-contract-cell">
                     ${
                         invoice.contract_details
                             ? `
                                 <span
-                                    title="${escapeHtml(invoice.contract_details)}"
-                                    style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:rgba(148,163,184,.5);font-size:8px;">
+                                    class="ff-invoice-contract-details"
+                                    title="${escapeHtml(invoice.contract_details)}">
                                     ${escapeHtml(invoice.contract_details)}
                                 </span>
                               `
