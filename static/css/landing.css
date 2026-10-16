@@ -1539,3 +1539,611 @@ button {
         padding: 20px 0 70px;
     }
 }
+
+/* =========================================================
+   THEME TOGGLE
+   ========================================================= */
+
+.elixor-theme-toggle {
+    width: 38px;
+    height: 38px;
+    display: inline-grid;
+    place-items: center;
+    padding: 0;
+    border: 1px solid rgba(148, 163, 184, .14);
+    border-radius: 12px;
+    background: rgba(15, 23, 42, .34);
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+}
+
+.elixor-theme-toggle:hover {
+    background: rgba(37, 99, 235, .14);
+    border-color: rgba(96, 165, 250, .28);
+    color: #f8fafc;
+    transform: translateY(-1px);
+}
+
+[data-theme="light"] .elixor-theme-toggle {
+    border-color: rgba(71, 85, 105, .16);
+    background: rgba(255, 255, 255, .58);
+    color: #475569;
+}
+
+[data-theme="light"] .elixor-theme-toggle:hover {
+    background: rgba(37, 99, 235, .10);
+    border-color: rgba(37, 99, 235, .24);
+    color: #1d4ed8;
+}
+
+.elixor-theme-toggle i {
+    font-size: 15px;
+    line-height: 1;
+}
+
+/* =========================================================
+   ELIXOR CONNECT — LIGHT GLASS THEME
+   ========================================================= */
+
+[data-theme="light"] {
+    --elixor-bg: #eef3f8;
+    --elixor-bg-soft: #f6f9fc;
+    --elixor-surface: rgba(255, 255, 255, .68);
+    --elixor-surface-strong: rgba(255, 255, 255, .84);
+    --elixor-border: rgba(71, 85, 105, .14);
+    --elixor-border-bright: rgba(37, 99, 235, .22);
+    --elixor-text: #0f172a;
+    --elixor-soft: #475569;
+    --elixor-muted: #64748b;
+    --elixor-green: #059669;
+}
+
+[data-theme="light"] body {
+    background:
+        radial-gradient(circle at 12% 8%, rgba(96, 165, 250, .18), transparent 30%),
+        radial-gradient(circle at 88% 18%, rgba(34, 211, 238, .12), transparent 28%),
+        linear-gradient(180deg, #f8fbff 0%, #eef3f8 48%, #e8eef5 100%);
+    color: var(--elixor-text);
+}
+
+[data-theme="light"] .elixor-nav {
+    background: rgba(248, 251, 255, .76);
+    border-bottom-color: rgba(71, 85, 105, .12);
+    box-shadow: 0 8px 30px rgba(15, 23, 42, .06);
+}
+
+[data-theme="light"] .elixor-brand,
+[data-theme="light"] .elixor-nav-links a,
+[data-theme="light"] .elixor-language {
+    color: var(--elixor-soft);
+}
+
+[data-theme="light"] .elixor-brand strong,
+[data-theme="light"] .elixor-brand span {
+    color: var(--elixor-text);
+}
+
+[data-theme="light"] .elixor-nav-links a:hover,
+[data-theme="light"] .elixor-language button:hover,
+[data-theme="light"] .elixor-language button.is-active {
+    color: #2563eb;
+}
+
+[data-theme="light"] .elixor-hero,
+[data-theme="light"] .elixor-section {
+    color: var(--elixor-text);
+}
+
+[data-theme="light"] .elixor-hero::before,
+[data-theme="light"] .elixor-hero::after {
+    opacity: .45;
+}
+
+[data-theme="light"] .elixor-card,
+[data-theme="light"] .elixor-feature,
+[data-theme="light"] .elixor-security-card,
+[data-theme="light"] .elixor-architecture-card,
+[data-theme="light"] .elixor-use-case,
+[data-theme="light"] .elixor-terminal,
+[data-theme="light"] .elixor-stat,
+[data-theme="light"] .elixor-cta {
+    background: var(--elixor-surface);
+    border-color: var(--elixor-border);
+    box-shadow:
+        0 18px 50px rgba(15, 23, 42, .07),
+        inset 0 1px 0 rgba(255, 255, 255, .72);
+    backdrop-filter: blur(20px);
+}
+
+[data-theme="light"] .elixor-card:hover,
+[data-theme="light"] .elixor-feature:hover,
+[data-theme="light"] .elixor-security-card:hover,
+[data-theme="light"] .elixor-use-case:hover {
+    background: var(--elixor-surface-strong);
+    border-color: var(--elixor-border-bright);
+}
+
+[data-theme="light"] .elixor-section-title,
+[data-theme="light"] .elixor-hero h1,
+[data-theme="light"] .elixor-card h3,
+[data-theme="light"] .elixor-feature h3,
+[data-theme="light"] .elixor-security-card h3,
+[data-theme="light"] .elixor-use-case h3 {
+    color: var(--elixor-text);
+}
+
+[data-theme="light"] .elixor-section-copy,
+[data-theme="light"] .elixor-hero p,
+[data-theme="light"] .elixor-card p,
+[data-theme="light"] .elixor-feature p,
+[data-theme="light"] .elixor-security-card p,
+[data-theme="light"] .elixor-use-case p {
+    color: var(--elixor-soft);
+}
+
+[data-theme="light"] .elixor-terminal {
+    background: rgba(255, 255, 255, .74);
+}
+
+[data-theme="light"] .elixor-theme-toggle {
+    background: rgba(255, 255, 255, .66);
+    border-color: var(--elixor-border);
+    color: #475569;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, .06);
+}
+
+[data-theme="light"] .elixor-theme-toggle:hover {
+    background: rgba(255, 255, 255, .92);
+    border-color: rgba(37, 99, 235, .24);
+    color: #1d4ed8;
+}
+
+[data-theme="light"] .elixor-footer {
+    border-top-color: var(--elixor-border);
+    background: rgba(241, 245, 249, .48);
+}
+
+[data-theme="light"] .elixor-footer,
+[data-theme="light"] .elixor-footer a {
+    color: var(--elixor-muted);
+}
+
+
+/* =========================================================
+   ELIXOR CONNECT — LIGHT GLASS LANDING OVERRIDES
+   ========================================================= */
+
+[data-theme="light"] .elixor-feature-card,
+[data-theme="light"] .elixor-value-card,
+[data-theme="light"] .elixor-mini-card,
+[data-theme="light"] .elixor-final-card {
+    background: rgba(255, 255, 255, .66);
+    border-color: rgba(71, 85, 105, .14);
+    box-shadow:
+        0 18px 50px rgba(15, 23, 42, .07),
+        inset 0 1px 0 rgba(255, 255, 255, .82);
+    backdrop-filter: blur(20px);
+}
+
+[data-theme="light"] .elixor-feature-card:hover,
+[data-theme="light"] .elixor-value-card:hover,
+[data-theme="light"] .elixor-mini-card:hover {
+    background: rgba(255, 255, 255, .82);
+    border-color: rgba(37, 99, 235, .22);
+    box-shadow:
+        0 22px 55px rgba(15, 23, 42, .09),
+        0 0 0 1px rgba(37, 99, 235, .05);
+}
+
+[data-theme="light"] .elixor-feature-card h3,
+[data-theme="light"] .elixor-value-card h3,
+[data-theme="light"] .elixor-mini-card h3,
+[data-theme="light"] .elixor-final-card h2 {
+    color: #0f172a;
+}
+
+[data-theme="light"] .elixor-feature-card p,
+[data-theme="light"] .elixor-value-card p,
+[data-theme="light"] .elixor-mini-card p,
+[data-theme="light"] .elixor-final-card p {
+    color: #475569;
+}
+
+[data-theme="light"] .elixor-feature-icon {
+    background: rgba(37, 99, 235, .10);
+    border-color: rgba(37, 99, 235, .18);
+    color: #2563eb;
+}
+
+[data-theme="light"] .elixor-security-section,
+[data-theme="light"] .elixor-architecture-section {
+    background: rgba(255, 255, 255, .20);
+}
+
+[data-theme="light"] .elixor-terminal {
+    background: rgba(248, 250, 252, .78);
+    border-color: rgba(71, 85, 105, .16);
+    box-shadow:
+        0 24px 60px rgba(15, 23, 42, .09),
+        inset 0 1px 0 rgba(255, 255, 255, .84);
+}
+
+[data-theme="light"] .elixor-terminal-top {
+    background: rgba(241, 245, 249, .72);
+    border-bottom-color: rgba(71, 85, 105, .12);
+}
+
+[data-theme="light"] .elixor-terminal-title,
+[data-theme="light"] .elixor-terminal-line {
+    color: #334155;
+}
+
+[data-theme="light"] .elixor-architecture-core,
+[data-theme="light"] .elixor-architecture-node {
+    background: rgba(255, 255, 255, .64);
+    border-color: rgba(37, 99, 235, .18);
+    box-shadow: 0 16px 40px rgba(15, 23, 42, .07);
+}
+
+[data-theme="light"] .elixor-security-copy,
+[data-theme="light"] .elixor-security-tags {
+    color: #475569;
+}
+
+[data-theme="light"] .elixor-showcase-stats {
+    color: #475569;
+}
+
+[data-theme="light"] .elixor-footer {
+    background: rgba(241, 245, 249, .52);
+    border-top-color: rgba(71, 85, 105, .12);
+}
+
+[data-theme="light"] .elixor-footer a,
+[data-theme="light"] .elixor-footer-meta {
+    color: #64748b;
+}
+
+[data-theme="light"] .elixor-footer a:hover {
+    color: #2563eb;
+}
+
+
+/* =========================================================
+   ELIXOR CONNECT — REFINED LIGHT GLASS
+   ========================================================= */
+
+[data-theme="light"] .elixor-value-card {
+    background: rgba(255, 255, 255, .34);
+    border-color: rgba(71, 85, 105, .10);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .72);
+    backdrop-filter: blur(16px);
+}
+
+[data-theme="light"] .elixor-value-card > i {
+    color: #2563eb;
+}
+
+[data-theme="light"] .elixor-value-card strong {
+    color: #0f172a;
+}
+
+[data-theme="light"] .elixor-value-card span {
+    color: #64748b;
+}
+
+/* Product preview — keep it dark, like the terminal */
+[data-theme="light"] .elixor-product-showcase {
+    border-color: rgba(96, 165, 250, .22);
+    background:
+        radial-gradient(circle at 72% 18%, rgba(37, 99, 235, .14), transparent 38%),
+        linear-gradient(145deg, rgba(12, 20, 34, .96), rgba(8, 14, 25, .94));
+    box-shadow:
+        0 30px 80px rgba(15, 23, 42, .16),
+        0 0 55px rgba(37, 99, 235, .07),
+        inset 0 1px 0 rgba(255, 255, 255, .06);
+    backdrop-filter: blur(24px);
+}
+
+[data-theme="light"] .elixor-showcase-sidebar {
+    background: rgba(6, 12, 22, .72);
+    border-color: rgba(148, 163, 184, .10);
+}
+
+[data-theme="light"] .elixor-showcase-item {
+    color: #64748b;
+}
+
+[data-theme="light"] .elixor-showcase-item.active {
+    color: #dbeafe;
+    background: rgba(37, 99, 235, .18);
+    box-shadow: inset 0 0 0 1px rgba(96, 165, 250, .08);
+}
+
+[data-theme="light"] .elixor-showcase-main {
+    color: #e2e8f0;
+}
+
+[data-theme="light"] .elixor-showcase-date {
+    background: rgba(15, 23, 42, .42);
+    border-color: rgba(148, 163, 184, .12);
+    color: #94a3b8;
+}
+
+[data-theme="light"] .elixor-showcase-stats > div {
+    background: rgba(15, 23, 42, .48);
+    border-color: rgba(148, 163, 184, .11);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .025);
+}
+
+[data-theme="light"] .elixor-showcase-stats span {
+    color: #64748b;
+}
+
+[data-theme="light"] .elixor-showcase-stats strong {
+    color: #f1f5f9;
+}
+
+[data-theme="light"] .elixor-showcase-chart {
+    background: rgba(15, 23, 42, .38);
+    border-color: rgba(148, 163, 184, .11);
+}
+
+[data-theme="light"] .elixor-chart-heading {
+    color: #cbd5e1;
+}
+
+/* Features — glass, not white cards */
+[data-theme="light"] .elixor-feature-card {
+    background: rgba(255, 255, 255, .38);
+    border-color: rgba(71, 85, 105, .11);
+    box-shadow:
+        0 18px 45px rgba(15, 23, 42, .06),
+        inset 0 1px 0 rgba(255, 255, 255, .76);
+    backdrop-filter: blur(18px);
+}
+
+[data-theme="light"] .elixor-feature-card:hover {
+    background: rgba(255, 255, 255, .52);
+    border-color: rgba(37, 99, 235, .20);
+    box-shadow:
+        0 22px 52px rgba(15, 23, 42, .08),
+        0 0 30px rgba(37, 99, 235, .05);
+}
+
+[data-theme="light"] .elixor-feature-icon {
+    background: rgba(37, 99, 235, .09);
+    border-color: rgba(37, 99, 235, .18);
+    color: #2563eb;
+}
+
+/* Security tags — blue/cyan glass */
+[data-theme="light"] .elixor-security-tags span {
+    background: linear-gradient(
+        135deg,
+        rgba(37, 99, 235, .09),
+        rgba(8, 145, 178, .06)
+    );
+    border-color: rgba(37, 99, 235, .16);
+    color: #334155;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .65);
+    backdrop-filter: blur(12px);
+}
+
+/* Terminal — deliberately dark */
+[data-theme="light"] .elixor-terminal {
+    background:
+        radial-gradient(circle at 80% 0%, rgba(37, 99, 235, .09), transparent 36%),
+        #080d16;
+    border-color: rgba(96, 165, 250, .16);
+    box-shadow:
+        0 28px 70px rgba(15, 23, 42, .18),
+        0 0 45px rgba(37, 99, 235, .05),
+        inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+/* Architecture — translucent blue glass */
+[data-theme="light"] .elixor-architecture {
+    background:
+        radial-gradient(circle at 12% 50%, rgba(37, 99, 235, .07), transparent 32%),
+        rgba(255, 255, 255, .30);
+    border-color: rgba(71, 85, 105, .11);
+    box-shadow:
+        0 22px 55px rgba(15, 23, 42, .07),
+        inset 0 1px 0 rgba(255, 255, 255, .72);
+    backdrop-filter: blur(18px);
+}
+
+[data-theme="light"] .elixor-architecture-core {
+    background:
+        radial-gradient(circle at 50% 35%, rgba(37, 99, 235, .14), transparent 55%),
+        rgba(15, 23, 42, .78);
+    border-color: rgba(96, 165, 250, .24);
+    box-shadow:
+        0 18px 45px rgba(15, 23, 42, .15),
+        0 0 35px rgba(37, 99, 235, .08);
+}
+
+[data-theme="light"] .elixor-architecture-node {
+    background: rgba(255, 255, 255, .36);
+    border-color: rgba(37, 99, 235, .13);
+    box-shadow:
+        0 14px 35px rgba(15, 23, 42, .06),
+        inset 0 1px 0 rgba(255, 255, 255, .70);
+    backdrop-filter: blur(16px);
+}
+
+[data-theme="light"] .elixor-architecture-node:hover {
+    border-color: rgba(37, 99, 235, .22);
+    background: rgba(255, 255, 255, .48);
+}
+
+/* Roadmap pills */
+[data-theme="light"] .elixor-roadmap b {
+    background: rgba(37, 99, 235, .07);
+    border-color: rgba(37, 99, 235, .13);
+    color: #475569;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .62);
+}
+
+/* Use cases */
+[data-theme="light"] .elixor-usecase {
+    background: rgba(255, 255, 255, .34);
+    border-color: rgba(71, 85, 105, .11);
+    box-shadow:
+        0 18px 45px rgba(15, 23, 42, .06),
+        inset 0 1px 0 rgba(255, 255, 255, .72);
+    backdrop-filter: blur(18px);
+}
+
+[data-theme="light"] .elixor-usecase > span {
+    color: rgba(37, 99, 235, .38);
+}
+
+/* Final CTA — glass with blue ambient light */
+[data-theme="light"] .elixor-final-card {
+    background:
+        radial-gradient(circle at 50% 35%, rgba(37, 99, 235, .16), transparent 42%),
+        radial-gradient(circle at 20% 80%, rgba(8, 145, 178, .08), transparent 32%),
+        rgba(255, 255, 255, .42);
+    border-color: rgba(37, 99, 235, .18);
+    box-shadow:
+        0 28px 70px rgba(15, 23, 42, .09),
+        0 0 55px rgba(37, 99, 235, .06),
+        inset 0 1px 0 rgba(255, 255, 255, .80);
+    backdrop-filter: blur(22px);
+}
+
+[data-theme="light"] .elixor-final-card h2 {
+    color: #0f172a;
+}
+
+[data-theme="light"] .elixor-final-card p {
+    color: #475569;
+}
+
+
+/* =========================================================
+   LIGHT GLASS FINAL POLISH
+   ========================================================= */
+
+[data-theme="light"] .elixor-eyebrow {
+    background: linear-gradient(135deg, rgba(37,99,235,.09), rgba(8,145,178,.06));
+    border-color: rgba(37,99,235,.16);
+    color: #334155;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.68);
+    backdrop-filter: blur(14px);
+}
+
+[data-theme="light"] .elixor-eyebrow .elixor-status-dot {
+    background: #2563eb;
+    box-shadow: 0 0 10px rgba(37,99,235,.35);
+}
+
+[data-theme="light"] .elixor-brand-mark {
+    background: transparent;
+    box-shadow: none;
+    border: 0;
+}
+
+[data-theme="light"] .elixor-brand-mark img {
+    filter: none;
+    box-shadow: none;
+}
+
+[data-theme="light"] .elixor-terminal {
+    background:
+        linear-gradient(180deg, rgba(255,255,255,.94), rgba(244,248,252,.92));
+    border-color: rgba(71,85,105,.14);
+    box-shadow:
+        0 24px 65px rgba(15,23,42,.10),
+        inset 0 1px 0 rgba(255,255,255,.92);
+    color: #0f172a;
+}
+
+[data-theme="light"] .elixor-terminal-top {
+    background: rgba(226,232,240,.72);
+    border-bottom-color: rgba(71,85,105,.10);
+}
+
+[data-theme="light"] .elixor-terminal-top > span {
+    background: #94a3b8;
+}
+
+[data-theme="light"] .elixor-terminal-top b {
+    color: #64748b;
+}
+
+[data-theme="light"] .elixor-terminal-title {
+    color: #2563eb;
+}
+
+[data-theme="light"] .elixor-terminal-line {
+    border-bottom-color: rgba(71,85,105,.08);
+}
+
+[data-theme="light"] .elixor-terminal-line span {
+    color: #64748b;
+}
+
+[data-theme="light"] .elixor-terminal-line strong {
+    color: #334155;
+}
+
+[data-theme="light"] .elixor-terminal-cursor {
+    color: #64748b;
+}
+
+[data-theme="light"] .elixor-architecture-core {
+    background: rgba(255,255,255,.36);
+    border-color: rgba(37,99,235,.15);
+    box-shadow:
+        0 16px 38px rgba(15,23,42,.06),
+        inset 0 1px 0 rgba(255,255,255,.72);
+    backdrop-filter: blur(16px);
+}
+
+[data-theme="light"] .elixor-architecture-core strong {
+    color: #0f172a;
+}
+
+[data-theme="light"] .elixor-architecture-core span {
+    color: #64748b;
+}
+
+
+.elixor-i18n-pending { visibility: hidden; }
+
+/* Hero layout polish */
+@media (min-width: 1051px) {
+    .elixor-hero-visual {
+        transform: translateY(40px);
+    }
+
+    .elixor-hero h1 {
+        max-width: 610px;
+        line-height: 1.02;
+    }
+
+    .elixor-hero h1 strong {
+        margin-top: 8px;
+    }
+}
+
+
+/* Mobile hero typography */
+@media (max-width: 800px) {
+    .elixor-hero h1 {
+        max-width: 100%;
+        font-size: clamp(34px, 10vw, 48px);
+        line-height: 1.04;
+        letter-spacing: -0.045em;
+        overflow-wrap: normal;
+    }
+
+    .elixor-hero h1 strong {
+        margin-top: 7px;
+    }
+}
+

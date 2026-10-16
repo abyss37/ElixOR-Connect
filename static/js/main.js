@@ -263,6 +263,64 @@
 
 
     /* ========================================================
+       THEME SWITCHER
+       ======================================================== */
+
+    const themeToggle =
+        document.getElementById("ff-theme-toggle");
+
+    function updateThemeToggle(theme) {
+
+        if (!themeToggle) {
+            return;
+        }
+
+        const icon = themeToggle.querySelector("i");
+        const isLight = theme === "light";
+
+        if (icon) {
+            icon.className = isLight
+                ? "bi bi-moon-stars-fill"
+                : "bi bi-sun-fill";
+        }
+
+        const label = isLight
+            ? "Switch to dark theme"
+            : "Switch to light theme";
+
+        themeToggle.setAttribute("aria-label", label);
+        themeToggle.setAttribute("title", label);
+    }
+
+    function initThemeSwitcher() {
+
+        const i18n = window.finflowI18n;
+
+        if (!i18n || !themeToggle) {
+            return;
+        }
+
+        updateThemeToggle(i18n.getTheme());
+
+        themeToggle.addEventListener(
+            "click",
+            () => {
+                i18n.toggleTheme();
+            }
+        );
+
+        window.addEventListener(
+            "finflow-theme-changed",
+            event => {
+                updateThemeToggle(
+                    event.detail?.theme || i18n.getTheme()
+                );
+            }
+        );
+    }
+
+
+    /* ========================================================
        USER MENU
        ======================================================== */
 
@@ -374,5 +432,6 @@
 
     restoreSidebarState();
     initLanguageSwitcher();
+    initThemeSwitcher();
 
 })();

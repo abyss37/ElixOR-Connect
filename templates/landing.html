@@ -16,10 +16,10 @@
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/landing.css') }}?v=20260928-3">
+          href="{{ url_for('static', filename='css/landing.css') }}?v=20260929-5">
 </head>
 
-<body>
+<body class="elixor-i18n-pending">
 
 <div class="elixor-site">
 
@@ -60,6 +60,14 @@
                     <span>/</span>
                     <button type="button" data-lang="en">EN</button>
                 </div>
+
+                <button type="button"
+                        class="elixor-theme-toggle"
+                        id="elixor-theme-toggle"
+                        aria-label="Toggle theme"
+                        title="Toggle theme">
+                    <i class="bi bi-moon-stars-fill" aria-hidden="true"></i>
+                </button>
 
 
             </div>
@@ -883,7 +891,7 @@
 
 </div>
 
-<script src="{{ url_for('static', filename='js/landing.js') }}?v=20260928-3"></script>
+<script src="{{ url_for('static', filename='js/landing.js') }}?v=20260929-2"></script>
 
 <script>
 </script>

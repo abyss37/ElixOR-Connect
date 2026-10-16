@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/notifications.css') }}?v=20260930-1">
+{% endblock %}
+
 {% block page_icon %}
 <span class="ff-page-icon">
     <i class="bi bi-bell-fill"></i>

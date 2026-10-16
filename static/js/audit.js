@@ -49,6 +49,175 @@
         }
     }
 
+    function formatDetailLabel(key) {
+        const labels = {
+            asset_type: 'Тип ресурса',
+            new_filename: 'Новый файл',
+            old_filename: 'Предыдущий файл',
+            original_extension: 'Исходный формат',
+            original_filename: 'Исходное имя',
+            processed_format: 'Обработанный формат',
+            company_id: 'ID компании',
+            company_name: 'Компания',
+            invoice_id: 'ID счёта',
+            invoice_number: 'Номер счёта',
+            software: 'Продукт',
+            amount: 'Сумма',
+            currency: 'Валюта',
+            status: 'Статус',
+            changes: 'Изменения'
+        };
+
+        return labels[key] || String(key)
+            .replace(/_/g, ' ')
+            .replace(/\b\w/g, char => char.toUpperCase());
+    }
+
+    function formatDetailValue(value) {
+        if (value === null || value === undefined || value === '') {
+            return '—';
+        }
+
+        if (typeof value === 'object') {
+            try {
+                return JSON.stringify(value, null, 2);
+            } catch {
+                return String(value);
+            }
+        }
+
+        return String(value);
+    }
+
+    function renderDetails(item) {
+        const details = item?.details;
+
+        if (details === null || details === undefined || details === '') {
+            return '';
+        }
+
+        let data = details;
+
+        if (typeof details === 'string') {
+            try {
+                data = JSON.parse(details);
+            } catch {
+                return `
+                    <div class="ff-audit-detail-text">
+                        ${escapeHtml(details)}
+                    </div>
+                `;
+            }
+        }
+
+        if (!data || typeof data !== 'object') {
+            return `
+                <div class="ff-audit-detail-text">
+                    ${escapeHtml(formatDetailValue(data))}
+                </div>
+            `;
+        }
+
+        const action = String(item.action || '').toUpperCase();
+
+        const assetLabels = {
+            logo: 'Логотип',
+            stamp: 'Печать',
+            signature: 'Подпись'
+        };
+
+        if (action === 'OUR_COMPANY_ASSET_UPDATED' && data.asset_type) {
+            const assetName =
+                assetLabels[String(data.asset_type).toLowerCase()] ||
+                formatDetailValue(data.asset_type);
+
+            return `
+                <div class="ff-audit-detail-content">
+                    <div class="ff-audit-detail-title">
+                        <i class="bi bi-arrow-repeat"></i>
+                        ${escapeHtml(assetName)} обновлён
+                    </div>
+
+                    <div class="ff-audit-detail-grid">
+                        ${
+                            data.original_filename
+                                ? `
+                                    <div class="ff-audit-detail-item">
+                                        <span>Исходный файл</span>
+                                        <strong>${escapeHtml(data.original_filename)}</strong>
+                                    </div>
+                                `
+                                : ''
+                        }
+
+                        ${
+                            data.old_filename
+                                ? `
+                                    <div class="ff-audit-detail-item">
+                                        <span>Предыдущий файл</span>
+                                        <strong>${escapeHtml(data.old_filename)}</strong>
+                                    </div>
+                                `
+                                : ''
+                        }
+
+                        ${
+                            data.new_filename
+                                ? `
+                                    <div class="ff-audit-detail-item">
+                                        <span>Новый файл</span>
+                                        <strong>${escapeHtml(data.new_filename)}</strong>
+                                    </div>
+                                `
+                                : ''
+                        }
+
+                        ${
+                            data.original_extension
+                                ? `
+                                    <div class="ff-audit-detail-item">
+                                        <span>Исходный формат</span>
+                                        <strong>${escapeHtml(String(data.original_extension).toUpperCase())}</strong>
+                                    </div>
+                                `
+                                : ''
+                        }
+
+                        ${
+                            data.processed_format
+                                ? `
+                                    <div class="ff-audit-detail-item">
+                                        <span>Обработан как</span>
+                                        <strong>${escapeHtml(String(data.processed_format).toUpperCase())}</strong>
+                                    </div>
+                                `
+                                : ''
+                        }
+                    </div>
+                </div>
+            `;
+        }
+
+        const entries = Object.entries(data);
+
+        if (!entries.length) {
+            return '';
+        }
+
+        return `
+            <div class="ff-audit-detail-content">
+                <div class="ff-audit-detail-grid">
+                    ${entries.map(([key, value]) => `
+                        <div class="ff-audit-detail-item">
+                            <span>${escapeHtml(formatDetailLabel(key))}</span>
+                            <strong>${escapeHtml(formatDetailValue(value))}</strong>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
     function formatNumber(value) {
         return new Intl.NumberFormat('ru-RU').format(Number(value || 0));
     }
@@ -578,8 +747,8 @@
                 (typeof item.details === 'string' ? item.details : '') ||
                 '—';
 
-            const detailsText = safeJson(item.details);
-            const hasDetails = Boolean(detailsText);
+            const detailsHtml = renderDetails(item);
+            const hasDetails = Boolean(detailsHtml);
 
             return `
                 <tr class="ff-audit-row" data-audit-index="${index}">
@@ -676,7 +845,7 @@
                             class="ff-audit-details-row"
                             data-details-index="${index}">
                             <td colspan="7" class="ff-audit-details-cell">
-                                <pre class="ff-audit-details">${escapeHtml(detailsText)}</pre>
+                                <div class="ff-audit-details">${detailsHtml}</div>
                             </td>
                            </tr>`
                         : ''

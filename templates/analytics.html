@@ -2,6 +2,12 @@
 
 {% block title %}Analytics — ElixOR Connect{% endblock %}
 
+{% block head %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/analytics.css') }}?v=20260930-1">
+{% endblock %}
+
+
 {% block page_icon %}
 <span class="ff-page-icon">
     <i class="bi bi-graph-up-arrow"></i>

@@ -303,7 +303,7 @@ function loadProductsView() {
                                                     type="button"
                                                     class="ff-product-action"
                                                     data-product-action="archive"
-                                                    title="Archive"
+                                                    title="Archive" data-i18n-title="Archive"
                                                     aria-label="${escapeHtml(window.finflowI18n?.translateSmart("Archive") || "Archive")} ${escapeHtml(product.name)}"
                                                 >
                                                     <i class="bi bi-archive"></i>
@@ -342,6 +342,7 @@ function loadProductsView() {
         const filtered = getFilteredProducts();
 
         grid.innerHTML = filtered.map(renderCard).join('');
+        window.finflowI18n?.applyLanguage?.(window.finflowI18n?.getLang?.());
 
         const visibleCount = document.getElementById(
             'products-visible-count'

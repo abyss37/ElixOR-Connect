@@ -1,5 +1,42 @@
 (function () {
     "use strict";
+    const THEME_STORAGE_KEY = "finflow-theme";
+
+    function getTheme() {
+        try {
+            const saved = localStorage.getItem(THEME_STORAGE_KEY);
+            if (saved === "light" || saved === "dark") return saved;
+        } catch (e) {}
+
+        return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches
+            ? "light"
+            : "dark";
+    }
+
+    function setTheme(theme) {
+        const nextTheme = theme === "light" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", nextTheme);
+        try { localStorage.setItem(THEME_STORAGE_KEY, nextTheme); } catch (e) {}
+        updateThemeToggle();
+    }
+
+    function toggleTheme() {
+        setTheme(getTheme() === "light" ? "dark" : "light");
+    }
+
+    function updateThemeToggle() {
+        const button = document.getElementById("elixor-theme-toggle");
+        if (!button) return;
+        const icon = button.querySelector("i");
+        const theme = getTheme();
+        if (icon) {
+            icon.className = theme === "light" ? "bi bi-moon-stars-fill" : "bi bi-sun-fill";
+        }
+        const label = theme === "light" ? "Switch to dark theme" : "Switch to light theme";
+        button.setAttribute("aria-label", label);
+        button.setAttribute("title", label);
+    }
+
 
     const translations = {
         uk: {
@@ -10,8 +47,8 @@
             signIn: "Увійти",
 
             heroEyebrow: "SELF-HOSTED FINANCIAL INFRASTRUCTURE",
-            heroTitle: "Multi-Company Financial Control.",
-            heroAccent: "Zero Cloud Lock-in.",
+            heroTitle: "Мультикомпанійний фінансовий контроль.",
+            heroAccent: "Без cloud lock-in.",
             heroDescription:
                 "Сучасна self-hosted платформа для керування компаніями, бюджетами, рахунками та фінансовими операціями в єдиному контрольованому робочому просторі.",
             heroPrimary: "Увійти до ElixOR Connect",
@@ -19,97 +56,97 @@
             metaSovereignty: "Контроль даних",
             metaSelfHosted: "Self-hosted",
 
-            systemReady: "System Ready",
-            overview: "Overview",
-            companies: "Companies",
-            invoices: "Invoices",
-            analytics: "Analytics",
-            workspace: "FINANCIAL WORKSPACE",
-            dashboardTitle: "Financial Overview",
-            activeInvoices: "ACTIVE INVOICES",
-            budgetUtilization: "BUDGET UTILIZATION",
-            counterparties: "COUNTERPARTIES",
-            tracked: "Tracked entities",
-            financialSummary: "Financial Summary",
-            systemStatus: "System Status",
-            connected: "Connected",
-            protected: "Protected",
-            enabled: "Enabled",
+            systemReady: "Система готова",
+            overview: "Огляд",
+            companies: "Компанії",
+            invoices: "Рахунки",
+            analytics: "Аналітика",
+            workspace: "ФІНАНСОВИЙ ПРОСТІР",
+            dashboardTitle: "Фінансовий огляд",
+            activeInvoices: "АКТИВНІ РАХУНКИ",
+            budgetUtilization: "ВИКОРИСТАННЯ БЮДЖЕТУ",
+            counterparties: "КОНТРАГЕНТИ",
+            tracked: "Відстежувані організації",
+            financialSummary: "Фінансове зведення",
+            systemStatus: "Стан системи",
+            connected: "Підключено",
+            protected: "Захищено",
+            enabled: "Увімкнено",
 
-            valueMulti: "Multi-Company",
+            valueMulti: "Мультикомпанійність",
             valueMultiText: "Ізольовані фінансові контури",
-            valueSelf: "Self-Hosted",
+            valueSelf: "Власна інфраструктура",
             valueSelfText: "Ваша інфраструктура",
-            valueAudit: "Auditable",
+            valueAudit: "Аудитованість",
             valueAuditText: "Прозора історія операцій",
-            valueDatabaseText: "Production database",
+            valueDatabaseText: "Робоча база даних",
 
-            productKicker: "THE WORKSPACE",
+            productKicker: "РОБОЧИЙ ПРОСТІР",
             productTitle: "Ваш фінансовий простір. Під вашим контролем.",
             productDescription:
                 "Об'єднайте операції компаній, бюджети, рахунки та фінансову аналітику, не передаючи контроль над власною інфраструктурою.",
-            budgets: "Budgets",
-            audit: "Audit",
-            currentWorkspace: "CURRENT WORKSPACE",
-            budget: "TOTAL BUDGET",
-            invoiced: "INVOICED",
-            remaining: "REMAINING",
-            utilization: "UTILIZATION",
-            budgetHealth: "Budget Health",
-            withinLimits: "Within planned limits",
+            budgets: "Бюджети",
+            audit: "Аудит",
+            currentWorkspace: "ПОТОЧНИЙ ПРОСТІР",
+            budget: "ЗАГАЛЬНИЙ БЮДЖЕТ",
+            invoiced: "ВИСТАВЛЕНО РАХУНКІВ",
+            remaining: "ЗАЛИШОК",
+            utilization: "ВИКОРИСТАННЯ",
+            budgetHealth: "Стан бюджету",
+            withinLimits: "У межах планових лімітів",
 
-            featuresKicker: "CORE CAPABILITIES",
+            featuresKicker: "ОСНОВНІ МОЖЛИВОСТІ",
             featuresTitle: "Усе під контролем.",
             featuresDescription:
                 "Фокусований операційний рівень для фінансових команд, яким потрібні прозорість, контроль і мінімум зайвої складності.",
 
-            featureCompanies: "Company Management",
+            featureCompanies: "Керування компаніями",
             featureCompaniesText:
                 "Керуйте організаціями та підтримуйте розділені фінансові контури в єдиному робочому просторі.",
-            featureInvoices: "Invoices & Billing",
+            featureInvoices: "Рахунки та білінг",
             featureInvoicesText:
                 "Створюйте, керуйте та відстежуйте вихідні рахунки в контрольованому фінансовому процесі.",
-            featureBudgets: "Budget Control",
+            featureBudgets: "Контроль бюджету",
             featureBudgetsText:
                 "Контролюйте бюджети, використання коштів та фінансові пороги в реальному часі.",
-            featureAnalytics: "Financial Analytics",
+            featureAnalytics: "Фінансова аналітика",
             featureAnalyticsText:
                 "Перетворюйте операційні дані на зрозумілу фінансову аналітику та контроль.",
-            featureRBAC: "Role-Based Access",
+            featureRBAC: "Рольовий доступ",
             featureRBACText:
                 "Керуйте доступом до чутливих операцій відповідно до ролей і відповідальності користувачів.",
-            featureAudit: "Audit Trail",
+            featureAudit: "Журнал аудиту",
             featureAuditText:
                 "Зберігайте контрольовану історію важливих системних і фінансових дій.",
 
-            securityKicker: "SECURITY & INFRASTRUCTURE",
+            securityKicker: "БЕЗПЕКА ТА ІНФРАСТРУКТУРА",
             securityTitle: "Ваша інфраструктура. Ваші дані.",
             securityDescription:
                 "ElixOR Connect працює всередині вашої інфраструктури, надаючи організації прямий контроль над розгортанням, доступом і фінансовими даними.",
 
-            architectureKicker: "ARCHITECTURE",
+            architectureKicker: "АРХІТЕКТУРА",
             architectureTitle: "Створено для розвитку вашої інфраструктури.",
             architectureDescription:
                 "Надійна фінансова основа сьогодні, готова підключатися до ширших бізнес-процесів завтра.",
-            architectureCore: "Financial Operations Core",
-            architectureFinance: "Finance",
-            architectureFinanceText: "Budgets · Invoices · Analytics",
-            architectureEntities: "Entities",
-            architectureEntitiesText: "Companies · Products · Scope",
-            architectureFuture: "Integrations",
-            architectureFutureText: "CRM · ERP · Business workflows",
-            roadmapLabel: "EVOLUTION PATH",
+            architectureCore: "Ядро фінансових операцій",
+            architectureFinance: "Фінанси",
+            architectureFinanceText: "Бюджети · Рахунки · Аналітика",
+            architectureEntities: "Сутності",
+            architectureEntitiesText: "Компанії · Продукти · Контури",
+            architectureFuture: "Інтеграції",
+            architectureFutureText: "CRM · ERP · Бізнес-процеси",
+            roadmapLabel: "ШЛЯХ РОЗВИТКУ",
 
-            useCasesKicker: "BUILT FOR",
+            useCasesKicker: "СТВОРЕНО ДЛЯ",
             useCasesTitle:
                 "Фінансовий контроль для команд, які цінують власність над даними.",
-            useCaseCompanies: "Multiple Companies",
+            useCaseCompanies: "Кілька компаній",
             useCaseCompaniesText:
                 "Розділяйте фінансові операції між організаціями та бізнес-напрямами.",
-            useCaseServices: "Service Businesses",
+            useCaseServices: "Сервісний бізнес",
             useCaseServicesText:
                 "Керуйте контрактами, бюджетами, рахунками та операційними витратами з одного простору.",
-            useCasePrivacy: "Privacy-Focused Teams",
+            useCasePrivacy: "Команди, орієнтовані на приватність",
             useCasePrivacyText:
                 "Розгортайте платформу у власній інфраструктурі, коли фінансові дані мають залишатися під вашим контролем.",
 
@@ -120,8 +157,8 @@
             finalPrimary: "Запустити ElixOR Connect",
             finalGithub: "Переглянути код",
 
-            footerTagline: "Self-hosted Financial Operations Platform",
-            license: "License"
+            footerTagline: "Self-hosted платформа фінансових операцій",
+            license: "Ліцензія"
         },
 
         en: {
@@ -222,16 +259,16 @@
             architectureFutureText: "CRM · ERP · Business workflows",
             roadmapLabel: "EVOLUTION PATH",
 
-            useCasesKicker: "BUILT FOR",
+            useCasesKicker: "СТВОРЕНО ДЛЯ",
             useCasesTitle:
                 "Financial control for teams that value data ownership.",
-            useCaseCompanies: "Multiple Companies",
+            useCaseCompanies: "Кілька компаній",
             useCaseCompaniesText:
                 "Keep financial operations separated across organizations and business units.",
-            useCaseServices: "Service Businesses",
+            useCaseServices: "Сервісний бізнес",
             useCaseServicesText:
                 "Manage contracts, budgets, invoices and operational spending from one workspace.",
-            useCasePrivacy: "Privacy-Focused Teams",
+            useCasePrivacy: "Команди, орієнтовані на приватність",
             useCasePrivacyText:
                 "Deploy inside your own infrastructure when financial data should remain under your control.",
 
@@ -294,6 +331,7 @@
         });
 
         updateDocumentMeta(lang);
+        document.body.classList.remove("elixor-i18n-pending");
     }
 
     function updateDocumentMeta(lang) {
@@ -325,11 +363,28 @@
             });
         });
 
+        const themeButton = document.getElementById("elixor-theme-toggle");
+
+        if (themeButton) {
+            themeButton.addEventListener("click", function () {
+                toggleTheme();
+            });
+        }
+
+        document.documentElement.setAttribute("data-theme", getTheme());
+        window.addEventListener("finflow-theme-changed", updateThemeToggle);
+        updateThemeToggle();
+
         applyLanguage(getLanguage());
 
         window.addEventListener("storage", function (event) {
             if (event.key === "finflow-language") {
                 applyLanguage(getLanguage());
+            }
+
+            if (event.key === THEME_STORAGE_KEY) {
+                document.documentElement.setAttribute("data-theme", getTheme());
+                updateThemeToggle();
             }
         });
     }

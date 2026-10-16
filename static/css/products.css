@@ -1236,3 +1236,304 @@
         align-self: flex-start;
     }
 }
+
+/* ============================================================
+   ELIXOR CONNECT — LIGHT GLASS / PRODUCTS
+   ============================================================ */
+
+[data-theme="light"] .ff-products-toolbar {
+    background: linear-gradient(145deg, rgba(255,255,255,.78), rgba(246,249,252,.68));
+    border-color: rgba(71,85,105,.13);
+    box-shadow: 0 18px 45px rgba(15,23,42,.08), inset 0 1px 0 rgba(255,255,255,.88);
+}
+
+[data-theme="light"] .ff-product-filters,
+[data-theme="light"] .ff-products-toolbar .ff-view-switcher {
+    background: rgba(226,232,240,.48);
+    border-color: rgba(71,85,105,.11);
+}
+
+[data-theme="light"] .ff-product-filter-button,
+[data-theme="light"] .ff-products-toolbar .ff-view-button {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-product-filter-button:hover,
+[data-theme="light"] .ff-products-toolbar .ff-view-button:hover {
+    color: #334155;
+}
+
+[data-theme="light"] .ff-product-filter-button.is-active,
+[data-theme="light"] .ff-products-toolbar .ff-view-button.is-active {
+    color: #2563eb;
+    background: rgba(37,99,235,.09);
+    box-shadow: inset 0 0 0 1px rgba(37,99,235,.13);
+}
+
+[data-theme="light"] .ff-product-search > i.bi-search {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-product-search input {
+    color: #0f172a;
+    background: rgba(255,255,255,.62);
+    border-color: rgba(71,85,105,.14);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.86);
+}
+
+[data-theme="light"] .ff-product-search input::placeholder {
+    color: #94a3b8;
+}
+
+[data-theme="light"] .ff-product-search input:focus {
+    background: rgba(255,255,255,.82);
+    border-color: rgba(37,99,235,.35);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.08), 0 8px 24px rgba(15,23,42,.06);
+}
+
+[data-theme="light"] .ff-product-search .ff-search-clear {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-product-search .ff-search-clear:hover {
+    color: #2563eb;
+    background: rgba(37,99,235,.07);
+}
+
+[data-theme="light"] .ff-products-count {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-products-count span:first-child {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-products-summary-item {
+    background: linear-gradient(145deg, rgba(255,255,255,.80), rgba(246,249,252,.70));
+    border-color: rgba(71,85,105,.12);
+    box-shadow: 0 16px 38px rgba(15,23,42,.07), inset 0 1px 0 rgba(255,255,255,.90);
+}
+
+[data-theme="light"] .ff-products-summary-item strong {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-products-summary-item span:not(.ff-products-summary-icon) {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-products-summary-icon {
+    color: #2563eb;
+    background: rgba(37,99,235,.07);
+    border-color: rgba(37,99,235,.13);
+}
+
+[data-theme="light"] .ff-products-summary-item:nth-child(2) .ff-products-summary-icon {
+    color: #059669;
+    background: rgba(5,150,105,.07);
+    border-color: rgba(5,150,105,.13);
+}
+
+[data-theme="light"] .ff-products-summary-item:nth-child(3) .ff-products-summary-icon {
+    color: #7c3aed;
+    background: rgba(124,58,237,.07);
+    border-color: rgba(124,58,237,.13);
+}
+
+[data-theme="light"] .ff-product-card {
+    background:
+        radial-gradient(circle at 100% 0%, rgba(37,99,235,.055), transparent 36%),
+        linear-gradient(145deg, rgba(255,255,255,.84), rgba(246,249,252,.72));
+    border-color: rgba(71,85,105,.13);
+    box-shadow: 0 20px 50px rgba(15,23,42,.08), inset 0 1px 0 rgba(255,255,255,.92);
+}
+
+[data-theme="light"] .ff-product-card:hover {
+    background:
+        radial-gradient(circle at 100% 0%, rgba(37,99,235,.08), transparent 36%),
+        linear-gradient(145deg, rgba(255,255,255,.92), rgba(246,249,252,.80));
+    border-color: rgba(37,99,235,.20);
+    box-shadow: 0 26px 60px rgba(15,23,42,.11), inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+[data-theme="light"] .ff-product-card::after {
+    background: radial-gradient(circle at 90% 0%, rgba(37,99,235,.045), transparent 34%);
+}
+
+[data-theme="light"] .ff-product-mark {
+    color: #2563eb;
+    background: linear-gradient(145deg, rgba(37,99,235,.10), rgba(8,145,178,.055));
+    border-color: rgba(37,99,235,.14);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.88);
+}
+
+[data-theme="light"] .ff-product-code {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-product-heading h3 {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-product-status-active {
+    color: #047857;
+    background: rgba(5,150,105,.07);
+    border-color: rgba(5,150,105,.14);
+}
+
+[data-theme="light"] .ff-product-status-archived {
+    color: #7c3aed;
+    background: rgba(124,58,237,.07);
+    border-color: rgba(124,58,237,.14);
+}
+
+[data-theme="light"] .ff-product-description {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-product-description > span {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-product-usage {
+    border-top-color: rgba(71,85,105,.09);
+    border-bottom-color: rgba(71,85,105,.09);
+}
+
+[data-theme="light"] .ff-product-usage-item > i {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-product-usage-item strong {
+    color: #334155;
+}
+
+[data-theme="light"] .ff-product-usage-item span {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-product-usage-divider {
+    background: rgba(71,85,105,.12);
+}
+
+[data-theme="light"] .ff-product-created span {
+    color: #94a3b8;
+}
+
+[data-theme="light"] .ff-product-created strong {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-product-action {
+    color: #64748b;
+    background: rgba(255,255,255,.54);
+    border-color: rgba(71,85,105,.11);
+}
+
+[data-theme="light"] .ff-product-action:hover {
+    color: #2563eb;
+    background: rgba(37,99,235,.07);
+    border-color: rgba(37,99,235,.16);
+}
+
+[data-theme="light"] .ff-product-action-danger:hover {
+    color: #dc2626;
+    background: rgba(239,68,68,.07);
+    border-color: rgba(239,68,68,.14);
+}
+
+[data-theme="light"] .ff-products-empty {
+    background: rgba(255,255,255,.48);
+    border-color: rgba(71,85,105,.16);
+}
+
+[data-theme="light"] .ff-products-empty-icon {
+    color: #2563eb;
+    background: rgba(37,99,235,.07);
+    border-color: rgba(37,99,235,.13);
+}
+
+[data-theme="light"] .ff-products-empty h3 {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-products-empty p {
+    color: #64748b;
+}
+
+/* PRODUCT MODAL */
+
+[data-theme="light"] .ff-product-modal-dialog {
+    background: linear-gradient(145deg, rgba(255,255,255,.96), rgba(246,249,252,.90));
+    border-color: rgba(71,85,105,.14);
+    box-shadow: 0 35px 90px rgba(15,23,42,.18), inset 0 1px 0 rgba(255,255,255,.94);
+}
+
+[data-theme="light"] .ff-product-modal-dialog .ff-modal-header {
+    border-bottom-color: rgba(71,85,105,.10);
+    background: rgba(255,255,255,.36);
+}
+
+[data-theme="light"] .ff-product-modal-dialog .ff-modal-header .ff-section-kicker {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-product-modal-dialog .ff-modal-header h2 {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-product-modal-dialog .ff-modal-header p {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-product-modal-dialog .ff-modal-close {
+    color: #64748b;
+    background: rgba(255,255,255,.58);
+    border-color: rgba(71,85,105,.12);
+}
+
+[data-theme="light"] .ff-product-modal-dialog .ff-modal-close:hover {
+    color: #2563eb;
+    background: rgba(37,99,235,.07);
+    border-color: rgba(37,99,235,.17);
+}
+
+[data-theme="light"] .ff-product-modal-dialog .ff-form-field label {
+    color: #334155;
+}
+
+[data-theme="light"] .ff-product-modal-dialog .ff-form-field input,
+[data-theme="light"] .ff-product-modal-dialog .ff-form-field textarea {
+    color: #0f172a;
+    background: linear-gradient(180deg, rgba(255,255,255,.76), rgba(248,250,252,.62));
+    border-color: rgba(71,85,105,.15);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.90);
+}
+
+[data-theme="light"] .ff-product-modal-dialog .ff-form-field input::placeholder,
+[data-theme="light"] .ff-product-modal-dialog .ff-form-field textarea::placeholder {
+    color: #94a3b8;
+}
+
+[data-theme="light"] .ff-product-modal-dialog .ff-form-field input:focus,
+[data-theme="light"] .ff-product-modal-dialog .ff-form-field textarea:focus {
+    background: rgba(239,246,255,.82);
+    border-color: rgba(37,99,235,.35);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.08), 0 8px 24px rgba(15,23,42,.07);
+}
+
+[data-theme="light"] .ff-product-modal-dialog .ff-form-field small {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-product-modal-dialog .ff-form-error {
+    color: #b91c1c;
+    background: rgba(239,68,68,.06);
+    border-color: rgba(239,68,68,.14);
+}
+
+[data-theme="light"] .ff-product-modal-dialog .ff-modal-footer {
+    border-top-color: rgba(71,85,105,.09);
+    background: rgba(255,255,255,.26);
+}
+

@@ -1679,3 +1679,1230 @@
         align-items: flex-start;
     }
 }
+
+/* =========================================================
+   ELIXOR LIGHT GLASS — COMPANIES
+   ========================================================= */
+
+[data-theme="light"] .ff-companies-page .ff-page-heading h1 {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-companies-page .ff-page-heading p,
+[data-theme="light"] .ff-page-eyebrow {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .ff-companies-page-actions .ff-btn-secondary,
+[data-theme="light"] .ff-btn-secondary {
+    color: #334155;
+    background: rgba(255,255,255,.72);
+    border-color: rgba(71,85,105,.14);
+    box-shadow: 0 8px 22px rgba(15,23,42,.06), inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+[data-theme="light"] .ff-btn-secondary:hover {
+    background: rgba(255,255,255,.94);
+    border-color: rgba(37,99,235,.18);
+}
+
+[data-theme="light"] .ff-companies-toolbar {
+    background: linear-gradient(145deg, rgba(255,255,255,.78), rgba(246,249,252,.68));
+    border-color: rgba(71,85,105,.14);
+    box-shadow: 0 18px 44px rgba(15,23,42,.07), inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+[data-theme="light"] .ff-company-search {
+    background: rgba(255,255,255,.72);
+    border-color: rgba(71,85,105,.14);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+}
+
+[data-theme="light"] .ff-company-search > i {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-company-search input {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-company-search input::placeholder {
+    color: #94a3b8;
+}
+
+[data-theme="light"] .ff-company-search input:focus {
+    border-color: rgba(37,99,235,.28);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.07);
+}
+
+[data-theme="light"] .ff-companies-count {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-companies-count span:first-child {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-company-card,
+[data-theme="light"] .ff-company-list-row {
+    background: linear-gradient(145deg, rgba(255,255,255,.82), rgba(246,249,252,.72));
+    border-color: rgba(71,85,105,.14);
+    box-shadow: 0 20px 50px rgba(15,23,42,.075), inset 0 1px 0 rgba(255,255,255,.92);
+}
+
+[data-theme="light"] .ff-company-card:hover,
+[data-theme="light"] .ff-company-list-row:hover {
+    border-color: rgba(37,99,235,.18);
+    box-shadow: 0 24px 56px rgba(15,23,42,.11), inset 0 1px 0 rgba(255,255,255,.96);
+}
+
+[data-theme="light"] .ff-company-card.is-expanded,
+[data-theme="light"] .ff-company-list-row.is-expanded {
+    border-color: rgba(37,99,235,.22);
+}
+
+[data-theme="light"] .ff-company-logo {
+    background: linear-gradient(145deg, rgba(37,99,235,.10), rgba(8,145,178,.07));
+    border-color: rgba(37,99,235,.14);
+    color: #2563eb;
+}
+
+[data-theme="light"] .ff-company-title,
+[data-theme="light"] .ff-company-title strong {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-company-title small,
+[data-theme="light"] .ff-company-meta-item,
+[data-theme="light"] .ff-company-meta-item i {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-company-meta-item strong {
+    color: #334155;
+}
+
+[data-theme="light"] .ff-company-open-icon {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-company-card-open:hover .ff-company-open-icon {
+    color: #2563eb;
+}
+
+[data-theme="light"] .ff-company-menu-button {
+    color: #64748b;
+    background: rgba(255,255,255,.55);
+    border-color: rgba(71,85,105,.12);
+}
+
+[data-theme="light"] .ff-company-menu-button:hover {
+    color: #2563eb;
+    background: rgba(37,99,235,.07);
+    border-color: rgba(37,99,235,.16);
+}
+
+[data-theme="light"] .ff-company-menu {
+    background: rgba(255,255,255,.96);
+    border-color: rgba(71,85,105,.14);
+    box-shadow: 0 18px 42px rgba(15,23,42,.14);
+}
+
+[data-theme="light"] .ff-company-menu button {
+    color: #334155;
+}
+
+[data-theme="light"] .ff-company-menu button:hover {
+    background: rgba(37,99,235,.07);
+    color: #1d4ed8;
+}
+
+[data-theme="light"] .ff-company-menu button.is-danger {
+    color: #dc2626;
+}
+
+[data-theme="light"] .ff-company-financial,
+[data-theme="light"] .ff-company-progress,
+[data-theme="light"] .ff-company-contract {
+    color: #334155;
+}
+
+[data-theme="light"] .ff-company-financial strong,
+[data-theme="light"] .ff-company-progress-head strong {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-company-progress-head span,
+[data-theme="light"] .ff-company-contract small {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-company-details {
+    border-top-color: rgba(71,85,105,.12);
+    background: rgba(248,250,252,.72);
+}
+
+[data-theme="light"] .ff-company-details-inner {
+    background: rgba(255,255,255,.48);
+}
+
+[data-theme="light"] .ff-company-details-header h3 {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-company-invoice-toolbar {
+    border-color: rgba(71,85,105,.10);
+}
+
+[data-theme="light"] .ff-company-invoice-total {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-company-invoices {
+    color: #334155;
+}
+
+[data-theme="light"] .ff-company-list-details {
+    background: rgba(248,250,252,.72);
+    border-top-color: rgba(71,85,105,.10);
+}
+
+[data-theme="light"] .ff-companies-empty {
+    background: linear-gradient(145deg, rgba(255,255,255,.78), rgba(246,249,252,.68));
+    border-color: rgba(71,85,105,.14);
+    box-shadow: 0 20px 50px rgba(15,23,42,.075), inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+[data-theme="light"] .ff-companies-empty h3 {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-companies-empty p {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-company-stamp-field {
+    background: rgba(255,255,255,.58);
+    border-color: rgba(71,85,105,.12);
+}
+
+[data-theme="light"] .ff-company-stamp-heading label {
+    color: #334155;
+}
+
+[data-theme="light"] .ff-company-stamp-heading small,
+[data-theme="light"] .ff-company-stamp-upload small {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-company-stamp-status {
+    color: #64748b;
+    background: rgba(100,116,139,.06);
+    border-color: rgba(71,85,105,.12);
+}
+
+[data-theme="light"] .ff-company-stamp-status.is-ready {
+    color: #047857;
+    background: rgba(16,185,129,.08);
+    border-color: rgba(16,185,129,.20);
+}
+
+[data-theme="light"] .ff-company-stamp-preview {
+    background: rgba(248,250,252,.88);
+    border-color: rgba(71,85,105,.12);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+}
+[data-theme="light"] .ff-dialog-backdrop {
+    background: rgba(15,23,42,.28);
+    backdrop-filter: blur(10px);
+}
+
+[data-theme="light"] .ff-dialog {
+    background: linear-gradient(145deg, rgba(255,255,255,.94), rgba(246,249,252,.92));
+    border: 1px solid rgba(71,85,105,.14);
+    box-shadow: 0 30px 80px rgba(15,23,42,.18), inset 0 1px 0 rgba(255,255,255,.95);
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-dialog-header {
+    border-bottom-color: rgba(71,85,105,.10);
+}
+
+[data-theme="light"] .ff-dialog-header h2 {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-dialog-eyebrow {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-dialog-close {
+    color: #64748b;
+    background: rgba(241,245,249,.8);
+    border-color: rgba(71,85,105,.12);
+}
+
+[data-theme="light"] .ff-dialog-close:hover {
+    color: #0f172a;
+    background: rgba(226,232,240,.9);
+}
+
+[data-theme="light"] .ff-form-field label {
+    color: #334155;
+}
+
+[data-theme="light"] .ff-form-field input {
+    color: #0f172a;
+    background: rgba(255,255,255,.82);
+    border-color: rgba(71,85,105,.16);
+    box-shadow: inset 0 1px 2px rgba(15,23,42,.03);
+}
+
+[data-theme="light"] .ff-form-field input::placeholder {
+    color: #94a3b8;
+}
+
+[data-theme="light"] .ff-form-field input:focus {
+    background: rgba(255,255,255,.96);
+    border-color: rgba(37,99,235,.38);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.08);
+}
+
+[data-theme="light"] .ff-form-error {
+    color: #b91c1c;
+    background: rgba(254,226,226,.72);
+    border-color: rgba(220,38,38,.16);
+}
+
+[data-theme="light"] .ff-dialog-actions {
+    border-top-color: rgba(71,85,105,.10);
+}
+[data-theme="light"] .ff-companies-toolbar {
+    background: rgba(255,255,255,.72);
+    border-color: rgba(71,85,105,.11);
+    box-shadow: 0 16px 36px rgba(15,23,42,.07), inset 0 1px 0 rgba(255,255,255,.92);
+}
+
+[data-theme="light"] .ff-company-search {
+    background: rgba(255,255,255,.88);
+    border-color: rgba(71,85,105,.14);
+    box-shadow: inset 0 1px 2px rgba(15,23,42,.025);
+}
+
+[data-theme="light"] .ff-company-search input {
+    color: #1e293b;
+}
+
+[data-theme="light"] .ff-company-search > i {
+    color: #475569;
+}
+
+[data-theme="light"] .ff-company-card,
+[data-theme="light"] .ff-company-list-row {
+    background: linear-gradient(145deg, rgba(255,255,255,.86), rgba(248,250,252,.78));
+    border-color: rgba(71,85,105,.12);
+    box-shadow: 0 18px 42px rgba(15,23,42,.075), inset 0 1px 0 rgba(255,255,255,.92);
+}
+
+[data-theme="light"] .ff-company-title strong {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-company-title small {
+    color: #475569;
+}
+
+[data-theme="light"] .ff-company-meta-item {
+    color: #475569;
+}
+
+[data-theme="light"] .ff-company-meta-item strong {
+    color: #1e293b;
+}
+
+[data-theme="light"] .ff-company-financial {
+    color: #334155;
+}
+
+[data-theme="light"] .ff-company-financial strong,
+[data-theme="light"] .ff-company-progress-head strong {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-company-progress-head span,
+[data-theme="light"] .ff-company-contract small {
+    color: #475569;
+}
+
+[data-theme="light"] .ff-company-contract {
+    color: #334155;
+}
+
+[data-theme="light"] .ff-company-details {
+    background: rgba(248,250,252,.58);
+}
+
+[data-theme="light"] .ff-company-details-inner {
+    background: rgba(255,255,255,.62);
+}
+
+[data-theme="light"] .ff-company-details-header h3 {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-company-invoice-total {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-invoice-row {
+    color: #334155;
+}
+
+[data-theme="light"] .ff-invoice-number,
+[data-theme="light"] .ff-invoice-amount,
+[data-theme="light"] .ff-invoice-payment strong {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-invoice-date,
+[data-theme="light"] .ff-invoice-software,
+[data-theme="light"] .ff-invoice-payment small {
+    color: #64748b;
+}
+
+/* =========================================================
+   LIGHT GLASS — COMPANIES PAGE POLISH
+   Main page only — modal intentionally untouched
+   ========================================================= */
+
+[data-theme="light"] .ff-view-switcher {
+    background: rgba(255,255,255,.82);
+    border-color: rgba(71,85,105,.13);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+[data-theme="light"] .ff-view-button {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-view-button:hover {
+    color: #334155;
+    background: rgba(241,245,249,.72);
+}
+
+[data-theme="light"] .ff-view-button.is-active {
+    color: #1d4ed8;
+    background: rgba(37,99,235,.09);
+    box-shadow: inset 0 0 0 1px rgba(37,99,235,.14);
+}
+
+[data-theme="light"] .ff-search-clear {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-search-clear:hover {
+    color: #334155;
+    background: rgba(226,232,240,.72);
+}
+
+[data-theme="light"] .ff-company-logo {
+    color: #1e40af;
+    background: linear-gradient(
+        145deg,
+        rgba(59,130,246,.11),
+        rgba(99,102,241,.07)
+    );
+    border-color: rgba(59,130,246,.16);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+[data-theme="light"] .ff-company-open-icon {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-company-card-open:hover .ff-company-open-icon {
+    color: #2563eb;
+    background: rgba(37,99,235,.07);
+}
+
+[data-theme="light"] .ff-icon-button {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-icon-button:hover {
+    color: #334155;
+    background: rgba(226,232,240,.72);
+    border-color: rgba(71,85,105,.10);
+}
+
+[data-theme="light"] .ff-company-menu {
+    background: rgba(255,255,255,.96);
+    border-color: rgba(71,85,105,.13);
+    box-shadow: 0 20px 45px rgba(15,23,42,.16);
+}
+
+[data-theme="light"] .ff-company-menu button {
+    color: #334155;
+}
+
+[data-theme="light"] .ff-company-menu button:hover {
+    color: #0f172a;
+    background: rgba(241,245,249,.88);
+}
+
+[data-theme="light"] .ff-company-meta {
+    border-top-color: rgba(71,85,105,.10);
+}
+
+[data-theme="light"] .ff-company-meta-item i {
+    color: #4f46e5;
+}
+
+[data-theme="light"] .ff-company-financial {
+    background: rgba(226,232,240,.72);
+    border-color: rgba(71,85,105,.10);
+}
+
+[data-theme="light"] .ff-financial-item {
+    background: rgba(255,255,255,.78);
+}
+
+[data-theme="light"] .ff-financial-label {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-financial-item strong {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-progress-track {
+    background: rgba(148,163,184,.20);
+}
+
+[data-theme="light"] .ff-company-contract {
+    background: rgba(255,255,255,.68);
+    border-color: rgba(71,85,105,.10);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.88);
+}
+
+[data-theme="light"] .ff-contract-icon {
+    color: #4f46e5;
+    background: rgba(99,102,241,.08);
+}
+
+[data-theme="light"] .ff-contract-content span {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-contract-content strong {
+    color: #1e293b;
+}
+
+[data-theme="light"] .ff-contract-status {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-company-details {
+    background: rgba(248,250,252,.72);
+    border-top-color: rgba(71,85,105,.12);
+}
+
+[data-theme="light"] .ff-company-details-inner {
+    background: rgba(255,255,255,.58);
+}
+
+[data-theme="light"] .ff-company-invoice-toolbar {
+    background: rgba(255,255,255,.56);
+}
+
+[data-theme="light"] .ff-invoice-filters button {
+    color: #64748b;
+    background: rgba(241,245,249,.68);
+    border-color: rgba(71,85,105,.10);
+}
+
+[data-theme="light"] .ff-invoice-filters button:hover {
+    color: #334155;
+    background: rgba(226,232,240,.82);
+}
+
+[data-theme="light"] .ff-invoice-filters button.is-active {
+    color: #1d4ed8;
+    background: rgba(37,99,235,.09);
+    border-color: rgba(37,99,235,.14);
+}
+
+[data-theme="light"] .ff-invoice-currency-title {
+    color: #475569;
+}
+
+[data-theme="light"] .ff-invoice-currency-title strong {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-invoice-total-row {
+    color: #475569;
+}
+
+[data-theme="light"] .ff-invoice-total-row strong {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-invoice-row {
+    background: rgba(255,255,255,.60);
+    border-color: rgba(71,85,105,.09);
+}
+
+[data-theme="light"] .ff-invoice-row:hover {
+    background: rgba(248,250,252,.88);
+}
+
+[data-theme="light"] .ff-invoice-row.is-cancelled {
+    background: rgba(248,250,252,.55);
+}
+
+[data-theme="light"] .ff-company-search {
+    background: rgba(255,255,255,.94) !important;
+    border-color: rgba(71,85,105,.14) !important;
+    box-shadow:
+        0 8px 24px rgba(15,23,42,.06),
+        inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+[data-theme="light"] .ff-company-search input {
+    background: transparent !important;
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-company-search input::placeholder {
+    color: #94a3b8 !important;
+}
+
+[data-theme="light"] .ff-companies-list {
+    color: #334155 !important;
+}
+
+[data-theme="light"] .ff-company-list-row {
+    background: rgba(255,255,255,.92) !important;
+    color: #334155 !important;
+    border-color: rgba(71,85,105,.12) !important;
+    box-shadow:
+        0 12px 30px rgba(15,23,42,.06),
+        inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+[data-theme="light"] .ff-company-list-row .ff-company-title strong,
+[data-theme="light"] .ff-company-list-row .ff-company-meta-item strong {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-company-list-row .ff-company-title small,
+[data-theme="light"] .ff-company-list-row .ff-company-meta-item,
+[data-theme="light"] .ff-company-list-row .ff-company-meta-item i {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .ff-company-list-row .ff-company-open-icon,
+[data-theme="light"] .ff-company-list-row .ff-company-menu-button {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .ff-company-list-row .ff-company-menu-button:hover {
+    color: #1e293b !important;
+    background: rgba(226,232,240,.72) !important;
+}
+[data-theme="light"] .ff-company-list-header {
+    background: rgba(255,255,255,.94) !important;
+    color: #334155 !important;
+    border-color: rgba(71,85,105,.12) !important;
+    box-shadow:
+        0 8px 24px rgba(15,23,42,.05),
+        inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+[data-theme="light"] .ff-company-list-header > *,
+[data-theme="light"] .ff-company-list-header span,
+[data-theme="light"] .ff-company-list-header strong {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .ff-company-list-row .ff-company-title,
+[data-theme="light"] .ff-company-list-row .ff-company-title strong,
+[data-theme="light"] .ff-company-list-row .ff-company-title a,
+[data-theme="light"] .ff-company-list-row .ff-company-title a strong {
+    color: #0f172a !important;
+    text-shadow: none !important;
+}
+
+[data-theme="light"] .ff-company-list-row .ff-list-company,
+[data-theme="light"] .ff-company-list-row .ff-list-company strong {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-company-list-row .ff-company-logo {
+    color: #1e40af !important;
+}
+
+[data-theme="light"] .ff-list-head {
+    background: rgba(255,255,255,.94) !important;
+    color: #475569 !important;
+    border-color: rgba(71,85,105,.12) !important;
+    box-shadow:
+        0 8px 24px rgba(15,23,42,.05),
+        inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+[data-theme="light"] .ff-list-head span,
+[data-theme="light"] .ff-list-head > span {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .ff-list-company {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-list-company strong {
+    color: #0f172a !important;
+    opacity: 1 !important;
+}
+
+[data-theme="light"] .ff-list-company small {
+    color: #64748b !important;
+    opacity: 1 !important;
+}
+
+[data-theme="light"] .ff-company-list-row > span:not(.ff-company-logo),
+[data-theme="light"] .ff-company-list-row > strong {
+    color: #334155 !important;
+    opacity: 1 !important;
+}
+
+[data-theme="light"] .ff-company-list-row > strong {
+    color: #0f172a !important;
+}
+
+/* ============================================================
+   ELIXOR CONNECT — COMPANIES / LIGHT GLASS FINAL OVERRIDE
+   Expanded company details should remain clean glass, not gray.
+   UI only — no JS / layout / functionality changes.
+   ============================================================ */
+
+[data-theme="light"] .ff-company-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.96),
+            rgba(248,250,252,.84)
+        ) !important;
+
+    border-color: rgba(71,85,105,.13) !important;
+
+    box-shadow:
+        0 18px 42px rgba(15,23,42,.065),
+        inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+[data-theme="light"] .ff-company-card.is-expanded {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.98),
+            rgba(248,250,252,.90)
+        ) !important;
+
+    border-color: rgba(37,99,235,.14) !important;
+
+    box-shadow:
+        0 22px 52px rgba(15,23,42,.085),
+        inset 0 1px 0 rgba(255,255,255,.98) !important;
+}
+
+/* Expanded area — no gray slab */
+[data-theme="light"] .ff-company-details {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(248,250,252,.42),
+            rgba(255,255,255,.18)
+        ) !important;
+
+    border-top-color: rgba(71,85,105,.10) !important;
+}
+
+/* Inner details surface */
+[data-theme="light"] .ff-company-details-inner {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.90),
+            rgba(248,250,252,.68)
+        ) !important;
+
+    border-color: rgba(71,85,105,.10) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.94),
+        0 8px 24px rgba(15,23,42,.035) !important;
+}
+
+/* Header inside expanded card */
+[data-theme="light"] .ff-company-details-header {
+    border-bottom-color: rgba(71,85,105,.09) !important;
+}
+
+[data-theme="light"] .ff-company-details-header h3 {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-details-eyebrow {
+    color: #64748b !important;
+}
+
+/* Invoice toolbar */
+[data-theme="light"] .ff-company-invoice-toolbar {
+    background:
+        rgba(255,255,255,.68) !important;
+
+    border-color: rgba(71,85,105,.09) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.92) !important;
+}
+
+/* Filter group */
+[data-theme="light"] .ff-invoice-filters {
+    background:
+        rgba(241,245,249,.58) !important;
+
+    border-color: rgba(71,85,105,.09) !important;
+}
+
+[data-theme="light"] .ff-invoice-filters button {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .ff-invoice-filters button:hover {
+    background: rgba(255,255,255,.76) !important;
+    color: #1e40af !important;
+}
+
+[data-theme="light"] .ff-invoice-filters button.is-active {
+    background: rgba(255,255,255,.96) !important;
+    color: #1d4ed8 !important;
+    border-color: rgba(37,99,235,.14) !important;
+
+    box-shadow:
+        0 3px 10px rgba(15,23,42,.045),
+        inset 0 1px 0 rgba(255,255,255,.95) !important;
+}
+
+/* Totals */
+[data-theme="light"] .ff-invoice-totals {
+    background:
+        rgba(255,255,255,.64) !important;
+
+    border-color: rgba(71,85,105,.09) !important;
+}
+
+[data-theme="light"] .ff-invoice-total-row {
+    background: transparent !important;
+}
+
+[data-theme="light"] .ff-invoice-total-row strong {
+    color: #0f172a !important;
+}
+
+/* Invoice list itself */
+[data-theme="light"] .ff-company-invoices {
+    background: transparent !important;
+}
+
+/* Individual invoice rows */
+[data-theme="light"] .ff-invoice-row {
+    background:
+        rgba(255,255,255,.72) !important;
+
+    border-color: rgba(71,85,105,.085) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.88) !important;
+}
+
+[data-theme="light"] .ff-invoice-row:hover {
+    background:
+        rgba(255,255,255,.94) !important;
+
+    border-color: rgba(37,99,235,.12) !important;
+
+    box-shadow:
+        0 8px 20px rgba(15,23,42,.045),
+        inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+/* Cancelled invoice keeps its semantic tint, but no gray slab */
+[data-theme="light"] .ff-invoice-row.is-cancelled {
+    background:
+        rgba(254,226,226,.42) !important;
+}
+
+/* List view expanded details */
+[data-theme="light"] .ff-company-list-details {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(248,250,252,.38),
+            rgba(255,255,255,.16)
+        ) !important;
+
+    border-top-color: rgba(71,85,105,.09) !important;
+}
+
+[data-theme="light"] .ff-company-list-details .ff-company-details-inner {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.90),
+            rgba(248,250,252,.68)
+        ) !important;
+
+    border-color: rgba(71,85,105,.10) !important;
+}
+
+/* =========================================================
+   FINAL LIGHT THEME — COMPANY DETAILS / INVOICE STATUS
+   2026-09-30
+   ========================================================= */
+
+[data-theme="light"] .ff-company-details {
+    background: linear-gradient(
+        180deg,
+        rgba(255,255,255,.30),
+        rgba(248,250,252,.12)
+    ) !important;
+    border-top-color: rgba(71,85,105,.08) !important;
+}
+
+[data-theme="light"] .ff-company-details-inner {
+    background: rgba(255,255,255,.46) !important;
+    border-color: rgba(71,85,105,.08) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.92),
+        0 6px 20px rgba(15,23,42,.025) !important;
+}
+
+/* Header inside expanded company */
+[data-theme="light"] .ff-company-details-header {
+    background: transparent !important;
+    border-bottom-color: rgba(71,85,105,.08) !important;
+}
+
+[data-theme="light"] .ff-company-details-header h3 {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-details-eyebrow {
+    color: #64748b !important;
+}
+
+/* Invoice toolbar */
+[data-theme="light"] .ff-company-invoice-toolbar {
+    background: rgba(255,255,255,.42) !important;
+    border-color: rgba(71,85,105,.08) !important;
+    box-shadow: none !important;
+}
+
+/* ---------------------------------------------------------
+   FINANCIAL SUMMARY
+   Remove the "gray badge" appearance.
+   --------------------------------------------------------- */
+
+[data-theme="light"] .ff-invoice-totals {
+    background: rgba(255,255,255,.36) !important;
+    border: 1px solid rgba(71,85,105,.075) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.88) !important;
+}
+
+[data-theme="light"] .ff-invoice-currency-title {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .ff-invoice-currency-title strong {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-invoice-total-row {
+    background: transparent !important;
+    color: #475569 !important;
+}
+
+[data-theme="light"] .ff-invoice-total-row strong {
+    color: #0f172a !important;
+}
+
+/* ---------------------------------------------------------
+   PAYMENT STATUS BADGES
+   Strong, readable, but still glass.
+   --------------------------------------------------------- */
+
+[data-theme="light"] .ff-payment-badge,
+[data-theme="light"] .ff-status-badge {
+    font-weight: 700 !important;
+    border-width: 1px !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.55),
+        0 2px 7px rgba(15,23,42,.05) !important;
+}
+
+/* PAID — green */
+[data-theme="light"] .ff-payment-paid {
+    color: #166534 !important;
+    background: rgba(220,252,231,.92) !important;
+    border-color: rgba(22,101,52,.22) !important;
+}
+
+[data-theme="light"] .ff-payment-paid:hover {
+    background: rgba(187,247,208,.96) !important;
+    border-color: rgba(22,101,52,.30) !important;
+}
+
+/* PARTIAL — amber */
+[data-theme="light"] .ff-payment-partial {
+    color: #92400e !important;
+    background: rgba(254,243,199,.94) !important;
+    border-color: rgba(146,64,14,.23) !important;
+}
+
+/* UNPAID — orange/red-orange */
+[data-theme="light"] .ff-payment-unpaid {
+    color: #9a3412 !important;
+    background: rgba(255,237,213,.96) !important;
+    border-color: rgba(154,52,18,.24) !important;
+}
+
+[data-theme="light"] .ff-payment-unpaid:hover {
+    background: rgba(254,215,170,.98) !important;
+    border-color: rgba(154,52,18,.32) !important;
+}
+
+/* OVERDUE */
+[data-theme="light"] .ff-status-overdue {
+    color: #991b1b !important;
+    background: rgba(254,226,226,.94) !important;
+    border-color: rgba(153,27,27,.23) !important;
+}
+
+/* CANCELLED */
+[data-theme="light"] .ff-status-cancelled {
+    color: #991b1b !important;
+    background: rgba(254,226,226,.94) !important;
+    border-color: rgba(153,27,27,.24) !important;
+}
+
+/* Invoice rows remain clean — no gray slab */
+[data-theme="light"] .ff-company-invoices {
+    background: transparent !important;
+}
+
+[data-theme="light"] .ff-invoice-row {
+    background: rgba(255,255,255,.64) !important;
+    border-color: rgba(71,85,105,.075) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.90) !important;
+}
+
+[data-theme="light"] .ff-invoice-row:hover {
+    background: rgba(255,255,255,.88) !important;
+    border-color: rgba(37,99,235,.12) !important;
+    box-shadow:
+        0 7px 18px rgba(15,23,42,.045),
+        inset 0 1px 0 rgba(255,255,255,.95) !important;
+}
+
+[data-theme="light"] .ff-invoice-row.is-cancelled {
+    background: rgba(254,226,226,.30) !important;
+}
+
+/* List/details variant */
+[data-theme="light"] .ff-company-list-details {
+    background: transparent !important;
+    border-top-color: rgba(71,85,105,.08) !important;
+}
+
+[data-theme="light"] .ff-company-list-details .ff-company-details-inner {
+    background: rgba(255,255,255,.46) !important;
+}
+
+/* =========================================================
+   END FINAL LIGHT THEME OVERRIDE
+   ========================================================= */
+
+
+/* =========================================================
+   COMPANIES — LIGHT THEME FINAL OVERRIDE
+   2026-09-30 / v3
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   EXPANDED COMPANY DETAILS
+   Completely remove gray slab appearance.
+   --------------------------------------------------------- */
+
+html[data-theme="light"] .ff-company-details,
+[data-theme="light"] .ff-company-details {
+    background: transparent !important;
+    background-image: none !important;
+    border-top: 1px solid rgba(71,85,105,.08) !important;
+}
+
+html[data-theme="light"] .ff-company-details-inner,
+[data-theme="light"] .ff-company-details-inner {
+    background: rgba(255,255,255,.38) !important;
+    background-image: none !important;
+    border-color: rgba(71,85,105,.08) !important;
+    box-shadow: none !important;
+}
+
+/* ---------------------------------------------------------
+   INVOICE TOOLBAR
+   --------------------------------------------------------- */
+
+html[data-theme="light"] .ff-company-invoice-toolbar,
+[data-theme="light"] .ff-company-invoice-toolbar {
+    background: transparent !important;
+    background-image: none !important;
+    border-color: rgba(71,85,105,.08) !important;
+    box-shadow: none !important;
+}
+
+/* ---------------------------------------------------------
+   FINANCIAL SUMMARY
+   EUR / Total / Invoices / Paid / Remaining
+   NO GRAY BACKGROUND.
+   --------------------------------------------------------- */
+
+html[data-theme="light"] .ff-invoice-totals,
+[data-theme="light"] .ff-invoice-totals {
+    background: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Make every possible nested summary layer transparent */
+html[data-theme="light"] .ff-invoice-totals *,
+[data-theme="light"] .ff-invoice-totals * {
+    background-color: transparent !important;
+}
+
+/* But keep the actual text readable */
+html[data-theme="light"] .ff-invoice-totals,
+[data-theme="light"] .ff-invoice-totals {
+    color: #475569 !important;
+}
+
+html[data-theme="light"] .ff-invoice-totals .ff-invoice-currency-title,
+[data-theme="light"] .ff-invoice-totals .ff-invoice-currency-title {
+    color: #64748b !important;
+}
+
+html[data-theme="light"] .ff-invoice-totals .ff-invoice-currency-title strong,
+[data-theme="light"] .ff-invoice-totals .ff-invoice-currency-title strong {
+    color: #0f172a !important;
+}
+
+html[data-theme="light"] .ff-invoice-totals .ff-invoice-total-row,
+[data-theme="light"] .ff-invoice-totals .ff-invoice-total-row {
+    background: transparent !important;
+    color: #475569 !important;
+}
+
+html[data-theme="light"] .ff-invoice-totals .ff-invoice-total-row strong,
+[data-theme="light"] .ff-invoice-totals .ff-invoice-total-row strong {
+    color: #0f172a !important;
+}
+
+/* ---------------------------------------------------------
+   PAYMENT BADGES
+   --------------------------------------------------------- */
+
+html[data-theme="light"] .ff-payment-badge,
+html[data-theme="light"] .ff-status-badge,
+[data-theme="light"] .ff-payment-badge,
+[data-theme="light"] .ff-status-badge {
+    font-weight: 800 !important;
+    opacity: 1 !important;
+    filter: none !important;
+    text-shadow: none !important;
+}
+
+/* PAID — clearly green */
+html[data-theme="light"] .ff-payment-paid,
+[data-theme="light"] .ff-payment-paid {
+    color: #166534 !important;
+    background: #dcfce7 !important;
+    background-image: none !important;
+    border: 1px solid #86efac !important;
+    box-shadow: 0 2px 8px rgba(22,101,52,.08) !important;
+}
+
+/* PARTIAL — clearly amber */
+html[data-theme="light"] .ff-payment-partial,
+[data-theme="light"] .ff-payment-partial {
+    color: #92400e !important;
+    background: #fef3c7 !important;
+    background-image: none !important;
+    border: 1px solid #fcd34d !important;
+    box-shadow: 0 2px 8px rgba(146,64,14,.08) !important;
+}
+
+/* UNPAID — clearly orange/red */
+html[data-theme="light"] .ff-payment-unpaid,
+[data-theme="light"] .ff-payment-unpaid {
+    color: #9a3412 !important;
+    background: #ffedd5 !important;
+    background-image: none !important;
+    border: 1px solid #fdba74 !important;
+    box-shadow: 0 2px 8px rgba(154,52,18,.08) !important;
+}
+
+/* OVERDUE */
+html[data-theme="light"] .ff-status-overdue,
+[data-theme="light"] .ff-status-overdue {
+    color: #991b1b !important;
+    background: #fee2e2 !important;
+    background-image: none !important;
+    border: 1px solid #fca5a5 !important;
+}
+
+/* CANCELLED */
+html[data-theme="light"] .ff-status-cancelled,
+[data-theme="light"] .ff-status-cancelled {
+    color: #991b1b !important;
+    background: #fee2e2 !important;
+    background-image: none !important;
+    border: 1px solid #fca5a5 !important;
+}
+
+/* ---------------------------------------------------------
+   INVOICE ROWS
+   --------------------------------------------------------- */
+
+html[data-theme="light"] .ff-invoice-row,
+[data-theme="light"] .ff-invoice-row {
+    background: rgba(255,255,255,.72) !important;
+    background-image: none !important;
+    border-color: rgba(71,85,105,.08) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.92) !important;
+}
+
+html[data-theme="light"] .ff-invoice-row:hover,
+[data-theme="light"] .ff-invoice-row:hover {
+    background: rgba(255,255,255,.94) !important;
+    background-image: none !important;
+}
+
+/* ---------------------------------------------------------
+   CACHE-BUST TARGET
+   --------------------------------------------------------- */
+

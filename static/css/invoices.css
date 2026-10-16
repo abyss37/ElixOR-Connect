@@ -1108,3 +1108,699 @@
     }
 }
 
+[data-theme="light"] .ff-invoices-page-actions .ff-btn-secondary,
+[data-theme="light"] .ff-invoice-toolbar .ff-filter-select {
+    color: #334155 !important;
+    background: rgba(255,255,255,.92) !important;
+    border-color: rgba(71,85,105,.13) !important;
+    box-shadow:
+        0 8px 24px rgba(15,23,42,.055),
+        inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+[data-theme="light"] .ff-invoices-page-actions .ff-btn-secondary:hover,
+[data-theme="light"] .ff-invoice-toolbar .ff-filter-select:hover {
+    color: #0f172a !important;
+    background: rgba(248,250,252,.98) !important;
+}
+
+[data-theme="light"] .ff-invoice-stats {
+    color: #334155 !important;
+}
+
+[data-theme="light"] .ff-invoice-stat,
+[data-theme="light"] .ff-invoice-toolbar,
+[data-theme="light"] .ff-invoice-content {
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,.90),
+        rgba(248,250,252,.82)
+    ) !important;
+    border-color: rgba(71,85,105,.12) !important;
+    box-shadow:
+        0 18px 42px rgba(15,23,42,.065),
+        inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+[data-theme="light"] .ff-invoice-stat strong {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-invoice-stat div > span {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .ff-invoice-stat-icon {
+    color: #1d4ed8 !important;
+}
+
+[data-theme="light"] .ff-invoice-stat-icon.is-success {
+    color: #047857 !important;
+}
+
+[data-theme="light"] .ff-invoice-stat-icon.is-warning {
+    color: #b45309 !important;
+}
+
+[data-theme="light"] .ff-invoice-stat-icon.is-accent {
+    color: #7c3aed !important;
+}
+
+[data-theme="light"] .ff-invoice-search {
+    background: rgba(255,255,255,.94) !important;
+    border-color: rgba(71,85,105,.14) !important;
+    box-shadow:
+        0 8px 24px rgba(15,23,42,.05),
+        inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+[data-theme="light"] .ff-invoice-search i {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .ff-invoice-search input {
+    color: #0f172a !important;
+    background: transparent !important;
+}
+
+[data-theme="light"] .ff-invoice-search input::placeholder {
+    color: #94a3b8 !important;
+}
+
+[data-theme="light"] .ff-filter-select {
+    color: #334155 !important;
+    background-color: rgba(255,255,255,.94) !important;
+    border-color: rgba(71,85,105,.14) !important;
+}
+
+[data-theme="light"] .ff-filter-select:focus {
+    border-color: rgba(37,99,235,.38) !important;
+    box-shadow: 0 0 0 3px rgba(37,99,235,.08) !important;
+}
+
+[data-theme="light"] .ff-invoice-view-toggle {
+    background: rgba(241,245,249,.82) !important;
+    border-color: rgba(71,85,105,.12) !important;
+}
+
+[data-theme="light"] .ff-invoice-view-toggle button {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .ff-invoice-view-toggle button:hover {
+    color: #334155 !important;
+    background: rgba(255,255,255,.72) !important;
+}
+
+[data-theme="light"] .ff-invoice-view-toggle button.is-active {
+    color: #1d4ed8 !important;
+    background: rgba(255,255,255,.96) !important;
+    box-shadow: inset 0 0 0 1px rgba(37,99,235,.14) !important;
+}
+
+[data-theme="light"] .ff-invoice-table-wrap {
+    background: rgba(255,255,255,.74) !important;
+}
+
+[data-theme="light"] .ff-invoice-table {
+    color: #334155 !important;
+}
+
+[data-theme="light"] .ff-invoice-table th {
+    color: #475569 !important;
+    background: rgba(248,250,252,.94) !important;
+    border-color: rgba(71,85,105,.10) !important;
+}
+
+[data-theme="light"] .ff-invoice-table td {
+    color: #334155 !important;
+    border-color: rgba(71,85,105,.08) !important;
+}
+
+[data-theme="light"] .ff-invoice-table tbody tr {
+    background: rgba(255,255,255,.66) !important;
+}
+
+[data-theme="light"] .ff-invoice-table tbody tr:hover {
+    background: rgba(248,250,252,.94) !important;
+}
+
+[data-theme="light"] .ff-invoice-number,
+[data-theme="light"] .ff-invoice-company,
+[data-theme="light"] .ff-invoice-amount {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-invoice-sub,
+[data-theme="light"] .ff-invoice-date,
+[data-theme="light"] .ff-invoice-muted {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .ff-invoice-card {
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,.90),
+        rgba(248,250,252,.82)
+    ) !important;
+    border-color: rgba(71,85,105,.12) !important;
+    box-shadow:
+        0 18px 42px rgba(15,23,42,.065),
+        inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+[data-theme="light"] .ff-invoice-card-amount {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-invoice-card-grid span:not(.ff-invoice-badge) {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .ff-invoice-card-grid strong {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-invoice-action {
+    color: #64748b !important;
+    background: rgba(241,245,249,.72) !important;
+    border-color: rgba(71,85,105,.11) !important;
+}
+
+[data-theme="light"] .ff-invoice-action:hover {
+    color: #1e293b !important;
+    background: rgba(226,232,240,.82) !important;
+}
+
+[data-theme="light"] .ff-invoice-empty {
+    color: #334155 !important;
+    background: rgba(255,255,255,.72) !important;
+    border-color: rgba(71,85,105,.11) !important;
+}
+
+[data-theme="light"] .ff-invoice-empty h3 {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-invoice-empty p {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .ff-product-badge {
+    color: #047857 !important;
+    background: rgba(16, 185, 129, .16) !important;
+    border-color: rgba(5, 150, 105, .30) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
+}
+
+[data-theme="light"] .ff-invoice-badge.is-paid,
+[data-theme="light"] .ff-invoice-badge.is-issued {
+    color: #047857 !important;
+    background: rgba(16, 185, 129, .17) !important;
+    border-color: rgba(5, 150, 105, .32) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
+}
+
+[data-theme="light"] .ff-invoice-badge.is-partial {
+    color: #b45309 !important;
+    background: rgba(245, 158, 11, .19) !important;
+    border-color: rgba(217, 119, 6, .34) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
+}
+
+[data-theme="light"] .ff-invoice-badge.is-unpaid,
+[data-theme="light"] .ff-invoice-badge.is-cancelled {
+    color: #be123c !important;
+    background: rgba(244, 63, 94, .16) !important;
+    border-color: rgba(225, 29, 72, .30) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
+}
+
+[data-theme="light"] .ff-invoice-deadline {
+    color: #334155 !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="light"] .ff-invoice-deadline.is-today {
+    color: #b45309 !important;
+    font-weight: 850 !important;
+}
+
+[data-theme="light"] .ff-invoice-deadline.is-overdue {
+    color: #be123c !important;
+    font-weight: 850 !important;
+}
+
+[data-theme="light"] .ff-invoice-table td .ff-invoice-deadline {
+    color: #334155 !important;
+}
+
+[data-theme="light"] .ff-invoice-table td .ff-invoice-deadline.is-today {
+    color: #b45309 !important;
+}
+
+[data-theme="light"] .ff-invoice-table td .ff-invoice-deadline.is-overdue {
+    color: #be123c !important;
+}
+
+
+/* =========================================================
+   INVOICES — LIGHT GLASS / CREATE & EDITOR
+   ========================================================= */
+
+[data-theme="light"] .ff-invoice-create {
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,.90),
+        rgba(248,250,252,.84)
+    ) !important;
+    border-color: rgba(71,85,105,.12) !important;
+    box-shadow:
+        0 24px 60px rgba(15,23,42,.08),
+        inset 0 1px 0 rgba(255,255,255,.96) !important;
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-invoice-create-head {
+    border-bottom-color: rgba(71,85,105,.10) !important;
+}
+
+[data-theme="light"] .ff-invoice-create-head h2 {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-invoice-create-head p {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .ff-invoice-editor-section {
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,.78),
+        rgba(248,250,252,.68)
+    ) !important;
+    border-color: rgba(71,85,105,.11) !important;
+    box-shadow:
+        0 14px 34px rgba(15,23,42,.045),
+        inset 0 1px 0 rgba(255,255,255,.92) !important;
+}
+
+[data-theme="light"] .ff-invoice-editor-section-head {
+    border-bottom-color: rgba(71,85,105,.08) !important;
+}
+
+[data-theme="light"] .ff-invoice-editor-section-head h3 {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-invoice-editor-section-head p {
+    color: #64748b !important;
+}
+
+[data-theme="light"] .ff-invoice-editor-kicker {
+    color: #2563eb !important;
+}
+
+[data-theme="light"] .ff-field,
+[data-theme="light"] .ff-invoice-form-grid label {
+    color: #334155 !important;
+}
+
+[data-theme="light"] .ff-field > span,
+[data-theme="light"] .ff-invoice-form-grid label > span {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .ff-field input,
+[data-theme="light"] .ff-field select,
+[data-theme="light"] .ff-field textarea,
+[data-theme="light"] .ff-invoice-form-grid input,
+[data-theme="light"] .ff-invoice-form-grid select,
+[data-theme="light"] .ff-invoice-form-grid textarea {
+    color: #0f172a !important;
+    background: rgba(255,255,255,.92) !important;
+    border-color: rgba(71,85,105,.15) !important;
+    box-shadow:
+        inset 0 1px 2px rgba(15,23,42,.025),
+        0 4px 14px rgba(15,23,42,.025) !important;
+}
+
+[data-theme="light"] .ff-field input::placeholder,
+[data-theme="light"] .ff-field textarea::placeholder,
+[data-theme="light"] .ff-invoice-form-grid input::placeholder,
+[data-theme="light"] .ff-invoice-form-grid textarea::placeholder {
+    color: #94a3b8 !important;
+}
+
+[data-theme="light"] .ff-field input:focus,
+[data-theme="light"] .ff-field select:focus,
+[data-theme="light"] .ff-field textarea:focus,
+[data-theme="light"] .ff-invoice-form-grid input:focus,
+[data-theme="light"] .ff-invoice-form-grid select:focus,
+[data-theme="light"] .ff-invoice-form-grid textarea:focus {
+    color: #0f172a !important;
+    background: #ffffff !important;
+    border-color: rgba(37,99,235,.42) !important;
+    box-shadow:
+        0 0 0 3px rgba(37,99,235,.08),
+        0 8px 20px rgba(15,23,42,.035) !important;
+}
+
+[data-theme="light"] .ff-invoice-items-head {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .ff-invoice-items-wrap {
+    background: rgba(255,255,255,.62) !important;
+    border-color: rgba(71,85,105,.11) !important;
+}
+
+[data-theme="light"] .ff-invoice-items-header {
+    color: #475569 !important;
+    background: rgba(241,245,249,.72) !important;
+    border-bottom-color: rgba(71,85,105,.10) !important;
+}
+
+[data-theme="light"] .ff-invoice-items-header span {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .ff-invoice-item {
+    background: rgba(255,255,255,.70) !important;
+    border-bottom-color: rgba(71,85,105,.08) !important;
+}
+
+[data-theme="light"] .ff-invoice-item input {
+    color: #0f172a !important;
+    background: rgba(255,255,255,.94) !important;
+    border-color: rgba(71,85,105,.13) !important;
+}
+
+[data-theme="light"] .ff-invoice-item input:focus {
+    background: #ffffff !important;
+    border-color: rgba(37,99,235,.40) !important;
+    box-shadow: 0 0 0 3px rgba(37,99,235,.07) !important;
+}
+
+[data-theme="light"] .ff-invoice-item-total {
+    color: #0f172a !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="light"] .ff-invoice-item-remove {
+    color: #64748b !important;
+    background: rgba(241,245,249,.72) !important;
+    border-color: rgba(71,85,105,.11) !important;
+}
+
+[data-theme="light"] .ff-invoice-item-remove:hover {
+    color: #be123c !important;
+    background: rgba(244,63,94,.09) !important;
+    border-color: rgba(225,29,72,.18) !important;
+}
+
+[data-theme="light"] .ff-invoice-create-actions {
+    border-top-color: rgba(71,85,105,.10) !important;
+}
+
+[data-theme="light"] .ff-invoice-form-error {
+    color: #be123c !important;
+    background: rgba(244,63,94,.08) !important;
+    border-color: rgba(225,29,72,.16) !important;
+}
+
+
+/* =========================================================
+   INVOICES — LIGHT GLASS / EDITOR TYPOGRAPHY
+   ========================================================= */
+
+[data-theme="light"] .ff-invoice-create,
+[data-theme="light"] .ff-invoice-create * {
+    --ff-light-text: #1e293b;
+    --ff-light-muted: #526277;
+}
+
+[data-theme="light"] .ff-invoice-create-head h2,
+[data-theme="light"] .ff-invoice-editor-section-head h3 {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-invoice-create-head p,
+[data-theme="light"] .ff-invoice-editor-section-head p {
+    color: #526277 !important;
+}
+
+[data-theme="light"] .ff-invoice-editor-kicker {
+    color: #1d4ed8 !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="light"] .ff-field > span,
+[data-theme="light"] .ff-invoice-form-grid label > span,
+[data-theme="light"] .ff-invoice-items-head,
+[data-theme="light"] .ff-invoice-items-header span {
+    color: #334155 !important;
+    font-weight: 700 !important;
+}
+
+[data-theme="light"] .ff-field input,
+[data-theme="light"] .ff-field select,
+[data-theme="light"] .ff-field textarea,
+[data-theme="light"] .ff-invoice-form-grid input,
+[data-theme="light"] .ff-invoice-form-grid select,
+[data-theme="light"] .ff-invoice-form-grid textarea,
+[data-theme="light"] .ff-invoice-item input {
+    color: #172033 !important;
+}
+
+[data-theme="light"] .ff-field input::placeholder,
+[data-theme="light"] .ff-field textarea::placeholder,
+[data-theme="light"] .ff-invoice-form-grid input::placeholder,
+[data-theme="light"] .ff-invoice-form-grid textarea::placeholder {
+    color: #64748b !important;
+    opacity: 1 !important;
+}
+
+[data-theme="light"] .ff-invoice-items-header {
+    color: #334155 !important;
+}
+
+[data-theme="light"] .ff-invoice-item-total {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] .ff-invoice-create-actions {
+    color: #334155 !important;
+}
+
+/* Editor helper / implementation note */
+[data-theme="light"] .ff-invoice-editor-section p,
+[data-theme="light"] .ff-invoice-editor-section small,
+[data-theme="light"] .ff-invoice-editor-section .ff-invoice-sub {
+    color: #526277 !important;
+    opacity: 1 !important;
+}
+
+
+[data-theme="light"] .ff-invoice-items-head p { color: #526277 !important; opacity: 1 !important; }
+
+[data-theme="light"] .ff-invoice-create .ff-invoice-items-head p[data-i18n] { color: #526277 !important; opacity: 1 !important; font-weight: 400 !important; }
+
+[data-theme="light"] .ff-invoice-create .ff-invoice-editor-section-head .ff-invoice-items-head p,
+[data-theme="light"] .ff-invoice-create .ff-invoice-items-head p { color: #526277 !important; opacity: 1 !important; font-weight: 400 !important; }
+
+[data-theme="light"] .ff-invoice-create .ff-invoice-items-head p { color: #526277 !important; opacity: 1 !important; font-weight: 400 !important; }
+
+/* ============================================================
+   ELIXOR CONNECT — INVOICES / LIGHT GLASS
+   Detail panel + invoice action buttons
+   ============================================================ */
+
+[data-theme="light"] .ff-invoice-detail {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.96),
+            rgba(246,249,252,.90)
+        ) !important;
+    border-color: rgba(71,85,105,.14) !important;
+    box-shadow:
+        0 24px 70px rgba(15,23,42,.12),
+        inset 0 1px 0 rgba(255,255,255,.94) !important;
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-invoice-detail-head {
+    border-bottom-color: rgba(71,85,105,.10);
+}
+
+[data-theme="light"] .ff-invoice-detail-head h2 {
+    color: #0f172a;
+}
+
+[data-theme="light"] .ff-invoice-detail-head p {
+    color: #64748b;
+}
+
+/* Close */
+[data-theme="light"] .ff-invoice-detail-close {
+    color: #475569;
+    background: rgba(255,255,255,.68) !important;
+    border-color: rgba(71,85,105,.14) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.88),
+        0 5px 16px rgba(15,23,42,.05);
+}
+
+[data-theme="light"] .ff-invoice-detail-close:hover {
+    color: #2563eb;
+    background: rgba(239,246,255,.82) !important;
+    border-color: rgba(37,99,235,.18) !important;
+}
+
+/* Detail information grid */
+[data-theme="light"] .ff-invoice-detail-grid {
+    background: rgba(71,85,105,.055);
+    border-color: rgba(71,85,105,.10);
+}
+
+[data-theme="light"] .ff-invoice-detail-item {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.92),
+            rgba(248,250,252,.82)
+        );
+}
+
+[data-theme="light"] .ff-invoice-detail-item:hover {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.98),
+            rgba(239,246,255,.72)
+        );
+}
+
+[data-theme="light"] .ff-invoice-detail-item > span:first-child {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-invoice-detail-item strong {
+    color: #0f172a;
+}
+
+/* Contract details */
+[data-theme="light"] .ff-invoice-detail-section {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.92),
+            rgba(248,250,252,.82)
+        );
+    border-color: rgba(71,85,105,.10);
+}
+
+[data-theme="light"] .ff-invoice-detail-section > span {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-invoice-detail-section > div {
+    color: #334155;
+}
+
+/* Cancelled invoice */
+[data-theme="light"] .ff-invoice-detail-cancelled {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(254,242,242,.92),
+            rgba(255,255,255,.72)
+        );
+    border-color: rgba(244,63,94,.16);
+}
+
+[data-theme="light"] .ff-invoice-detail-cancelled-title {
+    color: #be123c;
+}
+
+/* ============================================================
+   OPEN / ACTION BUTTONS
+   ============================================================ */
+
+[data-theme="light"] .ff-invoice-table .ff-btn[data-invoice-action="open"],
+[data-theme="light"] .ff-invoice-card .ff-btn[data-invoice-action="open"] {
+    color: #334155 !important;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.86),
+            rgba(246,249,252,.78)
+        ) !important;
+    border-color: rgba(71,85,105,.14) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.90),
+        0 5px 16px rgba(15,23,42,.055) !important;
+}
+
+[data-theme="light"] .ff-invoice-table .ff-btn[data-invoice-action="open"]:hover,
+[data-theme="light"] .ff-invoice-card .ff-btn[data-invoice-action="open"]:hover {
+    color: #2563eb !important;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(239,246,255,.92),
+            rgba(255,255,255,.84)
+        ) !important;
+    border-color: rgba(37,99,235,.20) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.94),
+        0 7px 20px rgba(37,99,235,.09) !important;
+    transform: translateY(-1px);
+}
+
+/* Buttons inside expanded invoice */
+[data-theme="light"] .ff-invoice-detail-actions .ff-btn {
+    color: #334155 !important;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.86),
+            rgba(246,249,252,.78)
+        ) !important;
+    border-color: rgba(71,85,105,.14) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.90),
+        0 5px 16px rgba(15,23,42,.055) !important;
+}
+
+[data-theme="light"] .ff-invoice-detail-actions .ff-btn:hover {
+    color: #2563eb !important;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(239,246,255,.92),
+            rgba(255,255,255,.84)
+        ) !important;
+    border-color: rgba(37,99,235,.20) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.94),
+        0 7px 20px rgba(37,99,235,.09) !important;
+    transform: translateY(-1px);
+}
+
+/* Cancel remains semantically red */
+[data-theme="light"] .ff-invoice-detail-actions .ff-btn[data-detail-action="cancel"]:hover {
+    color: #be123c !important;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,241,242,.96),
+            rgba(255,255,255,.84)
+        ) !important;
+    border-color: rgba(244,63,94,.20) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.94),
+        0 7px 20px rgba(244,63,94,.08) !important;
+}
+

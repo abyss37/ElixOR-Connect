@@ -26,6 +26,8 @@
             "ElixOR Connect — Financial Control": "ElixOR Connect — Фінансовий контроль",
             "Financial control platform": "Платформа фінансового контролю",
             "Financial overview": "Фінансовий огляд",
+            "Client details": "Реквізити клієнта",
+            "Invoice items are stored in the contract data": "Позиції рахунку зберігаються в даних договору",
 
             "Dashboard": "Панель керування",
             "Analytics": "Аналітика",
@@ -124,6 +126,7 @@
             "Server did not return product data.": "Сервер не повернув дані продукту.",
             "Failed to save product.": "Не вдалося зберегти продукт.",
             "Archive product": "Архівувати продукт",
+            "Archive": "Архівувати",
             "It will remain in the system but will be excluded from new operations.": "Він залишиться в системі, але буде виключений із нових операцій.",
             "Failed to archive product.": "Не вдалося архівувати продукт.",
             "Product is used in the system.": "Продукт використовується в системі.",
@@ -137,6 +140,14 @@
             "Close": "Закрити",
             "Cancel": "Скасувати",
             "Edit": "Редагувати",
+            "Edit organization": "Редагувати організацію",
+            "Change basic legal entity data": "Змінити основні дані юридичної особи",
+            "Director": "Керівник",
+            "Previous": "Назад",
+            "Next": "Далі",
+            "Create details set": "Створити набір реквізитів",
+            "Bank details": "Банківські реквізити",
+            "Additional": "Додатково",
             "Apply": "Застосувати",
             "Reset": "Скинути",
             "View": "Докладніше",
@@ -225,6 +236,10 @@
             "Registration and banking information": "Реєстраційні та банківські дані",
             "Add details set": "Додати набір",
             "Details set": "Набір реквізитів",
+            "Details sets": "Набори реквізитів",
+            "Legal, registration and banking information for documents.": "Юридична, реєстраційна та банківська інформація для документів.",
+            "Main Details": "Основні реквізити",
+            "ElixOR Connect — Main Details": "ElixOR Connect — Основні реквізити",
             "Edit details set": "Редагувати набір реквізитів",
             "Legal address": "Юридична адреса",
             "Actual address": "Фактична адреса",
@@ -724,7 +739,7 @@
             /* ==================== LANDING ==================== */
 
             "Sign in": "Увійти",
-            "Sign in to ElixOR Connect": "Увійти до FinFlow",
+            "Sign in to ElixOR Connect": "Увійти до ElixOR Connect",
 
             "Financial Operations Platform":
                 "Платформа фінансових операцій",
@@ -733,7 +748,7 @@
                 "Сучасна self-hosted платформа для керування бюджетами, рахунками, платежами, договорами, аналітикою, сповіщеннями та фінансовими операціями в одному контрольованому середовищі.",
 
             "Sign in to your ElixOR Connect workspace":
-                "Увійдіть до робочого простору FinFlow",
+                "Увійдіть до робочого простору ElixOR Connect",
 
             "Self-hosted":
                 "Self-hosted",
@@ -802,6 +817,7 @@
 
 
     function translate(value, lang) {
+        if (String(value).trim() === "ElixOR Connect") return "ElixOR Connect";
         if (!value) return value;
 
         lang = lang || getLang();
@@ -1490,6 +1506,52 @@
 
 
     /* =========================================================
+       THEME ENGINE
+       ========================================================= */
+
+    const THEME_STORAGE_KEY = "finflow-theme";
+
+    function getTheme() {
+        const saved = localStorage.getItem(THEME_STORAGE_KEY);
+
+        if (saved === "light" || saved === "dark") {
+            return saved;
+        }
+
+        return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches
+            ? "light"
+            : "dark";
+    }
+
+    function applyTheme(theme, persist = true) {
+        const nextTheme = theme === "light" ? "light" : "dark";
+
+        document.documentElement.setAttribute("data-theme", nextTheme);
+
+        if (persist) {
+            localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+        }
+
+        window.dispatchEvent(
+            new CustomEvent("finflow-theme-changed", {
+                detail: { theme: nextTheme }
+            })
+        );
+
+        return nextTheme;
+    }
+
+    function setTheme(theme) {
+        return applyTheme(theme, true);
+    }
+
+    function toggleTheme() {
+        return setTheme(getTheme() === "light" ? "dark" : "light");
+    }
+
+    applyTheme(getTheme(), false);
+
+    /* =========================================================
        PUBLIC API
        ========================================================= */
 
@@ -1508,7 +1570,11 @@
         applyLanguage,
         addLanguageSwitcher,
         addLandingLanguageSwitcher,
-        addSwitcher: addLanguageSwitcher
+        addSwitcher: addLanguageSwitcher,
+        getTheme,
+        setTheme,
+        toggleTheme,
+        applyTheme
     };
 
 

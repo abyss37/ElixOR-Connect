@@ -17,7 +17,7 @@
 
 {% block head %}
 <link rel="stylesheet"
-      href="{{ url_for('static', filename='css/invoices.css') }}?v=20260923">
+      href="{{ url_for('static', filename='css/invoices.css') }}?v=20260930-2">
 {% endblock %}
 
 {% block content %}
@@ -275,7 +275,7 @@
                     </div>
 
                     <label class="ff-field">
-                        <span data-i18n="Bill To / client details">Bill To / client details</span>
+                        <span data-i18n="Client details">Client details</span>
                         <textarea
                             name="bill_to_details"
                             rows="3"
@@ -290,7 +290,7 @@
                         <div>
                             <span class="ff-invoice-editor-kicker">04</span>
                             <h3 data-i18n="Invoice items">Invoice items</h3>
-                            <p data-i18n="Items are stored inside contract_details.">Items are stored inside contract_details.</p>
+                            <p data-i18n="Invoice items are stored in the contract data">Invoice items are stored in the contract data</p>
                         </div>
 
                         <button
