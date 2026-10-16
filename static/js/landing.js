@@ -259,16 +259,16 @@
             architectureFutureText: "CRM · ERP · Business workflows",
             roadmapLabel: "EVOLUTION PATH",
 
-            useCasesKicker: "СТВОРЕНО ДЛЯ",
+            useCasesKicker: "BUILT FOR",
             useCasesTitle:
                 "Financial control for teams that value data ownership.",
-            useCaseCompanies: "Кілька компаній",
+            useCaseCompanies: "Multiple Companies",
             useCaseCompaniesText:
                 "Keep financial operations separated across organizations and business units.",
-            useCaseServices: "Сервісний бізнес",
+            useCaseServices: "Service Businesses",
             useCaseServicesText:
                 "Manage contracts, budgets, invoices and operational spending from one workspace.",
-            useCasePrivacy: "Команди, орієнтовані на приватність",
+            useCasePrivacy: "Privacy-Focused Teams",
             useCasePrivacyText:
                 "Deploy inside your own infrastructure when financial data should remain under your control.",
 
