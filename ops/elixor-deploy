@@ -24,6 +24,7 @@ STATE_DIR=""
 PREVIOUS_PACKAGES_FILE=""
 WHEELHOUSE_DIR=""
 UPDATED=0
+SIGNAL_EXIT_CODE=""
 
 exec 9>"$LOCK_FILE"
 
@@ -49,11 +50,15 @@ health_check() {
 }
 
 rollback() {
-    local original_exit_code=$?
+    local original_exit_code="${1:-1}"
     local rollback_failed=0
     local attempt
 
-    trap - ERR
+    if [ -n "$SIGNAL_EXIT_CODE" ]; then
+        original_exit_code="$SIGNAL_EXIT_CODE"
+    fi
+
+    trap - ERR HUP INT TERM
     set +e
 
     echo
@@ -285,7 +290,38 @@ PYTHON
     exit 1
 }
 
-trap rollback ERR
+handle_deploy_signal() {
+    local signal="$1"
+    local exit_code
+
+    case "$signal" in
+        HUP)  exit_code=129 ;;
+        INT)  exit_code=130 ;;
+        TERM) exit_code=143 ;;
+        *)    exit_code=1 ;;
+    esac
+
+    SIGNAL_EXIT_CODE="$exit_code"
+    trap - HUP INT TERM
+
+    echo >&2
+    echo "Received SIG${signal}; stopping deployment safely." >&2
+
+    if [ "$UPDATED" -eq 1 ]; then
+        rollback "$exit_code"
+    fi
+
+    set +e
+    if [ -n "$STATE_DIR" ]; then
+        rm -rf -- "$STATE_DIR"
+    fi
+    exit "$exit_code"
+}
+
+trap 'rollback "$?"' ERR
+trap 'handle_deploy_signal HUP' HUP
+trap 'handle_deploy_signal INT' INT
+trap 'handle_deploy_signal TERM' TERM
 
 echo "===== PRE-DEPLOY CHECKS ====="
 
@@ -452,8 +488,8 @@ echo "===== CREATE BACKUP ====="
 echo
 echo "===== UPDATE CODE ====="
 
-git merge --ff-only "$TARGET_COMMIT"
 UPDATED=1
+git merge --ff-only "$TARGET_COMMIT"
 
 echo
 echo "===== INSTALL DEPENDENCIES ====="

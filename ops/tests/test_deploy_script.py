@@ -128,6 +128,27 @@ class DeploymentScriptStructureTests(unittest.TestCase):
         self.assertIn("http://127.0.0.1/health", text)
         self.assertIn("ROLLBACK COMPLETED.", text)
 
+    def test_signal_handlers_are_registered(self):
+        text = SCRIPT.read_text(encoding="utf-8")
+
+        self.assertIn('trap \'handle_deploy_signal HUP\' HUP', text)
+        self.assertIn('trap \'handle_deploy_signal INT\' INT', text)
+        self.assertIn('trap \'handle_deploy_signal TERM\' TERM', text)
+        self.assertIn('trap - ERR HUP INT TERM', text)
+        self.assertIn('SIGNAL_EXIT_CODE="$exit_code"', text)
+
+    def test_update_flag_is_set_before_git_merge(self):
+        text = SCRIPT.read_text(encoding="utf-8")
+
+        update_position = text.index("===== UPDATE CODE =====")
+        flag_position = text.index("UPDATED=1", update_position)
+        merge_position = text.index(
+            'git merge --ff-only "$TARGET_COMMIT"',
+            update_position,
+        )
+
+        self.assertLess(flag_position, merge_position)
+
     def test_rollback_restores_packages_without_network_index(self):
         text = SCRIPT.read_text(encoding="utf-8")
 
