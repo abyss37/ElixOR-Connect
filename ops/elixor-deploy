@@ -1,0 +1,477 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+umask 077
+
+if [ "$#" -ne 0 ]; then
+    echo "ERROR: This script does not accept arguments." >&2
+    exit 2
+fi
+
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+export GIT_TERMINAL_PROMPT=0
+
+APP_DIR="/opt/accounting-app"
+SERVICE="accounting-app.service"
+BACKUP_SCRIPT="${APP_DIR}/backup_finflow.sh"
+PYTHON="${APP_DIR}/venv/bin/python"
+LOCK_FILE="/run/lock/elixor-deploy.lock"
+STATE_ROOT="/var/lib/elixor-deploy"
+
+PREVIOUS_COMMIT=""
+TARGET_COMMIT=""
+STATE_DIR=""
+PREVIOUS_PACKAGES_FILE=""
+UPDATED=0
+
+exec 9>"$LOCK_FILE"
+
+if ! flock -n 9; then
+    echo "ERROR: Another deployment is already running." >&2
+    exit 1
+fi
+
+health_check() {
+    local response
+
+    response="$(
+        curl --fail --silent --show-error \
+            --max-time 5 \
+            http://127.0.0.1/health 2>/dev/null
+    )" || return 1
+
+    printf '%s' "$response" |
+        grep -q '"status"[[:space:]]*:[[:space:]]*"ok"' ||
+        return 1
+
+    printf '%s\n' "$response"
+}
+
+rollback() {
+    local original_exit_code=$?
+    local rollback_failed=0
+    local attempt
+
+    trap - ERR
+    set +e
+
+    echo
+    echo "===== DEPLOYMENT FAILED: ROLLBACK ====="
+
+    if [ "$UPDATED" -ne 1 ]; then
+        echo "Code was not updated; application rollback is unnecessary."
+
+        if [ -n "$STATE_DIR" ]; then
+            rm -rf -- "$STATE_DIR"
+        fi
+
+        exit "$original_exit_code"
+    fi
+
+    if [ -z "$PREVIOUS_COMMIT" ] ||
+       [ -z "$PREVIOUS_PACKAGES_FILE" ] ||
+       [ ! -s "$PREVIOUS_PACKAGES_FILE" ]; then
+        echo "CRITICAL: Rollback state is incomplete."
+        rollback_failed=1
+    fi
+
+    echo
+    echo "===== RESTORE PREVIOUS CODE ====="
+
+    if [ -n "$PREVIOUS_COMMIT" ] &&
+       git -C "$APP_DIR" reset --hard "$PREVIOUS_COMMIT"; then
+        echo "Previous Git commit restored."
+    else
+        echo "CRITICAL: Git rollback failed."
+        rollback_failed=1
+    fi
+
+    if [ -s "$PREVIOUS_PACKAGES_FILE" ]; then
+        echo
+        echo "===== RESTORE PREVIOUS PYTHON PACKAGES ====="
+
+        if "$PYTHON" -m pip install \
+            --disable-pip-version-check \
+            -r "$PREVIOUS_PACKAGES_FILE"; then
+            echo "Previous package versions reinstalled."
+
+            echo
+            echo "===== REMOVE PACKAGES ADDED BY FAILED DEPLOYMENT ====="
+
+            if "$PYTHON" - "$PREVIOUS_PACKAGES_FILE" <<'PYTHON'
+import json
+import re
+import subprocess
+import sys
+
+from pathlib import Path
+
+requirements_file = Path(sys.argv[1])
+expected_versions = {}
+protected_tools = {"pip", "setuptools", "wheel"}
+
+for raw_line in requirements_file.read_text().splitlines():
+    line = raw_line.strip()
+
+    if not line or line.startswith("#"):
+        continue
+
+    match = re.fullmatch(
+        r"([A-Za-z0-9][A-Za-z0-9._-]*)==([^\s;]+)",
+        line,
+    )
+    if not match:
+        raise SystemExit(
+            f"Cannot safely interpret saved package entry: {line!r}"
+        )
+
+    normalized_name = re.sub(r"[-_.]+", "-", match.group(1)).lower()
+
+    if normalized_name in expected_versions:
+        raise SystemExit(
+            f"Duplicate normalized package name: {match.group(1)!r}"
+        )
+
+    expected_versions[normalized_name] = match.group(2)
+
+if not expected_versions:
+    raise SystemExit("Saved package snapshot contains no package pins.")
+
+expected = set(expected_versions)
+
+result = subprocess.run(
+    [sys.executable, "-m", "pip", "list", "--format=json"],
+    check=True,
+    capture_output=True,
+    text=True,
+)
+
+installed = json.loads(result.stdout)
+extras = []
+
+for package in installed:
+    name = package["name"]
+    normalized_name = re.sub(r"[-_.]+", "-", name).lower()
+
+    if normalized_name in protected_tools:
+        continue
+
+    if normalized_name not in expected:
+        extras.append(name)
+
+if extras:
+    print("Removing packages absent from the saved environment:")
+    for name in sorted(extras, key=str.lower):
+        print(f"  - {name}")
+
+    subprocess.run(
+        [sys.executable, "-m", "pip", "uninstall", "-y", *extras],
+        check=True,
+    )
+else:
+    print("No additional packages need to be removed.")
+
+print("Verifying restored package versions...")
+
+result = subprocess.run(
+    [sys.executable, "-m", "pip", "list", "--format=json"],
+    check=True,
+    capture_output=True,
+    text=True,
+)
+
+installed = json.loads(result.stdout)
+actual_versions = {}
+
+for package in installed:
+    name = re.sub(r"[-_.]+", "-", package["name"]).lower()
+    actual_versions[name] = package["version"]
+
+mismatches = []
+
+for name, expected_version in sorted(expected_versions.items()):
+    actual_version = actual_versions.get(name)
+
+    if actual_version != expected_version:
+        mismatches.append(
+            f"{name}: expected {expected_version}, "
+            f"found {actual_version or 'NOT INSTALLED'}"
+        )
+
+if mismatches:
+    print("Package version verification failed:")
+    for mismatch in mismatches:
+        print(f"  - {mismatch}")
+    raise SystemExit(1)
+
+print(f"Verified exact versions for {len(expected_versions)} packages.")
+PYTHON
+            then
+                echo "Package reconciliation and version verification passed."
+            else
+                echo "CRITICAL: Package reconciliation failed."
+                rollback_failed=1
+            fi
+        else
+            echo "CRITICAL: Previous package restoration failed."
+            echo "Skipping package removal to avoid further damage."
+            rollback_failed=1
+        fi
+
+        if "$PYTHON" -m pip check; then
+            echo "Restored Python environment passed pip check."
+        else
+            echo "CRITICAL: Restored Python environment is inconsistent."
+            rollback_failed=1
+        fi
+    else
+        echo "CRITICAL: Saved Python package snapshot is missing or empty."
+        rollback_failed=1
+    fi
+
+    echo
+    echo "===== RESTART AFTER ROLLBACK ====="
+
+    if systemctl restart "$SERVICE" &&
+       systemctl is-active --quiet "$SERVICE"; then
+        echo "Application service is active."
+    else
+        echo "CRITICAL: Service failed after rollback."
+        systemctl status "$SERVICE" --no-pager || true
+        journalctl -u "$SERVICE" -n 80 --no-pager || true
+        rollback_failed=1
+    fi
+
+    echo
+    echo "===== VERIFY ROLLBACK HEALTH ====="
+
+    local health_ok=0
+
+    for attempt in $(seq 1 10); do
+        if health_check; then
+            health_ok=1
+            break
+        fi
+
+        echo "Rollback health check ${attempt}/10 failed."
+        sleep 3
+    done
+
+    if [ "$health_ok" -eq 1 ]; then
+        echo "Rollback health check passed."
+    else
+        echo "CRITICAL: Application health check failed after rollback."
+        journalctl -u "$SERVICE" -n 80 --no-pager || true
+        rollback_failed=1
+    fi
+
+    if [ "$rollback_failed" -eq 0 ]; then
+        echo
+        echo "ROLLBACK COMPLETED."
+        rm -rf -- "$STATE_DIR"
+        exit "$original_exit_code"
+    fi
+
+    echo
+    echo "CRITICAL: ROLLBACK INCOMPLETE."
+    echo "Preserving rollback state for manual recovery:"
+    echo "$STATE_DIR"
+    exit 1
+}
+
+trap rollback ERR
+
+echo "===== PRE-DEPLOY CHECKS ====="
+
+if [ "$(id -u)" -ne 0 ]; then
+    echo "ERROR: This script must run as root." >&2
+    exit 1
+fi
+
+cd "$APP_DIR"
+
+if [ ! -x "$PYTHON" ]; then
+    echo "ERROR: Production Python environment not found."
+    exit 1
+fi
+
+if [ ! -x "$BACKUP_SCRIPT" ]; then
+    echo "ERROR: Backup script not found or not executable."
+    exit 1
+fi
+
+if [ ! -d "$STATE_ROOT" ]; then
+    install -d -o root -g root -m 0700 "$STATE_ROOT"
+fi
+
+if [ "$(stat -c '%U:%G:%a' "$STATE_ROOT")" != "root:root:700" ]; then
+    echo "ERROR: Rollback state directory must be root:root mode 700."
+    exit 1
+fi
+
+if [ -n "$(git status --porcelain)" ]; then
+    echo "ERROR: Production Git working tree is not clean."
+    git status --short
+    exit 1
+fi
+
+if ! systemctl is-active --quiet "$SERVICE"; then
+    echo "ERROR: Application service is not active."
+    systemctl status "$SERVICE" --no-pager || true
+    exit 1
+fi
+
+PREVIOUS_COMMIT="$(git rev-parse HEAD)"
+
+echo "Current commit: $PREVIOUS_COMMIT"
+
+echo
+echo "===== FETCH MAIN ====="
+
+git fetch origin main
+TARGET_COMMIT="$(git rev-parse origin/main)"
+
+echo "Target commit: $TARGET_COMMIT"
+
+if [ "$PREVIOUS_COMMIT" = "$TARGET_COMMIT" ]; then
+    echo "Already running the latest main commit."
+    exit 0
+fi
+
+if ! git merge-base --is-ancestor \
+    "$PREVIOUS_COMMIT" "$TARGET_COMMIT"; then
+    echo "ERROR: Production history diverges from origin/main."
+    echo "Refusing to overwrite production history."
+    exit 1
+fi
+
+echo
+echo "===== SAVE ROLLBACK STATE ====="
+
+STATE_DIR="$(mktemp -d "${STATE_ROOT}/rollback.XXXXXXXX")"
+chmod 0700 "$STATE_DIR"
+
+PREVIOUS_PACKAGES_FILE="${STATE_DIR}/requirements-before.txt"
+
+"$PYTHON" -m pip freeze > "$PREVIOUS_PACKAGES_FILE"
+
+if [ ! -s "$PREVIOUS_PACKAGES_FILE" ]; then
+    echo "ERROR: Python package snapshot is empty."
+    rm -rf -- "$STATE_DIR"
+    exit 1
+fi
+
+echo
+echo "===== VALIDATE PYTHON PACKAGE SNAPSHOT ====="
+
+if ! "$PYTHON" - "$PREVIOUS_PACKAGES_FILE" <<'PYTHON'
+import re
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+packages = {}
+
+for number, raw_line in enumerate(path.read_text().splitlines(), 1):
+    line = raw_line.strip()
+
+    if not line or line.startswith("#"):
+        continue
+
+    match = re.fullmatch(
+        r"([A-Za-z0-9][A-Za-z0-9._-]*)==([^\s;]+)",
+        line,
+    )
+
+    if not match:
+        raise SystemExit(
+            f"Unsupported snapshot entry at line {number}: {line!r}"
+        )
+
+    name = re.sub(r"[-_.]+", "-", match.group(1)).lower()
+
+    if name in packages:
+        raise SystemExit(
+            f"Duplicate normalized package name at line {number}: "
+            f"{match.group(1)!r}"
+        )
+
+    packages[name] = match.group(2)
+
+if not packages:
+    raise SystemExit("Snapshot contains no valid package pins.")
+
+print(f"Validated {len(packages)} pinned packages.")
+PYTHON
+then
+    echo "ERROR: Python package snapshot is invalid; deployment aborted."
+    rm -rf -- "$STATE_DIR"
+    exit 1
+fi
+
+echo "Previous commit recorded."
+echo "Python package snapshot validated and saved."
+
+echo
+echo "===== CREATE BACKUP ====="
+
+"$BACKUP_SCRIPT"
+
+echo
+echo "===== UPDATE CODE ====="
+
+git merge --ff-only "$TARGET_COMMIT"
+UPDATED=1
+
+echo
+echo "===== INSTALL DEPENDENCIES ====="
+
+"$PYTHON" -m pip install \
+    --disable-pip-version-check \
+    -r "${APP_DIR}/requirements.txt"
+
+"$PYTHON" -m pip check
+
+echo
+echo "===== RESTART APPLICATION ====="
+
+systemctl restart "$SERVICE"
+
+if ! systemctl is-active --quiet "$SERVICE"; then
+    echo "ERROR: Application service failed to start."
+    systemctl status "$SERVICE" --no-pager || true
+    journalctl -u "$SERVICE" -n 80 --no-pager || true
+    false
+fi
+
+echo
+echo "===== HTTP HEALTH CHECK ====="
+
+HEALTH_OK=0
+
+for attempt in $(seq 1 10); do
+    if health_check; then
+        HEALTH_OK=1
+        break
+    fi
+
+    echo "Health check attempt ${attempt}/10 failed."
+    sleep 3
+done
+
+if [ "$HEALTH_OK" -ne 1 ]; then
+    echo "ERROR: HTTP health check failed."
+    journalctl -u "$SERVICE" -n 80 --no-pager || true
+    false
+fi
+
+echo
+echo "===== DEPLOYMENT SUCCESSFUL ====="
+echo "Previous commit: $PREVIOUS_COMMIT"
+echo "Current commit:  $(git rev-parse HEAD)"
+
+UPDATED=0
+trap - ERR
+
+rm -rf -- "$STATE_DIR"
+echo "Temporary rollback state removed."
