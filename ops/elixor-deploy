@@ -22,6 +22,7 @@ PREVIOUS_COMMIT=""
 TARGET_COMMIT=""
 STATE_DIR=""
 PREVIOUS_PACKAGES_FILE=""
+WHEELHOUSE_DIR=""
 UPDATED=0
 
 exec 9>"$LOCK_FILE"
@@ -70,7 +71,9 @@ rollback() {
 
     if [ -z "$PREVIOUS_COMMIT" ] ||
        [ -z "$PREVIOUS_PACKAGES_FILE" ] ||
-       [ ! -s "$PREVIOUS_PACKAGES_FILE" ]; then
+       [ ! -s "$PREVIOUS_PACKAGES_FILE" ] ||
+       [ -z "$WHEELHOUSE_DIR" ] ||
+       [ ! -d "$WHEELHOUSE_DIR" ]; then
         echo "CRITICAL: Rollback state is incomplete."
         rollback_failed=1
     fi
@@ -86,12 +89,15 @@ rollback() {
         rollback_failed=1
     fi
 
-    if [ -s "$PREVIOUS_PACKAGES_FILE" ]; then
+    if [ -s "$PREVIOUS_PACKAGES_FILE" ] &&
+       [ -d "$WHEELHOUSE_DIR" ]; then
         echo
-        echo "===== RESTORE PREVIOUS PYTHON PACKAGES ====="
+        echo "===== RESTORE PREVIOUS PYTHON PACKAGES OFFLINE ====="
 
         if "$PYTHON" -m pip install \
             --disable-pip-version-check \
+            --no-index \
+            --find-links "$WHEELHOUSE_DIR" \
             -r "$PREVIOUS_PACKAGES_FILE"; then
             echo "Previous package versions reinstalled."
 
@@ -225,7 +231,7 @@ PYTHON
             rollback_failed=1
         fi
     else
-        echo "CRITICAL: Saved Python package snapshot is missing or empty."
+        echo "CRITICAL: Saved package snapshot or local wheelhouse is missing."
         rollback_failed=1
     fi
 
@@ -352,6 +358,9 @@ STATE_DIR="$(mktemp -d "${STATE_ROOT}/rollback.XXXXXXXX")"
 chmod 0700 "$STATE_DIR"
 
 PREVIOUS_PACKAGES_FILE="${STATE_DIR}/requirements-before.txt"
+WHEELHOUSE_DIR="${STATE_DIR}/wheelhouse"
+
+install -d -o root -g root -m 0700 "$WHEELHOUSE_DIR"
 
 "$PYTHON" -m pip freeze > "$PREVIOUS_PACKAGES_FILE"
 
@@ -408,6 +417,29 @@ then
     rm -rf -- "$STATE_DIR"
     exit 1
 fi
+
+echo
+echo "===== SAVE OFFLINE PYTHON PACKAGE ARCHIVE ====="
+
+if ! "$PYTHON" -m pip download \
+    --disable-pip-version-check \
+    --only-binary=:all: \
+    --dest "$WHEELHOUSE_DIR" \
+    -r "$PREVIOUS_PACKAGES_FILE"; then
+    echo "ERROR: Could not save all required package distributions."
+    echo "Deployment aborted before application code was changed."
+    rm -rf -- "$STATE_DIR"
+    exit 1
+fi
+
+if ! find "$WHEELHOUSE_DIR" -maxdepth 1 -type f -print -quit |
+    grep -q .; then
+    echo "ERROR: Local Python package archive is empty."
+    rm -rf -- "$STATE_DIR"
+    exit 1
+fi
+
+echo "Local package archive prepared."
 
 echo "Previous commit recorded."
 echo "Python package snapshot validated and saved."

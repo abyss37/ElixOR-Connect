@@ -128,6 +128,40 @@ class DeploymentScriptStructureTests(unittest.TestCase):
         self.assertIn("http://127.0.0.1/health", text)
         self.assertIn("ROLLBACK COMPLETED.", text)
 
+    def test_rollback_restores_packages_without_network_index(self):
+        text = SCRIPT.read_text(encoding="utf-8")
+
+        self.assertIn("--no-index", text)
+        self.assertIn('--find-links "$WHEELHOUSE_DIR"', text)
+        self.assertIn("--only-binary=:all:", text)
+        self.assertIn("CRITICAL: Saved package snapshot or local wheelhouse is missing.", text)
+
+    def test_package_archive_is_prepared_before_backup_and_code_update(self):
+        text = SCRIPT.read_text(encoding="utf-8")
+
+        download_position = text.index("===== SAVE OFFLINE PYTHON PACKAGE ARCHIVE =====")
+        backup_position = text.index("===== CREATE BACKUP =====")
+        update_position = text.index("===== UPDATE CODE =====")
+
+        self.assertLess(download_position, backup_position)
+        self.assertLess(backup_position, update_position)
+
+    def test_package_archive_failure_aborts_before_code_update(self):
+        text = SCRIPT.read_text(encoding="utf-8")
+
+        download_position = text.index("===== SAVE OFFLINE PYTHON PACKAGE ARCHIVE =====")
+        failure_position = text.index(
+            "ERROR: Could not save all required package distributions."
+        )
+        update_position = text.index("===== UPDATE CODE =====")
+
+        self.assertLess(download_position, failure_position)
+        self.assertLess(failure_position, update_position)
+        self.assertIn(
+            'rm -rf -- "$STATE_DIR"\n    exit 1',
+            text[failure_position:update_position],
+        )
+
 
 class PackageReconciliationTests(unittest.TestCase):
     @classmethod
