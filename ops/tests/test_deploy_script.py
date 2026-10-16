@@ -134,7 +134,8 @@ class DeploymentScriptStructureTests(unittest.TestCase):
         self.assertIn('trap \'handle_deploy_signal HUP\' HUP', text)
         self.assertIn('trap \'handle_deploy_signal INT\' INT', text)
         self.assertIn('trap \'handle_deploy_signal TERM\' TERM', text)
-        self.assertIn('trap - ERR HUP INT TERM', text)
+        self.assertIn("trap - ERR", text)
+        self.assertIn("trap ':' HUP INT TERM", text)
         self.assertIn('SIGNAL_EXIT_CODE="$exit_code"', text)
 
     def test_update_flag_is_set_before_git_merge(self):

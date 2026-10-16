@@ -58,7 +58,8 @@ rollback() {
         original_exit_code="$SIGNAL_EXIT_CODE"
     fi
 
-    trap - ERR HUP INT TERM
+    trap - ERR
+    trap ':' HUP INT TERM
     set +e
 
     echo
@@ -302,7 +303,7 @@ handle_deploy_signal() {
     esac
 
     SIGNAL_EXIT_CODE="$exit_code"
-    trap - HUP INT TERM
+    trap ':' HUP INT TERM
 
     echo >&2
     echo "Received SIG${signal}; stopping deployment safely." >&2
