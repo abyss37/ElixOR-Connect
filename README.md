@@ -26,9 +26,62 @@ The application also has a public landing page and login page. A guest visiting 
 
 ## Screenshots
 
-There are currently no verified application screenshots in the repository. The existing image assets are branding or promotional graphics, so they are not presented here as screenshots.
+The following screenshots showcase the ElixOR Connect interface using demonstration data.
 
-> TODO: Add current, approved screenshots of the application to `docs/screenshots/`. Use representative data and remove personal, financial, and production-sensitive information before publishing.
+<table>
+  <tr>
+    <td width="50%">
+      <strong>Dashboard</strong><br>
+      <img src="docs/screenshots/01-dashboard.png" alt="ElixOR Connect Dashboard" width="100%">
+    </td>
+    <td width="50%">
+      <strong>Companies</strong><br>
+      <img src="docs/screenshots/02-companies.png" alt="Companies management" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <strong>Products</strong><br>
+      <img src="docs/screenshots/03-products.png" alt="Products management" width="100%">
+    </td>
+    <td width="50%">
+      <strong>Budgets</strong><br>
+      <img src="docs/screenshots/04-budgets.png" alt="Company budgets" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <strong>Invoices</strong><br>
+      <img src="docs/screenshots/05-invoices.png" alt="Invoice management" width="100%">
+    </td>
+    <td width="50%">
+      <strong>Analytics</strong><br>
+      <img src="docs/screenshots/06-analytics.png" alt="Financial analytics" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <strong>Notifications</strong><br>
+      <img src="docs/screenshots/07-notifications.png" alt="Notifications center" width="100%">
+    </td>
+    <td width="50%">
+      <strong>Audit Log</strong><br>
+      <img src="docs/screenshots/08-audit-log.png" alt="Audit log" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <strong>Users &amp; Roles</strong><br>
+      <img src="docs/screenshots/09-users.png" alt="User management and roles" width="100%">
+    </td>
+    <td width="50%">
+      <strong>Invoice Generator</strong><br>
+      <img src="docs/screenshots/10-invoice-generator.png" alt="Invoice generator" width="100%">
+    </td>
+  </tr>
+</table>
+
+All screenshots are captured from the local application using demonstration data. No production database or production application was modified to create them.
 
 ## Technology stack
 
