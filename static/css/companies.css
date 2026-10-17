@@ -1362,7 +1362,12 @@
     }
 
     .ff-company-search {
+        width: 100%;
+        min-width: 0;
         max-width: none;
+        height: 42px;
+        min-height: 0;
+        flex: 0 1 auto;
     }
 
     .ff-companies-toolbar-right {
