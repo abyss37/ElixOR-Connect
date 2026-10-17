@@ -16,6 +16,107 @@
 
 
     /* ========================================================
+       GLOBAL NOTIFICATION BADGE
+       ======================================================== */
+
+    const notificationBadge =
+        document.getElementById('ff-notification-badge');
+
+    let notificationBadgeRevision = 0;
+    let notificationBadgeRequestInFlight = false;
+
+    function renderNotificationBadgeCount(count) {
+        notificationBadge.textContent =
+            count > 99
+                ? '99+'
+                : String(count);
+
+        notificationBadge.classList.toggle(
+            'hidden',
+            count === 0
+        );
+    }
+
+    function setNotificationBadgeCount(count) {
+
+        if (
+            !notificationBadge ||
+            !Number.isInteger(count) ||
+            count < 0
+        ) {
+            return;
+        }
+
+        notificationBadgeRevision += 1;
+        renderNotificationBadgeCount(count);
+    }
+
+    window.setNotificationBadgeCount =
+        setNotificationBadgeCount;
+
+    async function refreshNotificationBadge() {
+        if (notificationBadgeRequestInFlight) {
+            return;
+        }
+
+        notificationBadgeRequestInFlight = true;
+        const requestRevision = notificationBadgeRevision;
+
+        try {
+            const response = await fetch(
+                '/api/notifications?count_only=1',
+                {
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'same-origin'
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            if (
+                data?.status === 'ok' &&
+                Number.isInteger(data.unread_count) &&
+                data.unread_count >= 0 &&
+                requestRevision === notificationBadgeRevision
+            ) {
+                renderNotificationBadgeCount(data.unread_count);
+            }
+        } catch (error) {
+            console.debug(
+                '[FinFlow] Notification badge refresh failed',
+                error
+            );
+        } finally {
+            notificationBadgeRequestInFlight = false;
+        }
+    }
+
+    function initNotificationBadge() {
+
+        if (!notificationBadge) {
+            return;
+        }
+
+        // notifications.js already refreshes the full list and count there.
+        if (document.getElementById('notification-list')) {
+            return;
+        }
+
+        refreshNotificationBadge();
+        window.setInterval(
+            refreshNotificationBadge,
+            30000
+        );
+    }
+
+
+    /* ========================================================
        DESKTOP SIDEBAR
        ======================================================== */
 
@@ -404,8 +505,12 @@
             'keydown',
             event => {
 
-                if (event.key === 'Escape') {
+                if (
+                    event.key === 'Escape' &&
+                    !userMenu.hidden
+                ) {
                     closeUserMenu();
+                    userMenuButton.focus();
                 }
             }
         );
@@ -433,5 +538,6 @@
     restoreSidebarState();
     initLanguageSwitcher();
     initThemeSwitcher();
+    initNotificationBadge();
 
 })();

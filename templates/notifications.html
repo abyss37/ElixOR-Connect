@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/notifications.css') }}?v=20261017-1">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/notifications.css') }}?v=20261017-2">
 {% endblock %}
 
 {% block page_icon %}
@@ -44,7 +44,7 @@
             <button
                 id="notification-read-all"
                 type="button"
-                class="ff-action-button ff-action-button-primary">
+                class="ff-btn ff-btn-primary">
 
                 <i class="bi bi-check2-all"></i>
 
@@ -208,6 +208,6 @@
 
 {% block scripts %}
 
-<script src="{{ url_for('static', filename='js/notifications.js') }}?v=20260923"></script>
+<script src="{{ url_for('static', filename='js/notifications.js') }}?v=20261017-3"></script>
 
 {% endblock %}

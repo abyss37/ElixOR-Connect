@@ -27,7 +27,7 @@
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/finflow.css') }}?v=20261016-3">
+          href="{{ url_for('static', filename='css/finflow.css') }}?v=20261017-3">
 
     {% block head %}{% endblock %}
     {% block extra_head %}{% endblock %}
@@ -307,42 +307,45 @@
 
                 </div>
 
-                <div class="ff-sidebar-user" id="ff-sidebar-user">
-
-                    <div class="ff-user-avatar">
-                        <i class="bi bi-person-fill"></i>
-                    </div>
-
-                    <div class="ff-sidebar-user-copy">
-
-                        <strong>
-                            {% if current_user is defined and current_user %}
-                                {{ current_user.username }}
-                            {% else %}
-                                admin
-                            {% endif %}
-                        </strong>
-
-                        <small>
-                            {% if current_user is defined and current_user %}
-                                {{ current_user.role|default('user')|capitalize }}
-                            {% else %}
-                                Administrator
-                            {% endif %}
-                        </small>
-
-                    </div>
+                <div class="ff-sidebar-user-wrap">
 
                     <button
                         id="ff-user-menu-button"
                         type="button"
-                        class="ff-user-menu-button"
+                        class="ff-sidebar-user"
                         aria-label="User menu"
                         title="User menu"
                         aria-expanded="false"
-                        aria-haspopup="true">
+                        aria-haspopup="true"
+                        aria-controls="ff-user-menu">
 
-                        <i class="bi bi-three-dots"></i>
+                        <span class="ff-user-avatar" aria-hidden="true">
+                            <i class="bi bi-person-fill"></i>
+                        </span>
+
+                        <span class="ff-sidebar-user-copy">
+
+                            <strong>
+                                {% if current_user is defined and current_user %}
+                                    {{ current_user.username }}
+                                {% else %}
+                                    admin
+                                {% endif %}
+                            </strong>
+
+                            <small>
+                                {% if current_user is defined and current_user %}
+                                    {{ current_user.role|default('user')|capitalize }}
+                                {% else %}
+                                    Administrator
+                                {% endif %}
+                            </small>
+
+                        </span>
+
+                        <span class="ff-user-menu-button" aria-hidden="true">
+                            <i class="bi bi-three-dots"></i>
+                        </span>
 
                     </button>
 
@@ -485,7 +488,7 @@
 
 <script src="{{ url_for('static', filename='js/finflow-i18n.js') }}?v=20260929-14"></script>
 <script src="{{ url_for('static', filename='js/finflow-money.js') }}?v=20260923-1"></script>
-<script src="{{ url_for('static', filename='js/main.js') }}?v=20260929-2"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}?v=20261017-3"></script>
 
 {% block scripts %}{% endblock %}
 

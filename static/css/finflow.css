@@ -191,7 +191,7 @@ a {
     display: flex;
     flex-direction: column;
 
-    overflow: hidden;
+    overflow: visible;
 
     border: 1px solid var(--ff-border-light);
     border-radius: 22px;
@@ -558,6 +558,7 @@ a {
 /* USER */
 
 .ff-sidebar-user {
+    width: 100%;
     min-height: 56px;
 
     display: flex;
@@ -567,10 +568,30 @@ a {
     padding: 8px;
 
     border: 1px solid var(--ff-border);
+    color: inherit;
+    font: inherit;
+    text-align: left;
+
     border-radius: 14px;
 
     background:
         rgba(255,255,255,.025);
+
+    cursor: pointer;
+    transition:
+        border-color .18s ease,
+        background .18s ease,
+        box-shadow .18s ease;
+}
+
+.ff-sidebar-user:hover {
+    border-color: var(--ff-border-accent);
+    background: rgba(255,255,255,.045);
+}
+
+.ff-sidebar-user:focus-visible {
+    outline: 2px solid var(--ff-accent);
+    outline-offset: 2px;
 }
 
 .ff-user-avatar {
@@ -836,8 +857,7 @@ html.ff-sidebar-precollapsed .ff-nav-label,
 html.ff-sidebar-precollapsed .ff-nav-text,
 html.ff-sidebar-precollapsed .ff-system-status-copy,
 html.ff-sidebar-precollapsed .ff-sidebar-user-copy,
-html.ff-sidebar-precollapsed .ff-user-menu-button,
-html.ff-sidebar-precollapsed .ff-nav-badge {
+html.ff-sidebar-precollapsed .ff-user-menu-button {
     display: none;
 }
 
@@ -860,9 +880,22 @@ body.ff-sidebar-collapsed .ff-nav-label,
 body.ff-sidebar-collapsed .ff-nav-text,
 body.ff-sidebar-collapsed .ff-system-status-copy,
 body.ff-sidebar-collapsed .ff-sidebar-user-copy,
-body.ff-sidebar-collapsed .ff-user-menu-button,
-body.ff-sidebar-collapsed .ff-nav-badge {
+body.ff-sidebar-collapsed .ff-user-menu-button {
     display: none;
+}
+
+html.ff-sidebar-precollapsed .ff-nav-badge,
+body.ff-sidebar-collapsed .ff-nav-badge {
+    position: absolute;
+    top: -3px;
+    right: -9px;
+    min-width: 19px;
+    height: 17px;
+    padding: 0 4px;
+    box-sizing: border-box;
+    font-size: 8px;
+    line-height: 1;
+    z-index: 2;
 }
 
 body.ff-sidebar-collapsed .ff-brand-row {
@@ -2027,8 +2060,9 @@ body.ff-modal-open {
    SIDEBAR USER MENU
    ========================================================= */
 
-.ff-sidebar-user {
+.ff-sidebar-user-wrap {
     position: relative;
+    flex: 0 0 auto;
 }
 
 .ff-user-menu {
@@ -2036,6 +2070,8 @@ body.ff-modal-open {
     left: 0;
     bottom: calc(100% + 10px);
     width: 248px;
+    max-height: calc(100vh - 24px);
+    overflow-y: auto;
     padding: 8px;
     z-index: 1000;
 
@@ -2185,7 +2221,7 @@ body.ff-modal-open {
 /* Collapsed sidebar */
 
 .ff-sidebar-collapsed .ff-user-menu {
-    left: 62px;
+    left: calc(100% + 10px);
     bottom: 0;
     transform-origin: bottom left;
 }
@@ -2193,14 +2229,20 @@ body.ff-modal-open {
 
 /* Mobile */
 
-@media (max-width: 900px) {
+@media (max-width: 760px) {
 
     .ff-user-menu {
         left: auto;
         right: 0;
         bottom: calc(100% + 10px);
-        width: 238px;
+        width: min(238px, calc(100vw - 24px));
         transform-origin: bottom right;
+    }
+
+    .ff-sidebar-collapsed .ff-user-menu {
+        left: auto;
+        right: 0;
+        bottom: calc(100% + 10px);
     }
 
 }
@@ -3997,6 +4039,12 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
 
 [data-theme="light"] .ff-nav-icon {
     color: inherit;
+}
+
+[data-theme="light"] .ff-nav-badge {
+    border-color: rgba(37,99,235,.22);
+    color: #1d4ed8;
+    background: rgba(37,99,235,.10);
 }
 
 

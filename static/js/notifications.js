@@ -3,8 +3,10 @@
 
     const state = {
         notifications: [],
+        unreadCount: null,
         filter: 'all',
-        loading: false
+        loading: false,
+        revision: 0
     };
 
 
@@ -19,6 +21,37 @@
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#039;');
+    }
+
+
+    function getCsrfToken() {
+        return document.querySelector(
+            '#ff-logout-form input[name="csrf_token"]'
+        )?.value || '';
+    }
+
+
+    function setUnreadCount(value) {
+        if (Number.isInteger(value) && value >= 0) {
+            state.unreadCount = value;
+            window.setNotificationBadgeCount?.(value);
+        }
+    }
+
+
+    function showReadError(markAll = false) {
+        const isEnglish =
+            window.finflowI18n?.getLang?.() === 'en';
+
+        const message = markAll
+            ? isEnglish
+                ? 'Could not mark notifications as read. Please try again.'
+                : 'Не вдалося позначити сповіщення прочитаними. Спробуйте ще раз.'
+            : isEnglish
+                ? 'Could not mark this notification as read. Please try again.'
+                : 'Не вдалося позначити сповіщення прочитаним. Спробуйте ще раз.';
+
+        window.alert(message);
     }
 
 
@@ -142,9 +175,11 @@
             return;
         }
 
-        const unread = state.notifications.filter(
-            item => !item.is_read
-        ).length;
+        const unread = Number.isInteger(state.unreadCount)
+            ? state.unreadCount
+            : state.notifications.filter(
+                item => !item.is_read
+            ).length;
 
         badge.textContent =
             unread > 99
@@ -458,6 +493,7 @@
         }
 
         state.loading = true;
+        const requestRevision = state.revision;
 
         try {
             const response = await fetch(
@@ -487,8 +523,14 @@
                 );
             }
 
+            if (requestRevision !== state.revision) {
+                return;
+            }
+
             state.notifications =
                 data.notifications;
+            state.unreadCount = null;
+            setUnreadCount(data.unread_count);
 
             render();
 
@@ -531,12 +573,19 @@
 
     async function markAsRead(notificationId) {
         try {
+            const csrfToken = getCsrfToken();
+
+            if (!csrfToken) {
+                throw new Error('CSRF token is unavailable');
+            }
+
             const response = await fetch(
                 `/api/notifications/${encodeURIComponent(notificationId)}/read`,
                 {
                     method: 'POST',
                     headers: {
-                        'Accept': 'application/json'
+                        'Accept': 'application/json',
+                        'X-CSRF-Token': csrfToken
                     },
                     credentials: 'same-origin'
                 }
@@ -556,6 +605,8 @@
                 );
             }
 
+            state.revision += 1;
+
             const item =
                 state.notifications.find(
                     notification =>
@@ -564,12 +615,14 @@
                 );
 
             if (item) {
-                item.is_read = true;
+                item.is_read =
+                    data.notification?.is_read ?? true;
                 item.read_at =
                     data.notification?.read_at ||
                     new Date().toISOString();
             }
 
+            setUnreadCount(data.unread_count);
             render();
 
         } catch (error) {
@@ -577,6 +630,8 @@
                 '[FinFlow] Mark notification as read failed',
                 error
             );
+            render();
+            showReadError();
         }
     }
 
@@ -592,12 +647,19 @@
         }
 
         try {
+            const csrfToken = getCsrfToken();
+
+            if (!csrfToken) {
+                throw new Error('CSRF token is unavailable');
+            }
+
             const response = await fetch(
                 '/api/notifications/read-all',
                 {
                     method: 'POST',
                     headers: {
-                        'Accept': 'application/json'
+                        'Accept': 'application/json',
+                        'X-CSRF-Token': csrfToken
                     },
                     credentials: 'same-origin'
                 }
@@ -617,6 +679,8 @@
                 );
             }
 
+            state.revision += 1;
+
             state.notifications.forEach(function (item) {
                 item.is_read = true;
 
@@ -626,6 +690,7 @@
                 }
             });
 
+            setUnreadCount(data.unread_count);
             render();
 
         } catch (error) {
@@ -633,6 +698,7 @@
                 '[FinFlow] Mark all notifications failed',
                 error
             );
+            showReadError(true);
         }
     }
 
@@ -788,13 +854,20 @@
         }
 
         try {
+            const csrfToken = getCsrfToken();
+
+            if (!csrfToken) {
+                throw new Error('CSRF token is unavailable');
+            }
+
             const response = await fetch(
                 `/api/notifications/${encodeURIComponent(notificationId)}`,
                 {
                     method: 'DELETE',
                     credentials: 'same-origin',
                     headers: {
-                        'Accept': 'application/json'
+                        'Accept': 'application/json',
+                        'X-CSRF-Token': csrfToken
                     }
                 }
             );
@@ -808,6 +881,8 @@
                 );
             }
 
+            state.revision += 1;
+
             state.notifications =
                 state.notifications.filter(
                     notification =>
@@ -815,6 +890,7 @@
                         String(notificationId)
                 );
 
+            setUnreadCount(data.unread_count);
             render();
 
         } catch (error) {
@@ -852,37 +928,6 @@
         }
 
         render();
-    }
-
-
-    // =========================================================
-    // GLOBAL BADGE SUPPORT
-    // =========================================================
-
-    function updateGlobalBadge(notifications) {
-        const badge =
-            document.getElementById(
-                'ff-notification-badge'
-            );
-
-        if (!badge) {
-            return;
-        }
-
-        const unread =
-            notifications.filter(
-                item => !item.is_read
-            ).length;
-
-        badge.textContent =
-            unread > 99
-                ? '99+'
-                : String(unread);
-
-        badge.classList.toggle(
-            'hidden',
-            unread === 0
-        );
     }
 
 

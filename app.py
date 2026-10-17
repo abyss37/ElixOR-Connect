@@ -227,7 +227,7 @@ app.config["SESSION_COOKIE_SECURE"] = True
 
 
 # CSRF protection.
-# A per-session token is required for every POST request.
+# A per-session token is required for POST and DELETE requests.
 def get_csrf_token():
     token = session.get("csrf_token")
 
@@ -247,7 +247,7 @@ def inject_csrf_token():
 
 @app.before_request
 def csrf_protect():
-    if request.method != "POST":
+    if request.method not in {"POST", "DELETE"}:
         return None
 
     expected = session.get("csrf_token")
@@ -4878,6 +4878,18 @@ def notifications():
 @login_required
 def api_notifications():
     try:
+        unread_count = (
+            Notification.query
+            .filter_by(is_read=False)
+            .count()
+        )
+
+        if request.args.get("count_only") == "1":
+            return jsonify({
+                "status": "ok",
+                "unread_count": unread_count,
+            })
+
         notifications = (
             Notification.query
             .order_by(
@@ -4886,12 +4898,6 @@ def api_notifications():
             )
             .limit(50)
             .all()
-        )
-
-        unread_count = (
-            Notification.query
-            .filter_by(is_read=False)
-            .count()
         )
 
         return jsonify({
