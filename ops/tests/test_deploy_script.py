@@ -185,6 +185,41 @@ class DeploymentScriptStructureTests(unittest.TestCase):
         )
 
 
+    def test_permissions_are_normalized_for_python_templates_and_static(self):
+        text = SCRIPT.read_text(encoding="utf-8")
+
+        self.assertIn("normalize_application_permissions() {", text)
+        self.assertIn("-name '*.py'", text)
+        self.assertIn("chmod 0644", text)
+        self.assertIn("chmod 0755", text)
+        self.assertIn("runuser -u accounting -- test -r", text)
+
+    def test_permissions_are_normalized_during_deploy_and_rollback(self):
+        text = SCRIPT.read_text(encoding="utf-8")
+
+        rollback_position = text.index("===== RESTORE PREVIOUS CODE =====")
+        rollback_normalize_position = text.index(
+            "===== NORMALIZE PERMISSIONS AFTER ROLLBACK ====="
+        )
+        rollback_restart_position = text.index(
+            "===== RESTART AFTER ROLLBACK ====="
+        )
+
+        deploy_position = text.index("===== UPDATE CODE =====")
+        deploy_normalize_position = text.index(
+            "===== NORMALIZE APPLICATION FILE PERMISSIONS ====="
+        )
+        deploy_dependencies_position = text.index(
+            "===== INSTALL DEPENDENCIES ====="
+        )
+
+        self.assertLess(rollback_position, rollback_normalize_position)
+        self.assertLess(rollback_normalize_position, rollback_restart_position)
+
+        self.assertLess(deploy_position, deploy_normalize_position)
+        self.assertLess(deploy_normalize_position, deploy_dependencies_position)
+
+
 class PackageReconciliationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

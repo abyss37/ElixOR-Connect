@@ -49,6 +49,49 @@ health_check() {
     printf '%s\n' "$response"
 }
 
+normalize_application_permissions() {
+    local directory
+    local file
+
+    for directory in templates static; do
+        if [ ! -d "$APP_DIR/$directory" ]; then
+            echo "ERROR: Required directory is missing: $directory" >&2
+            return 1
+        fi
+    done
+
+    # Normalize top-level Python source files.
+    find "$APP_DIR" -maxdepth 1 -type f -name '*.py' \
+        -exec chmod 0644 {} + || return 1
+
+    # Normalize template and static directory/file permissions.
+    find "$APP_DIR/templates" "$APP_DIR/static" -type d \
+        -exec chmod 0755 {} + || return 1
+    find "$APP_DIR/templates" "$APP_DIR/static" -type f \
+        -exec chmod 0644 {} + || return 1
+
+    # Verify all application Python files are readable by the service user.
+    for file in "$APP_DIR"/*.py; do
+        [ -f "$file" ] || continue
+        if ! runuser -u accounting -- test -r "$file"; then
+            echo "ERROR: accounting cannot read $file" >&2
+            return 1
+        fi
+    done
+
+    # Verify every template and static file.
+    for directory in templates static; do
+        while IFS= read -r -d '' file; do
+            if ! runuser -u accounting -- test -r "$file"; then
+                echo "ERROR: accounting cannot read $file" >&2
+                return 1
+            fi
+        done < <(find "$APP_DIR/$directory" -type f -print0)
+    done
+
+    echo "Application file permissions normalized and verified."
+}
+
 rollback() {
     local original_exit_code="${1:-1}"
     local rollback_failed=0
@@ -92,6 +135,16 @@ rollback() {
         echo "Previous Git commit restored."
     else
         echo "CRITICAL: Git rollback failed."
+        rollback_failed=1
+    fi
+
+    echo
+    echo "===== NORMALIZE PERMISSIONS AFTER ROLLBACK ====="
+
+    if normalize_application_permissions; then
+        echo "Rollback file permissions verified."
+    else
+        echo "CRITICAL: Permission normalization failed after rollback."
         rollback_failed=1
     fi
 
@@ -495,24 +548,7 @@ git merge --ff-only "$TARGET_COMMIT"
 echo
 echo "===== NORMALIZE APPLICATION FILE PERMISSIONS ====="
 
-for directory in templates static; do
-    if [ ! -d "$APP_DIR/$directory" ]; then
-        echo "ERROR: Required directory is missing: $directory" >&2
-        exit 1
-    fi
-done
-
-find "$APP_DIR/templates" "$APP_DIR/static" -type d \
-    -exec chmod 0755 {} +
-find "$APP_DIR/templates" "$APP_DIR/static" -type f \
-    -exec chmod 0644 {} +
-
-if ! runuser -u accounting -- test -r "$APP_DIR/templates/error.html"; then
-    echo "ERROR: accounting cannot read templates/error.html" >&2
-    exit 1
-fi
-
-echo "Template and static file permissions normalized."
+normalize_application_permissions
 
 echo
 echo "===== INSTALL DEPENDENCIES ====="
