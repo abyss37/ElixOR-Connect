@@ -3959,6 +3959,30 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
 
 
 /* =========================================================
+   LIGHT THEME — SIDEBAR USER & LANGUAGE CONTRAST
+   ========================================================= */
+
+[data-theme="light"] .ff-sidebar-user-copy strong {
+    color: #263449;
+}
+
+[data-theme="light"] .ff-sidebar-user-copy small {
+    color: #52667d;
+}
+
+[data-theme="light"] .ff-language {
+    color: #64748b;
+}
+
+[data-theme="light"] .ff-language-button {
+    color: #52667d;
+}
+
+[data-theme="light"] .ff-language-button.is-active {
+    color: #2563eb;
+}
+
+/* =========================================================
    ELIXOR CONNECT — LIGHT GLASS FOUNDATION
    ========================================================= */
 
