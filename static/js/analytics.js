@@ -3,6 +3,10 @@
 
     const DATA_ID = 'finflowAnalyticsInvoiceData';
 
+    function t(value) {
+        return window.finflowI18n?.translateSmart(value) || value;
+    }
+
     function getInvoices() {
         const rawData = document.getElementById(DATA_ID);
 
@@ -30,7 +34,7 @@
 
         return window.FinFlowMoney
             ? window.FinFlowMoney.formatMoney(value, code)
-            : `${code} ${Number(value || 0).toLocaleString('uk-UA', {
+            : `${code} ${Number(value || 0).toLocaleString(window.finflowI18n?.getLocale?.() || 'uk-UA', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             })}`;
@@ -70,7 +74,7 @@
         return (
             invoice.company?.name ||
             invoice.company_name ||
-            'Unknown'
+            t('Unknown')
         );
     }
 
@@ -163,23 +167,24 @@
         );
 
         const currencies = Object.keys(currencyTotals);
+        const totalElement = document.getElementById('analyticsTotal');
 
         if (!currencies.length) {
             setText('analyticsTotal', money(0, 'EUR'));
-        } else if (currencies.length === 1) {
-            const currency = currencies[0];
+        } else if (totalElement) {
+            totalElement.replaceChildren();
 
-            setText(
-                'analyticsTotal',
-                money(currencyTotals[currency], currency)
-            );
-        } else {
-            setText(
-                'analyticsTotal',
-                currencies.map(function (currency) {
-                    return money(currencyTotals[currency], currency);
-                }).join(' · ')
-            );
+            currencies.forEach(function (currency) {
+                const row = document.createElement('div');
+
+                row.className = 'ff-analytics-total-row';
+                row.textContent = money(
+                    currencyTotals[currency],
+                    currency
+                );
+
+                totalElement.appendChild(row);
+            });
         }
 
         const companies = new Set(
@@ -246,13 +251,13 @@
 
         const rows = Object.values(totals)
             .sort(function (a, b) {
-                return b.amount - a.amount;
+                return a.currency.localeCompare(b.currency) || b.amount - a.amount;
             });
 
         if (!rows.length) {
             target.innerHTML = emptyState(
                 'bi-bar-chart',
-                'No expense data'
+                t('No expense data')
             );
             return;
         }
@@ -272,11 +277,13 @@
                 ? Math.min(100, (row.amount / max) * 100)
                 : 0;
 
+            const label = `${row.company} · ${money(row.amount, row.currency)}`;
+
             return `
                 <div class="ff-analytics-bar-row">
                     <div class="ff-analytics-bar-header">
                         <span class="ff-analytics-bar-name">
-                            ${escapeHtml(row.company)}
+                            <span data-finflow-no-i18n>${escapeHtml(row.company)}</span>
                         </span>
 
                         <span class="ff-analytics-bar-value">
@@ -284,10 +291,15 @@
                         </span>
                     </div>
 
-                    <div class="ff-analytics-bar-track">
+                    <div
+                        class="ff-analytics-bar-track"
+                        role="img"
+                        aria-label="${escapeHtml(label)}"
+                        title="${escapeHtml(label)}">
                         <div
                             class="ff-analytics-bar-fill ff-analytics-bar-fill-company"
-                            style="width:${width.toFixed(2)}%">
+                            style="width:${width.toFixed(2)}%"
+                            aria-hidden="true">
                         </div>
                     </div>
                 </div>
@@ -322,13 +334,13 @@
 
         const rows = Object.values(totals)
             .sort(function (a, b) {
-                return b.amount - a.amount;
+                return a.currency.localeCompare(b.currency) || b.amount - a.amount;
             });
 
         if (!rows.length) {
             target.innerHTML = emptyState(
                 'bi-pie-chart',
-                'No product data'
+                t('No product data')
             );
             return;
         }
@@ -351,12 +363,13 @@
             const fillClass = row.product
                 ? 'ff-analytics-bar-fill-product'
                 : 'ff-analytics-bar-fill-company';
+            const label = `${row.product || t('Unknown')} · ${money(row.amount, row.currency)}`;
 
             return `
                 <div class="ff-analytics-bar-row">
                     <div class="ff-analytics-bar-header">
                         <span class="ff-analytics-bar-name">
-                            ${escapeHtml(row.product)}
+                            <span data-finflow-no-i18n>${escapeHtml(row.product)}</span>
                         </span>
 
                         <span class="ff-analytics-bar-value">
@@ -364,10 +377,15 @@
                         </span>
                     </div>
 
-                    <div class="ff-analytics-bar-track">
+                    <div
+                        class="ff-analytics-bar-track"
+                        role="img"
+                        aria-label="${escapeHtml(label)}"
+                        title="${escapeHtml(label)}">
                         <div
                             class="ff-analytics-bar-fill ${fillClass}"
-                            style="width:${width.toFixed(2)}%">
+                            style="width:${width.toFixed(2)}%"
+                            aria-hidden="true">
                         </div>
                     </div>
                 </div>
@@ -382,10 +400,153 @@
             return month;
         }
 
-        return date.toLocaleDateString('uk-UA', {
+        return date.toLocaleDateString(window.finflowI18n?.getLocale?.() || 'uk-UA', {
             month: 'short',
             year: 'numeric'
         }).replace('.', '');
+    }
+
+    function compactAmount(value, currency) {
+        const locale = window.finflowI18n?.getLocale?.() || 'uk-UA';
+
+        try {
+            return new Intl.NumberFormat(locale, {
+                style: 'currency',
+                currency: normalizeCurrency(currency),
+                notation: 'compact',
+                maximumFractionDigits: 1
+            }).format(value);
+        } catch (error) {
+            return `${normalizeCurrency(currency)} ${Number(value || 0).toLocaleString(locale, {
+                notation: 'compact',
+                maximumFractionDigits: 1
+            })}`;
+        }
+    }
+
+    function renderCurrencyTrend(target, currency, monthlyRows) {
+        const monthValues = new Map(monthlyRows.map(function (row) {
+            return [row.month, row.amount];
+        }));
+        const months = [...monthValues.keys()].sort();
+
+        if (!months.length) {
+            return '';
+        }
+
+        const values = months.map(month => number(monthValues.get(month)));
+        const max = Math.max(...values, 0);
+        const chartWidth = 720;
+        const chartHeight = 252;
+        const left = 66;
+        const right = 704;
+        const top = 20;
+        const bottom = 196;
+        const plotWidth = right - left;
+        const plotHeight = bottom - top;
+        const denominator = Math.max(max, 1);
+        const points = values.map(function (value, index) {
+            const x = months.length === 1
+                ? left + plotWidth / 2
+                : left + (index / (months.length - 1)) * plotWidth;
+            const y = bottom - (value / denominator) * plotHeight;
+            return { x, y, value, month: months[index] };
+        });
+        const line = points.map(point => `${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(' ');
+        const area = `${left},${bottom} ${line} ${right},${bottom}`;
+        const grid = [0, 1, 2, 3].map(function (step) {
+            const y = top + (plotHeight / 3) * step;
+            const value = max * (1 - step / 3);
+            return `
+                <g class="ff-analytics-trend-gridline">
+                    <line x1="${left}" y1="${y.toFixed(1)}" x2="${right}" y2="${y.toFixed(1)}"></line>
+                    <text x="${left - 9}" y="${(y + 3).toFixed(1)}" text-anchor="end">${escapeHtml(compactAmount(value, currency))}</text>
+                </g>
+            `;
+        }).join('');
+        const labelIndexes = new Set();
+        const labelCount = Math.min(months.length, 6);
+
+        for (let index = 0; index < labelCount; index += 1) {
+            labelIndexes.add(labelCount === 1
+                ? Math.floor((months.length - 1) / 2)
+                : Math.round(index * (months.length - 1) / (labelCount - 1)));
+        }
+
+        const axisLabels = [...labelIndexes].map(function (index) {
+            const point = points[index];
+            return `<text class="ff-analytics-trend-month" x="${point.x.toFixed(1)}" y="${bottom + 25}" text-anchor="middle">${escapeHtml(monthLabel(point.month))}</text>`;
+        }).join('');
+        const pointMarkup = points.map(function (point) {
+            const label = `${monthLabel(point.month)} · ${money(point.value, currency)}`;
+            return `
+                <circle
+                    class="ff-analytics-trend-point"
+                    cx="${point.x.toFixed(1)}"
+                    cy="${point.y.toFixed(1)}"
+                    r="4"
+                    tabindex="0"
+                    aria-label="${escapeHtml(label)}"></circle>
+            `;
+        }).join('');
+        const heading = `${t('Monthly expenses')} · ${currency}`;
+
+        target.insertAdjacentHTML('beforeend', `
+            <section class="ff-analytics-trend-series" aria-label="${escapeHtml(heading)}">
+                <div class="ff-analytics-trend-series-head">
+                    <span class="ff-analytics-trend-legend-mark" aria-hidden="true"></span>
+                    <strong>${escapeHtml(currency)}</strong>
+                    <span>${escapeHtml(t('By month'))}</span>
+                </div>
+                <div class="ff-analytics-trend-plot">
+                    <svg viewBox="0 0 ${chartWidth} ${chartHeight}" role="img" aria-label="${escapeHtml(heading)}" preserveAspectRatio="xMidYMid meet">
+                        ${grid}
+                        <polygon class="ff-analytics-trend-area" points="${area}"></polygon>
+                        <polyline class="ff-analytics-trend-line" points="${line}"></polyline>
+                        ${pointMarkup}
+                        ${axisLabels}
+                    </svg>
+                    <div class="ff-analytics-chart-tooltip" role="status" aria-live="polite" hidden></div>
+                </div>
+            </section>
+        `);
+
+        const series = target.lastElementChild;
+        const plot = series.querySelector('.ff-analytics-trend-plot');
+        const tooltip = series.querySelector('.ff-analytics-chart-tooltip');
+
+        series.querySelectorAll('.ff-analytics-trend-point').forEach(function (point) {
+            function showTooltip() {
+                const pointBounds = point.getBoundingClientRect();
+                const plotBounds = plot.getBoundingClientRect();
+
+                tooltip.textContent = point.getAttribute('aria-label');
+                tooltip.hidden = false;
+
+                const halfTooltipWidth = tooltip.offsetWidth / 2;
+                const visibleLeft = plot.scrollLeft + halfTooltipWidth + 8;
+                const visibleRight = plot.scrollLeft + plot.clientWidth - halfTooltipWidth - 8;
+                const pointX = pointBounds.left - plotBounds.left + plot.scrollLeft + pointBounds.width / 2;
+                const tooltipX = visibleRight >= visibleLeft
+                    ? Math.min(Math.max(pointX, visibleLeft), visibleRight)
+                    : plot.scrollLeft + plot.clientWidth / 2;
+                const pointY = pointBounds.top - plotBounds.top + plot.scrollTop;
+                const showBelow = pointY < 54;
+
+                tooltip.classList.toggle('is-below', showBelow);
+                tooltip.style.left = `${tooltipX}px`;
+                tooltip.style.top = `${pointY + (showBelow ? 12 : -7)}px`;
+            }
+
+            function hideTooltip() {
+                tooltip.hidden = true;
+            }
+
+            point.addEventListener('mouseenter', showTooltip);
+            point.addEventListener('focus', showTooltip);
+            point.addEventListener('mouseleave', hideTooltip);
+            point.addEventListener('blur', hideTooltip);
+        });
     }
 
     function renderMonthly(selected) {
@@ -431,136 +592,26 @@
         if (!rows.length) {
             target.innerHTML = emptyState(
                 'bi-graph-up',
-                'No monthly data'
+                t('No monthly data')
             );
             return;
         }
 
-        const currencies = [
-            ...new Set(rows.map(function (row) {
-                return row.currency;
-            }))
-        ];
-
-        const maxByCurrency = {};
+        const currencies = [...new Set(rows.map(row => row.currency))];
+        target.classList.toggle('ff-analytics-monthly-multi', currencies.length > 1);
+        target.innerHTML = '';
 
         currencies.forEach(function (currency) {
-            maxByCurrency[currency] = Math.max(
-                ...rows
-                    .filter(function (row) {
-                        return row.currency === currency;
-                    })
-                    .map(function (row) {
-                        return row.amount;
-                    }),
-                0
+            renderCurrencyTrend(
+                target,
+                currency,
+                rows.filter(row => row.currency === currency)
             );
         });
-
-        const months = [
-            ...new Set(rows.map(function (row) {
-                return row.month;
-            }))
-        ];
-
-        target.classList.toggle(
-            'ff-analytics-monthly-multi',
-            currencies.length > 1
-        );
-
-        target.innerHTML = months.map(function (month) {
-            const monthRows = rows.filter(function (row) {
-                return row.month === month;
-            });
-
-            return `
-                <div class="ff-analytics-month-column">
-
-                    <div class="ff-analytics-month-bars">
-                        ${monthRows.map(function (row) {
-                            const max = maxByCurrency[row.currency] || 0;
-                            const height = max
-                                ? Math.max(
-                                    4,
-                                    (row.amount / max) * 100
-                                )
-                                : 0;
-
-                            return `
-                                <div class="ff-analytics-month-series">
-                                    <div
-                                        class="ff-analytics-month-value">
-                                        ${money(row.amount, row.currency)}
-                                    </div>
-
-                                    <div class="ff-analytics-month-track">
-                                        <div
-                                            class="ff-analytics-month-fill"
-                                            style="height:${height.toFixed(2)}%">
-                                        </div>
-                                    </div>
-
-                                    <div class="ff-analytics-month-currency">
-                                        ${row.currency}
-                                    </div>
-                                </div>
-                            `;
-                        }).join('')}
-                    </div>
-
-                    <div class="ff-analytics-month-label">
-                        ${escapeHtml(monthLabel(month))}
-                    </div>
-
-                </div>
-            `;
-        }).join('');
-
-        const legend = currencies.map(function (currency) {
-            return `
-                <span class="ff-analytics-chart-legend-item">
-                    <span class="ff-analytics-chart-legend-dot"></span>
-                    ${currency}
-                </span>
-            `;
-        }).join('');
-
-        target.insertAdjacentHTML(
-            'beforebegin',
-            `
-                <div class="ff-analytics-chart-legend">
-                    ${legend}
-                </div>
-            `
-        );
-
-        const previousLegend =
-            target.previousElementSibling;
-
-        if (
-            previousLegend &&
-            previousLegend.classList.contains(
-                'ff-analytics-chart-legend'
-            )
-        ) {
-            previousLegend.dataset.analyticsLegend = '1';
-        }
-    }
-
-    function cleanupMonthlyLegend() {
-        document
-            .querySelectorAll(
-                '[data-analytics-legend="1"]'
-            )
-            .forEach(function (element) {
-                element.remove();
-            });
     }
 
     function renderAnalytics(invoices) {
         const selected = filteredInvoices(invoices);
-
-        cleanupMonthlyLegend();
 
         renderKpis(selected);
         renderCompanyBars(selected);
@@ -604,6 +655,10 @@
 
         bindFilters(invoices);
         renderAnalytics(invoices);
+
+        window.addEventListener('finflow-language-changed', function () {
+            renderAnalytics(invoices);
+        });
 
         console.log(
             '[FinFlow] Analytics initialized:',

@@ -99,7 +99,7 @@
     function money(value, currency = "EUR") {
         return window.FinFlowMoney
             ? window.FinFlowMoney.formatMoney(value, currency)
-            : `${String(currency || "EUR").toUpperCase()} ${Number(value || 0).toLocaleString("uk-UA", {
+            : `${String(currency || "EUR").toUpperCase()} ${Number(value || 0).toLocaleString(window.finflowI18n?.getLocale?.() || "uk-UA", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
             })}`;
@@ -126,7 +126,7 @@
             return "—";
         }
 
-        return date.toLocaleDateString("uk-UA", {
+        return date.toLocaleDateString(window.finflowI18n?.getLocale?.() || "uk-UA", {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
@@ -912,7 +912,7 @@
             cancellationHtml = `
                 <div class="ff-invoice-cancellation">
                     <strong>${window.finflowI18n?.translateSmart("Cancellation reason") || "Cancellation reason"}:</strong>
-                    ${escapeHtml(invoice.cancellation_reason)}
+                    <span data-finflow-no-i18n>${escapeHtml(invoice.cancellation_reason)}</span>
                 </div>
             `;
         }
@@ -924,7 +924,7 @@
 
                 <div class="ff-invoice-main">
 
-                    <span class="ff-invoice-number">
+                    <span class="ff-invoice-number" data-finflow-no-i18n>
                         ${escapeHtml(
                             invoice.invoice_number ||
                             `#${invoice.id}`
@@ -935,7 +935,7 @@
                         ${formatDate(invoice.invoice_date)}
                         ${
                             invoice.completion_date
-                                ? ` · до ${formatDate(invoice.completion_date)}`
+                                ? ` · ${(window.finflowI18n?.translateSmart("until") || "until")} ${formatDate(invoice.completion_date)}`
                                 : ""
                         }
                     </span>
@@ -943,7 +943,7 @@
                 </div>
 
                 <div class="ff-invoice-product">
-                    <span class="ff-invoice-software">
+                    <span class="ff-invoice-software" data-finflow-no-i18n>
                         ${escapeHtml(software || "—")}
                     </span>
                 </div>
@@ -983,6 +983,7 @@
                             ? `
                                 <span
                                     class="ff-invoice-contract-details"
+                                    data-finflow-no-i18n
                                     title="${escapeHtml(invoice.contract_details)}">
                                     ${escapeHtml(invoice.contract_details)}
                                 </span>
@@ -1341,7 +1342,7 @@
 
             if (title) {
                 title.textContent =
-                    "Редактировать компанию";
+                    window.finflowI18n?.translateSmart("Редактировать компанию") || "Edit company";
             }
         } else {
             idInput.value = "";
@@ -1350,7 +1351,7 @@
 
             if (title) {
                 title.textContent =
-                    "Новая компания";
+                    window.finflowI18n?.translateSmart("Новая компания") || "New company";
             }
         }
 
@@ -1499,7 +1500,8 @@
             return;
         }
 
-        error.textContent = message;
+        error.textContent =
+            window.finflowI18n?.translateSmart(message) || message;
         error.classList.remove("hidden");
     }
 
@@ -1522,10 +1524,9 @@
 
         const confirmed =
             window.confirm(
-                `Удалить компанию «${company.name}»?\n\n` +
-                "Вместе с компанией будут удалены её счета, " +
-                "бюджеты и связанные уведомления.\n\n" +
-                "История аудита сохранится."
+                `${window.finflowI18n?.translateSmart("Delete company") || "Delete company"} «${company.name}»?\n\n` +
+                `${window.finflowI18n?.translateSmart("Deleting the company will also remove its invoices, budgets, and related notifications.") || "Deleting the company will also remove its invoices, budgets, and related notifications."}\n\n` +
+                (window.finflowI18n?.translateSmart("The audit history will be preserved.") || "The audit history will be preserved.")
             );
 
         if (!confirmed) {
@@ -1595,12 +1596,12 @@
 
         const value =
             window.prompt(
-                `Сколько оплачено по счёту?\n\n` +
-                `Сумма счёта: ${money(
+                `${window.finflowI18n?.translateSmart("How much has been paid on this invoice?") || "How much has been paid on this invoice?"}\n\n` +
+                `${window.finflowI18n?.translateSmart("Invoice total") || "Invoice total"}: ${money(
                     amount,
                     invoice.currency
                 )}\n` +
-                `Текущая оплата: ${money(
+                `${window.finflowI18n?.translateSmart("Current payment") || "Current payment"}: ${money(
                     currentPaid,
                     invoice.currency
                 )}`,
@@ -1748,12 +1749,11 @@
 
         const confirmed =
             window.confirm(
-                `Отменить счёт ${
+                `${window.finflowI18n?.translateSmart("Cancel invoice") || "Cancel invoice"} ${
                     invoice.invoice_number ||
                     `#${invoice.id}`
                 }?\n\n` +
-                "Счёт останется в истории, " +
-                "но будет исключён из финансовых итогов."
+                (window.finflowI18n?.translateSmart("The invoice will remain in history but be excluded from financial totals.") || "The invoice will remain in history but be excluded from financial totals.")
             );
 
         if (!confirmed) {
@@ -2282,6 +2282,19 @@
             60000
         );
     }
+
+    window.addEventListener("finflow-language-changed", () => {
+        companyCards.forEach(card => {
+            updateCompanyCardMetrics(card.id);
+            updateListRow(card.id, buildCompanyFinancial(card.id));
+        });
+
+        if (openCompanyId !== null) {
+            renderCompanyInvoices(openCompanyId);
+        }
+
+        applySearch();
+    });
 
 
     initializeCompanies();

@@ -21,7 +21,8 @@
             return `${code} 0,00`;
         }
 
-        const formatted = new Intl.NumberFormat('uk-UA', {
+        const locale = window.finflowI18n?.getLocale?.() || 'uk-UA';
+        const formatted = new Intl.NumberFormat(locale, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
         }).format(amount);

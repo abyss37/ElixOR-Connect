@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}ElixOR Connect — Обзор{% endblock %}
+{% block title %}ElixOR Connect — Overview{% endblock %}
 
 {% block page_icon %}
     <i class="bi bi-grid-1x2-fill"></i>
@@ -39,7 +39,7 @@
     <a
         href="{{ url_for('our_company_detail_page', our_company_id=active_our_company.id) }}"
         class="our-company-card our-company-dashboard-card"
-        aria-label="Открыть организацию {{ active_our_company.name }}"
+        aria-label="Open organization" data-i18n-aria-label="Open organization"
     >
         <div class="our-company-card-header">
             <div class="our-company-card-identity">
@@ -59,7 +59,7 @@
 
                 <div class="our-company-card-title">
                     <div class="our-company-name">
-                        {{ active_our_company.name }}
+                        <span data-finflow-no-i18n>{{ active_our_company.name }}</span>
                     </div>
 
                     <div class="our-company-status">
@@ -79,9 +79,9 @@
             <div class="our-company-card-primary">
                 <div class="our-company-card-field">
                     <span>Руководитель</span>
-                    <strong>{{ active_our_company.director_name }}</strong>
+                    <strong data-finflow-no-i18n>{{ active_our_company.director_name }}</strong>
                     {% if active_our_company.director_position %}
-                    <small>{{ active_our_company.director_position }}</small>
+                    <small data-finflow-no-i18n>{{ active_our_company.director_position }}</small>
                     {% endif %}
                 </div>
             </div>
@@ -92,7 +92,7 @@
     <a
         href="{{ url_for('our_company_page') }}"
         class="our-company-card our-company-dashboard-card our-company-dashboard-card-empty"
-        aria-label="Открыть раздел нашей организации"
+        aria-label="Open our organization" data-i18n-aria-label="Open our organization"
     >
         <div class="our-company-card-header">
             <div class="our-company-card-identity">
@@ -123,7 +123,7 @@
          CORE METRICS
          ===================================================== -->
 
-    <section class="ff-overview-grid" aria-label="Основные показатели">
+    <section class="ff-overview-grid" aria-label="Key metrics" data-i18n-aria-label="Key metrics">
 
         <article class="ff-overview-card">
 
@@ -240,7 +240,7 @@
 
     <section
         class="ff-overview-summary"
-        aria-label="Финансовая сводка"
+        aria-label="Financial summary" data-i18n-aria-label="Financial summary"
     >
 
         <div class="ff-overview-summary-head">
@@ -326,7 +326,7 @@
 
     <section
         class="ff-overview-links"
-        aria-label="Разделы ElixOR Connect"
+        aria-label="ElixOR Connect sections" data-i18n-aria-label="ElixOR Connect sections"
     >
 
         <a
@@ -435,6 +435,6 @@
 }
 </script>
 
-<script src="{{ url_for('static', filename='js/index.js') }}?v=20260925-2"></script>
+<script src="{{ url_for('static', filename='js/index.js') }}?v=20261017-2"></script>
 
 {% endblock %}

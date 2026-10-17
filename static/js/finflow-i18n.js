@@ -637,6 +637,8 @@
 
             "Username": "Ім'я користувача",
             "Password": "Пароль",
+            "Email": "Електронна пошта",
+            "Administrators": "Адміністратори",
             "Role": "Роль",
             "Minimum 8 characters": "Мінімум 8 символів",
             "username": "ім'я користувача",
@@ -768,6 +770,428 @@
         translations.en[key] = key;
     });
 
+    /*
+     * Legacy client-rendered strings and missing page labels.  Keeping
+     * these mappings here lets the existing DOM observer and dialog
+     * wrappers localize dynamic content without adding page-specific
+     * translation systems.
+     */
+    const legacyTranslations = {
+        "Search products": ["Пошук продуктів", "Search products"],
+        "Search companies": ["Пошук компаній", "Search companies"],
+        "Additional details used in documents": ["Додаткові реквізити для документів", "Additional details used in documents"],
+        "Bank name": ["Назва банку", "Bank name"],
+        "Contact details of the company.": ["Контактні дані компанії.", "Contact details of the company."],
+        "General Director": ["Генеральний директор", "General Director"],
+        "SWIFT / BIC": ["SWIFT / BIC", "SWIFT / BIC"],
+        "Add a new account with an initial role and password": ["Додайте обліковий запис із початковою роллю та паролем", "Add a new account with an initial role and password"],
+        "All roles": ["Усі ролі", "All roles"],
+        "Create User": ["Створити користувача", "Create User"],
+        "No users found": ["Користувачів не знайдено", "No users found"],
+        "No users match the current filters": ["Немає користувачів, що відповідають поточним фільтрам", "No users match the current filters"],
+        "Password must contain at least 8 characters": ["Пароль має містити щонайменше 8 символів", "Password must contain at least 8 characters"],
+        "Search users": ["Пошук користувачів", "Search users"],
+        "Set a new password for": ["Задати новий пароль для", "Set a new password for"],
+        "Total users": ["Усього користувачів", "Total users"],
+        "Active invoices trend": ["Динаміка активних рахунків", "Active invoices trend"],
+        "Active lines": ["Активні рядки", "Active lines"],
+        "Analysis parameters": ["Параметри аналізу", "Analysis parameters"],
+        "By month": ["За місяцями", "By month"],
+        "Expenses by company": ["Витрати за компаніями", "Expenses by company"],
+        "Expenses by product": ["Витрати за продуктами", "Expenses by product"],
+        "Financial analytics and ElixOR Connect metrics": ["Фінансова аналітика та показники ElixOR Connect", "Financial analytics and ElixOR Connect metrics"],
+        "Financial scope": ["Фінансовий контур", "Financial scope"],
+        "In financial analysis": ["У фінансовому аналізі", "In financial analysis"],
+        "Included in calculation": ["Враховано в розрахунку", "Included in calculation"],
+        "Monthly expenses": ["Щомісячні витрати", "Monthly expenses"],
+        "No expense data": ["Немає даних про витрати", "No expense data"],
+        "No monthly data": ["Немає помісячних даних", "No monthly data"],
+        "No product data": ["Немає даних про продукти", "No product data"],
+        "Product distribution": ["Розподіл за продуктами", "Product distribution"],
+        "Product line": ["Продуктова лінійка", "Product line"],
+        "Selection settings": ["Параметри вибору", "Selection settings"],
+        "TOTAL VOLUME": ["ЗАГАЛЬНИЙ ОБСЯГ", "TOTAL VOLUME"],
+        "Volume distribution": ["Розподіл обсягу", "Volume distribution"],
+        "Нет активных продуктов": ["Немає активних продуктів", "No active products"],
+        "Тип ресурса": ["Тип ресурсу", "Asset type"],
+        "Новый файл": ["Новий файл", "New file"],
+        "Предыдущий файл": ["Попередній файл", "Previous file"],
+        "Исходный формат": ["Початковий формат", "Original format"],
+        "Исходное имя": ["Початкова назва", "Original name"],
+        "Обработанный формат": ["Оброблений формат", "Processed format"],
+        "ID компании": ["ID компанії", "Company ID"],
+        "ID счёта": ["ID рахунку", "Invoice ID"],
+        "Номер счёта": ["Номер рахунку", "Invoice number"],
+        "Продукт": ["Продукт", "Product"],
+        "Сумма": ["Сума", "Amount"],
+        "Валюта": ["Валюта", "Currency"],
+        "Статус": ["Статус", "Status"],
+        "Изменения": ["Зміни", "Changes"],
+        "Логотип": ["Логотип", "Logo"],
+        "Печать": ["Печатка", "Stamp"],
+        "Подпись": ["Підпис", "Signature"],
+        "Ошибка загрузки журнала": ["Не вдалося завантажити журнал аудиту", "Failed to load audit log"],
+        "Неизвестная ошибка": ["Невідома помилка", "Unknown error"],
+        "Не удалось загрузить": ["Не вдалося завантажити", "Could not load"],
+        "Показать детали": ["Показати деталі", "Show details"],
+        "Скрыть детали": ["Приховати деталі", "Hide details"],
+        "Удалить фильтр": ["Видалити фільтр", "Remove filter"],
+        "Без компании": ["Без компанії", "No company"],
+        "Система": ["Система", "System"],
+        "Результаты с учётом выбранных фильтров": ["Результати з урахуванням вибраних фільтрів", "Results matching the selected filters"],
+        "Деактивировать этого пользователя?": ["Деактивувати цього користувача?", "Deactivate this user?"],
+        "Просроченный счёт": ["Прострочений рахунок", "Overdue invoice"],
+        "Превышение бюджета": ["Перевищення бюджету", "Budget exceeded"],
+        "Критическое состояние бюджета": ["Критичний стан бюджету", "Critical budget status"],
+        "Предупреждение по бюджету": ["Попередження щодо бюджету", "Budget warning"],
+        "Завершение договора": ["Завершення договору", "Contract ending"],
+        "Системное уведомление": ["Системне сповіщення", "System notification"],
+        "Прочитано": ["Прочитано", "Read"],
+        "Новое уведомление": ["Нове сповіщення", "New notification"],
+        "Прочитать": ["Прочитати", "Mark as read"],
+        "Удалить уведомление": ["Видалити сповіщення", "Delete notification"],
+        "Удалить это уведомление?": ["Видалити це сповіщення?", "Delete this notification?"],
+        "Не удалось удалить уведомление": ["Не вдалося видалити сповіщення", "Could not delete notification"],
+        "Не удалось удалить уведомление.": ["Не вдалося видалити сповіщення.", "Could not delete notification."],
+        "Отменён": ["Скасовано", "Cancelled"],
+        "Оплачен": ["Сплачено", "Paid"],
+        "Частично оплачен": ["Сплачено частково", "Partially paid"],
+        "Не оплачен": ["Не сплачено", "Unpaid"],
+        "Укажите причину аннулирования:": ["Укажіть причину скасування:", "Enter a cancellation reason:"],
+        "Причина обязательна.": ["Необхідно вказати причину.", "A reason is required."],
+        "Аннулировать счет?": ["Скасувати рахунок?", "Cancel this invoice?"],
+        "Ошибка аннулирования": ["Не вдалося скасувати рахунок", "Could not cancel invoice"],
+        "Ошибка сохранения": ["Не вдалося зберегти зміни", "Could not save changes"],
+        "Показати пароль": ["Показати пароль", "Show password"],
+        "Обновить журнал": ["Оновити журнал", "Refresh log"],
+        "Предыдущая страница": ["Попередня сторінка", "Previous page"],
+        "Следующая страница": ["Наступна сторінка", "Next page"],
+        "Switch language to Ukrainian": ["Переключити мову на українську", "Switch language to Ukrainian"],
+        "Switch to Ukrainian": ["Перейти на українську", "Switch to Ukrainian"],
+        "Переключити мову на англійську": ["Переключити мову на англійську", "Switch language to English"],
+        "Переключити на англійську": ["Перейти на англійську", "Switch to English"],
+        "Main navigation": ["Головна навігація", "Main navigation"],
+        "Primary navigation": ["Основна навігація", "Primary navigation"],
+        "Toggle theme": ["Перемкнути тему", "Toggle theme"],
+        "Language": ["Мова", "Language"],
+        "Close": ["Закрити", "Close"],
+        "Delete": ["Видалити", "Delete"],
+        "Change password": ["Змінити пароль", "Change password"],
+        "Deactivate": ["Деактивувати", "Deactivate"],
+        "Activate": ["Активувати", "Activate"],
+        "Filter by role": ["Фільтрувати за роллю", "Filter by role"],
+        "Form steps": ["Кроки форми", "Form steps"],
+        "Name": ["Назва", "Name"],
+        "Generator": ["Генератор", "Generator"]
+        ,"Invalid username or password.": ["Неправильне ім'я користувача або пароль.", "Invalid username or password."]
+        ,"Financial control platform": ["Платформа фінансового контролю", "Financial control platform"]
+        ,"Welcome back": ["З поверненням", "Welcome back"]
+        ,"Sign in to continue working in ElixOR Connect.": ["Увійдіть, щоб продовжити роботу в ElixOR Connect.", "Sign in to continue working in ElixOR Connect."]
+        ,"Enter username": ["Введіть ім'я користувача", "Enter username"]
+        ,"Enter password": ["Введіть пароль", "Enter password"]
+        ,"Secure access to ElixOR Connect": ["Захищений доступ до ElixOR Connect", "Secure access to ElixOR Connect"]
+        ,"Financial management system": ["Система фінансового управління", "Financial management system"]
+        ,"Show password": ["Показати пароль", "Show password"]
+        ,"Hide password": ["Приховати пароль", "Hide password"]
+        ,"Новая компания": ["Нова компанія", "New company"]
+        ,"Не удалось сохранить компанию.": ["Не вдалося зберегти компанію.", "Could not save company."]
+        ,"Не удалось удалить компанию.": ["Не вдалося видалити компанію.", "Could not delete company."]
+        ,"Введите корректную сумму.": ["Введіть коректну суму.", "Enter a valid amount."]
+        ,"Сумма оплаты не может быть отрицательной.": ["Сума оплати не може бути від'ємною.", "Payment amount cannot be negative."]
+        ,"Сумма оплаты не может превышать сумму счёта.": ["Сума оплати не може перевищувати суму рахунку.", "Payment amount cannot exceed the invoice total."]
+        ,"Не удалось обновить оплату.": ["Не вдалося оновити оплату.", "Could not update payment."]
+        ,"Причина отмены счёта:": ["Причина скасування рахунку:", "Invoice cancellation reason:"]
+        ,"Причина отмены обязательна.": ["Необхідно вказати причину скасування.", "A cancellation reason is required."]
+        ,"Не удалось отменить счёт.": ["Не вдалося скасувати рахунок.", "Could not cancel invoice."]
+        ,"Событие": ["Подія", "Event"]
+        ,"Создано": ["Створено", "Created"]
+        ,"Удалить": ["Видалити", "Delete"]
+        ,"Не удалось загрузить уведомления": ["Не вдалося завантажити сповіщення", "Could not load notifications"]
+        ,"Проверьте соединение с сервером и обновите страницу.": ["Перевірте з'єднання із сервером і перезавантажте сторінку.", "Check your connection to the server and reload the page."]
+        ,"Завершён": ["Завершено", "Ended"]
+        ,"Все контрольные события в выбранной категории отсутствуют.": ["У вибраній категорії немає контрольних подій.", "There are no control events in the selected category."]
+        ,"Счёт": ["Рахунок", "Invoice"]
+        ,"Частично оплачено": ["Сплачено частково", "Partially paid"]
+        ,"Не оплачено": ["Не сплачено", "Unpaid"]
+        ,"Search: ": ["Пошук: ", "Search: "]
+        ,"Action: ": ["Дія: ", "Action: "]
+        ,"Company: ": ["Компанія: ", "Company: "]
+        ,"User: ": ["Користувач: ", "User: "]
+        ,"Product: ": ["Продукт: ", "Product: "]
+        ,"From: ": ["Від: ", "From: "]
+        ,"To: ": ["До: ", "To: "]
+        ,"updated": ["оновлено", "updated"]
+        ,"Original file": ["Початковий файл", "Original file"]
+        ,"Previous file": ["Попередній файл", "Previous file"]
+        ,"New file": ["Новий файл", "New file"]
+        ,"Original format": ["Початковий формат", "Original format"]
+        ,"Processed as": ["Оброблено як", "Processed as"]
+        ,"Companies, contracts and financial relationships in one workspace.": ["Компанії, договори та фінансові зв'язки в одному робочому просторі.", "Companies, contracts and financial relationships in one workspace."]
+        ,"Имя пользователя используется как стабильный идентификатор в аудит-логе. IP-адреса последнего входа сохраняется для отслеживания активности учётной записи.": ["Ім'я користувача є сталим ідентифікатором у журналі аудиту. IP-адреса останнього входу зберігається для відстеження активності облікового запису.", "The username is the stable identity used in the audit log. The latest login IP is recorded for account activity tracking."]
+        ,"Live preview": ["Попередній перегляд", "Live preview"]
+        ,"Registry": ["Реєстр", "Registry"]
+        ,"Volume": ["Обсяг", "Volume"]
+        ,"PO Number": ["Номер замовлення", "PO Number"]
+        ,"Reference": ["Посилання", "Reference"]
+        ,"Contacts": ["Контакти", "Contacts"]
+        ,"Products count one": ["продукт", "product"]
+        ,"Products count few": ["продукти", "products"]
+        ,"Products count many": ["продуктів", "products"]
+        ,"Details sets one": ["набір реквізитів", "details set"]
+        ,"Details sets few": ["набори реквізитів", "details sets"]
+        ,"Details sets many": ["наборів реквізитів", "details sets"]
+        ,"product": ["продукт", "product"]
+        ,"products": ["продукти", "products"]
+        ,"details set": ["набір реквізитів", "details set"]
+        ,"details sets": ["набори реквізитів", "details sets"]
+        ,"15 днів": ["15 днів", "15 days"]
+        ,"Компания с таким названием уже существует.": ["Компанія з такою назвою вже існує.", "A company with this name already exists."]
+        ,"Код продукта обязателен.": ["Необхідно вказати код продукту.", "Product code is required."]
+        ,"Код продукта не должен превышать 50 символов.": ["Код продукту має містити не більше 50 символів.", "Product code must be 50 characters or fewer."]
+        ,"Код продукта может содержать только латинские буквы, цифры, дефис и подчёркивание.": ["Код продукту може містити лише латинські літери, цифри, дефіс і підкреслення.", "Product code may contain only Latin letters, numbers, hyphens, and underscores."]
+        ,"Название продукта обязательно.": ["Необхідно вказати назву продукту.", "Product name is required."]
+        ,"Название продукта не должно превышать 255 символов.": ["Назва продукту має містити не більше 255 символів.", "Product name must be 255 characters or fewer."]
+        ,"Описание продукта не должно превышать 10000 символов.": ["Опис продукту має містити не більше 10 000 символів.", "Product description must be 10,000 characters or fewer."]
+        ,"Продукт с таким кодом уже существует.": ["Продукт із таким кодом уже існує.", "A product with this code already exists."]
+        ,"Продукт используется в системе и не может быть удалён.": ["Продукт використовується в системі, тому його не можна видалити.", "This product is in use and cannot be deleted."]
+        ,"Неизвестный тип файла.": ["Невідомий тип файлу.", "Unknown file type."]
+        ,"Файл не выбран.": ["Файл не вибрано.", "No file was selected."]
+        ,"Допустимые форматы: PNG, JPG, JPEG, WebP.": ["Дозволені формати: PNG, JPG, JPEG, WebP.", "Allowed formats: PNG, JPG, JPEG, WebP."]
+        ,"Размер файла не должен превышать 5 МБ.": ["Розмір файлу не має перевищувати 5 МБ.", "File size must not exceed 5 MB."]
+        ,"Не удалось сохранить файл.": ["Не вдалося зберегти файл.", "Could not save the file."]
+        ,"until": ["до", "until"]
+        ,"Delete company": ["Видалити компанію", "Delete company"]
+        ,"Deleting the company will also remove its invoices, budgets, and related notifications.": ["Разом із компанією буде видалено її рахунки, бюджети та пов'язані сповіщення.", "Deleting the company will also remove its invoices, budgets, and related notifications."]
+        ,"The audit history will be preserved.": ["Історія аудиту збережеться.", "The audit history will be preserved."]
+        ,"How much has been paid on this invoice?": ["Скільки сплачено за рахунком?", "How much has been paid on this invoice?"]
+        ,"Invoice total": ["Сума рахунку", "Invoice total"]
+        ,"Current payment": ["Поточна оплата", "Current payment"]
+        ,"Cancel invoice": ["Скасувати рахунок", "Cancel invoice"]
+        ,"The invoice will remain in history but be excluded from financial totals.": ["Рахунок залишиться в історії, але його буде виключено з фінансових підсумків.", "The invoice will remain in history but be excluded from financial totals."]
+        ,"Change role of user to": ["Змінити роль користувача на", "Change role of user to"]
+        ,"Resource not found.": ["Ресурс не знайдено.", "Resource not found."]
+        ,"Access denied.": ["Доступ заборонено.", "Access denied."]
+        ,"An internal server error occurred.": ["Сталася внутрішня помилка сервера.", "An internal server error occurred."]
+        ,"Invoice not found": ["Рахунок не знайдено", "Invoice not found"]
+        ,"Cancelled invoices cannot be edited.": ["Скасовані рахунки не можна редагувати.", "Cancelled invoices cannot be edited."]
+        ,"Cancelled invoices cannot have their payment status changed.": ["Статус оплати скасованих рахунків не можна змінити.", "Cancelled invoices cannot have their payment status changed."]
+        ,"paid_amount_eur is required": ["Потрібно вказати суму оплати.", "Payment amount is required."]
+        ,"Payment information unchanged.": ["Дані про оплату не змінилися.", "Payment information unchanged."]
+        ,"Payment information updated.": ["Дані про оплату оновлено.", "Payment information updated."]
+        ,"Invoice is already cancelled.": ["Рахунок уже скасовано.", "Invoice is already cancelled."]
+        ,"Cancellation reason must be 2000 characters or less.": ["Причина скасування має містити не більше 2 000 символів.", "Cancellation reason must be 2,000 characters or fewer."]
+        ,"Could not cancel invoice.": ["Не вдалося скасувати рахунок.", "Could not cancel invoice."]
+        ,"Notification not found": ["Сповіщення не знайдено", "Notification not found"]
+        ,"Could not create company.": ["Не вдалося створити компанію.", "Could not create company."]
+        ,"Could not update company.": ["Не вдалося оновити компанію.", "Could not update company."]
+        ,"Could not delete company.": ["Не вдалося видалити компанію.", "Could not delete company."]
+        ,"Could not create product.": ["Не вдалося створити продукт.", "Could not create product."]
+        ,"Could not update product.": ["Не вдалося оновити продукт.", "Could not update product."]
+        ,"Could not archive product.": ["Не вдалося архівувати продукт.", "Could not archive product."]
+        ,"Could not delete product.": ["Не вдалося видалити продукт.", "Could not delete product."]
+        ,"Could not update payment information.": ["Не вдалося оновити дані про оплату.", "Could not update payment information."]
+        ,"Could not load notifications.": ["Не вдалося завантажити сповіщення.", "Could not load notifications."]
+        ,"Could not update notification.": ["Не вдалося оновити сповіщення.", "Could not update notification."]
+        ,"Could not delete notification.": ["Не вдалося видалити сповіщення.", "Could not delete notification."]
+        ,"Could not mark notifications as read.": ["Не вдалося позначити сповіщення прочитаними.", "Could not mark notifications as read."]
+        ,"Unsupported currency": ["Непідтримувана валюта", "Unsupported currency"]
+        ,"Invalid monetary value": ["Некоректне грошове значення.", "Invalid monetary value"]
+        ,"Paid amount cannot be negative": ["Сума оплати не може бути від’ємною.", "Paid amount cannot be negative"]
+        ,"Paid amount cannot exceed invoice total": ["Сума оплати не може перевищувати загальну суму рахунку.", "Paid amount cannot exceed invoice total"]
+        ,"Dates must use YYYY-MM-DD format": ["Дати мають бути у форматі YYYY-MM-DD.", "Dates must use YYYY-MM-DD format"]
+        ,"Company name is required": ["Необхідно вказати назву компанії.", "Company name is required"]
+        ,"Unknown software product": ["Невідомий програмний продукт.", "Unknown software product"]
+        ,"Total amount must be greater than 0": ["Загальна сума має бути більшою за 0.", "Total amount must be greater than 0"]
+        ,"Invalid budget product or amount": ["Некоректний продукт або сума бюджету.", "Invalid budget product or amount"]
+        ,"Invalid company budget data.": ["Некоректні дані бюджету компанії.", "Invalid company budget data."]
+        ,"Invalid contract completion date or currency.": ["Некоректна дата завершення договору або валюта.", "Invalid contract completion date or currency."]
+        ,"Invalid audit log filters.": ["Некоректні параметри фільтрації журналу аудиту.", "Invalid audit log filters."]
+        ,"Файл не является корректным изображением.": ["Файл не є коректним зображенням.", "The file is not a valid image."]
+        ,"Изображение имеет некорректные размеры.": ["Зображення має некоректні розміри.", "The image dimensions are invalid."]
+        ,"Invalid company_id": ["Некоректний ідентифікатор компанії.", "Invalid company_id"]
+        ,"Invalid user_id": ["Некоректний ідентифікатор користувача.", "Invalid user_id"]
+        ,"Invalid software product": ["Некоректний програмний продукт.", "Invalid software product"]
+        ,"Invalid date_from. Expected YYYY-MM-DD.": ["Некоректна дата початку. Очікується формат YYYY-MM-DD.", "Invalid date_from. Expected YYYY-MM-DD."]
+        ,"Invalid date_to. Expected YYYY-MM-DD.": ["Некоректна дата завершення. Очікується формат YYYY-MM-DD.", "Invalid date_to. Expected YYYY-MM-DD."]
+        ,"Обзор": ["Огляд", "Dashboard"]
+        ,"Финансовый контроль и состояние системы": ["Фінансовий контроль і стан системи", "Financial control and system status"]
+        ,"Активна": ["Активна", "Active"]
+        ,"Руководитель": ["Керівник", "Director"]
+        ,"Организация ещё не создана": ["Організацію ще не створено", "Organization has not been created"]
+        ,"Не создана": ["Не створено", "Not created"]
+        ,"Компании": ["Компанії", "Companies"]
+        ,"зарегистрировано": ["зареєстровано", "registered"]
+        ,"Продукты": ["Продукти", "Products"]
+        ,"Общий бюджет": ["Загальний бюджет", "Total budget"]
+        ,"по валютам": ["за валютами", "by currency"]
+        ,"Счета": ["Рахунки", "Invoices"]
+        ,"активных": ["активних", "active"]
+        ,"активный счёт": ["активний рахунок", "active invoice"]
+        ,"активных счетов": ["активних рахунків", "active invoices"]
+        ,"Активные счета": ["Активні рахунки", "Active invoices"]
+        ,"Оплачено": ["Сплачено", "Paid"]
+        ,"Остаток бюджета": ["Залишок бюджету", "Remaining budget"]
+        ,"Использование": ["Використання", "Utilization"]
+        ,"Редактировать компанию": ["Редагувати компанію", "Edit company"]
+        ,"Название компании обязательно.": ["Необхідно вказати назву компанії.", "Company name is required."]
+        ,"Название компании не должно превышать 255 символов.": ["Назва компанії має містити не більше 255 символів.", "Company name must be 255 characters or fewer."]
+        ,"COMPANY": ["КОМПАНІЯ", "COMPANY"]
+        ,"К счетам": ["До рахунків", "Back to invoices"]
+        ,"Скачать PDF": ["Завантажити PDF", "Download PDF"]
+        ,"Архив счетов": ["Архів рахунків", "Invoice archive"]
+        ,"Поиск счета...": ["Пошук рахунку...", "Search invoices..."]
+        ,"Все": ["Усі", "All"]
+        ,"Счета не найдены": ["Рахунків не знайдено", "No invoices found"]
+        ,"Измените поисковый запрос или фильтр.": ["Змініть пошуковий запит або фільтр.", "Change the search query or filter."]
+        ,"Выберите счет": ["Оберіть рахунок", "Select an invoice"]
+        ,"Нет выбранного счета": ["Рахунок не вибрано", "No invoice selected"]
+        ,"Выберите документ из архива, чтобы открыть его предпросмотр.": ["Оберіть документ в архіві, щоб відкрити попередній перегляд.", "Select a document from the archive to preview it."]
+        ,"Реквизиты пока не заполнены": ["Реквізити ще не заповнено", "Organization details have not been added yet"]
+        ,"Организация не указана": ["Організацію не вказано", "No organization specified"]
+        ,"Юридический адрес:": ["Юридична адреса:", "Legal address:"]
+        ,"Рег. номер:": ["Реєстраційний номер:", "Registration number:"]
+        ,"ИНН:": ["ІПН:", "Tax ID:"]
+        ,"Банк:": ["Банк:", "Bank:"]
+        ,"Счёт отменён": ["Рахунок скасовано", "Invoice cancelled"]
+        ,"Причина отмены не указана.": ["Причину скасування не вказано.", "No cancellation reason provided."]
+        ,"Invoice date": ["Дата рахунку", "Invoice date"]
+        ,"Completion date": ["Дата завершення", "Completion date"]
+        ,"PO number": ["Номер замовлення", "PO number"]
+        ,"Payment status": ["Статус оплати", "Payment status"]
+        ,"Outstanding": ["До сплати", "Outstanding"]
+        ,"Subtotal": ["Проміжний підсумок", "Subtotal"]
+        ,"FILTERS": ["ФІЛЬТРИ", "FILTERS"]
+        ,"COMPANY ANALYSIS": ["АНАЛІЗ ЗА КОМПАНІЯМИ", "COMPANY ANALYSIS"]
+        ,"PRODUCT ANALYSIS": ["АНАЛІЗ ЗА ПРОДУКТАМИ", "PRODUCT ANALYSIS"]
+        ,"TIMELINE": ["ДИНАМІКА", "TIMELINE"]
+        ,"MONTHLY": ["ЩОМІСЯЦЯ", "MONTHLY"]
+        ,"SYSTEM ACTIVITY": ["АКТИВНІСТЬ СИСТЕМИ", "SYSTEM ACTIVITY"]
+        ,"Журнал аудита": ["Журнал аудиту", "Audit log"]
+        ,"История действий и изменений в системе": ["Історія дій і змін у системі", "History of system activity and changes"]
+        ,"Контроль действий системы": ["Контроль дій системи", "System activity overview"]
+        ,"События": ["Події", "Events"]
+        ,"Сбросить фильтры": ["Скинути фільтри", "Reset filters"]
+        ,"Все действия": ["Усі дії", "All actions"]
+        ,"Все компании": ["Усі компанії", "All companies"]
+        ,"Все пользователи": ["Усі користувачі", "All users"]
+        ,"Все продукты": ["Усі продукти", "All products"]
+        ,"Дата / время": ["Дата / час", "Date / time"]
+        ,"Действие": ["Дія", "Action"]
+        ,"Компания": ["Компанія", "Company"]
+        ,"Пользователь": ["Користувач", "User"]
+        ,"Описание": ["Опис", "Description"]
+        ,"Показывать": ["Показувати", "Show"]
+        ,"Оповещения": ["Сповіщення", "Notifications"]
+        ,"NOTIFICATION CENTER": ["ЦЕНТР СПОВІЩЕНЬ", "NOTIFICATION CENTER"]
+        ,"уведомлений": ["сповіщень", "notifications"]
+        ,"Прочитать все": ["Прочитати всі", "Mark all as read"]
+        ,"Непрочитанные": ["Непрочитані", "Unread"]
+        ,"Критические": ["Критичні", "Critical"]
+        ,"Предупреждения": ["Попередження", "Warnings"]
+        ,"EVENTS": ["ПОДІЇ", "EVENTS"]
+        ,"Центр уведомлений": ["Центр сповіщень", "Notification center"]
+        ,"Все уведомления": ["Усі сповіщення", "All notifications"]
+        ,"Загрузка уведомлений": ["Завантаження сповіщень", "Loading notifications"]
+        ,"Получаем актуальное состояние системы…": ["Отримуємо актуальний стан системи…", "Loading the latest system status…"]
+        ,"Уведомлений нет": ["Сповіщень немає", "No notifications"]
+        ,"Непрочитанных уведомлений нет": ["Немає непрочитаних сповіщень", "No unread notifications"]
+        ,"Выдан": ["Виставлено", "Issued"]
+        ,"Готов к печати": ["Готовий до друку", "Ready to print"]
+        ,"Генератор": ["Генератор", "Generator"]
+        ,"Системные события, финансовые риски и контрольные уведомления": ["Системні події, фінансові ризики та контрольні сповіщення", "System events, financial risks and control notifications"]
+        ,"Не удалось загрузить журнал": ["Не вдалося завантажити журнал аудиту", "Could not load the audit log"]
+        ,"Текущее состояние": ["Поточний стан", "Current status"]
+        ,"Договоры и отношения": ["Договори та відносини", "Contracts and relationships"]
+        ,"Расходы и лимиты": ["Витрати та ліміти", "Expenses and limits"]
+        ,"Счета и оплаты": ["Рахунки та оплати", "Invoices and payments"]
+        ,"Показатели и динамика": ["Показники та динаміка", "Metrics and trends"]
+        ,"Системное событие": ["Системна подія", "System event"]
+        ,"Критично": ["Критично", "Critical"]
+        ,"Внимание": ["Увага", "Warning"]
+        ,"Информация": ["Інформація", "Information"]
+        ,"Платформа финансового контроля": ["Платформа фінансового контролю", "Financial control platform"]
+        ,"Просмотр, печать и серверное формирование PDF существующих счетов.": ["Перегляд, друк і формування PDF на сервері для наявних рахунків.", "Preview, print and server-side PDF generation for existing invoices."]
+        ,"Фильтры журнала": ["Фільтри журналу", "Audit log filters"]
+        ,"Настройте выборку событий": ["Налаштуйте вибірку подій", "Configure the event selection"]
+        ,"Очистить поиск": ["Очистити пошук", "Clear search"]
+        ,"Событие, описание, ID...": ["Подія, опис, ID...", "Event, description, ID..."]
+        ,"Поиск": ["Пошук", "Search"]
+        ,"От даты": ["Від дати", "From date"]
+        ,"До даты": ["До дати", "To date"]
+        ,"Применить": ["Застосувати", "Apply"]
+        ,"Сбросить": ["Скинути", "Reset"]
+        ,"События системы": ["Події системи", "System events"]
+        ,"Последние действия в системе": ["Останні дії в системі", "Latest system activity"]
+        ,"Всего событий": ["Усього подій", "Total events"]
+        ,"На странице": ["На сторінці", "On this page"]
+        ,"Текущий статус": ["Поточний стан", "Current status"]
+        ,"Отслеживайте изменения, операции пользователей и финансовые события в едином журнале ElixOR Connect.": ["Відстежуйте зміни, дії користувачів і фінансові події в єдиному журналі ElixOR Connect.", "Track changes, user actions and financial events in one ElixOR Connect log."]
+        ,"Дата начала не может быть позже даты окончания.": ["Дата початку не може бути пізніше дати завершення.", "The start date cannot be after the end date."]
+        ,"Готово": ["Готово", "Ready"]
+        ,"Ошибка": ["Помилка", "Error"]
+        ,"Загрузка": ["Завантаження", "Loading"]
+        ,"Нет совпадений": ["Збігів не знайдено", "No matches"]
+        ,"Загрузка журнала": ["Завантаження журналу", "Loading audit log"]
+        ,"Получаем события из базы данных...": ["Отримуємо події з бази даних...", "Loading events from the database..."]
+        ,"События не найдены": ["Подій не знайдено", "No events found"]
+        ,"Измените параметры фильтрации или сбросьте фильтры.": ["Змініть параметри фільтрації або скиньте фільтри.", "Change the filters or reset them."]
+        ,"Проверьте соединение с сервером.": ["Перевірте з'єднання із сервером.", "Check your connection to the server."]
+        ,"Повторить": ["Повторити", "Retry"]
+        ,"Открыть организацию": ["Відкрити організацію", "Open organization"]
+        ,"Открыть раздел нашей организации": ["Відкрити розділ нашої організації", "Open our organization"]
+        ,"Основные показатели": ["Основні показники", "Key metrics"]
+        ,"Финансовая сводка": ["Фінансовий підсумок", "Financial summary"]
+        ,"Разделы ElixOR Connect": ["Розділи ElixOR Connect", "ElixOR Connect sections"]
+        ,"из": ["із", "of"]
+        ,"страница": ["сторінка", "page"]
+        ,"All companies": ["Усі компанії", "All companies"]
+        ,"All products": ["Усі продукти", "All products"]
+        ,"Create": ["Створити", "Create"]
+        ,"Update": ["Оновити", "Update"]
+        ,"Cancel": ["Скасувати", "Cancel"]
+        ,"Login": ["Вхід", "Login"]
+        ,"Logout": ["Вихід", "Logout"]
+        ,"COMPANIES": ["КОМПАНІЇ", "COMPANIES"]
+        ,"PRODUCTS": ["ПРОДУКТИ", "PRODUCTS"]
+        ,"INVOICES": ["РАХУНКИ", "INVOICES"]
+        ,"Software License": ["Ліцензія на програмне забезпечення", "Software License"]
+        ,"Invoice": ["Рахунок", "Invoice"]
+        ,"Description": ["Опис", "Description"]
+        ,"Amount": ["Сума", "Amount"]
+        ,"Notes": ["Примітки", "Notes"]
+        ,"Paid": ["Сплачено", "Paid"]
+        ,"Total": ["Усього", "Total"]
+        ,"Product": ["Продукт", "Product"]
+        ,"Currency": ["Валюта", "Currency"]
+        ,"Terms & conditions": ["Умови", "Terms & conditions"]
+        ,"Open organization": ["Відкрити організацію", "Open organization"]
+        ,"Open our organization": ["Відкрити нашу організацію", "Open our organization"]
+        ,"Key metrics": ["Основні показники", "Key metrics"]
+        ,"Financial summary": ["Фінансовий підсумок", "Financial summary"]
+        ,"ElixOR Connect sections": ["Розділи ElixOR Connect", "ElixOR Connect sections"]
+        ,"Print": ["Друк", "Print"]
+        ,"Бюджеты": ["Бюджети", "Budgets"]
+        ,"Аналитика": ["Аналітика", "Analytics"]
+        ,"счетов": ["рахунків", "invoices"]
+        ,"0 счетов": ["0 рахунків", "0 invoices"]
+        ,"Выберите документ из архива,": ["Оберіть документ в архіві,", "Select a document from the archive,"]
+        ,"чтобы открыть его предпросмотр.": ["щоб відкрити попередній перегляд.", "to open its preview."]
+        ,"ElixOR Connect — Overview": ["ElixOR Connect — Огляд", "ElixOR Connect — Overview"]
+        ,"Invoice Generator — ElixOR Connect": ["Генератор рахунків — ElixOR Connect", "Invoice Generator — ElixOR Connect"]
+        ,"Audit Log — ElixOR Connect": ["Журнал аудиту — ElixOR Connect", "Audit Log — ElixOR Connect"]
+        ,"Notifications — ElixOR Connect": ["Сповіщення — ElixOR Connect", "Notifications — ElixOR Connect"]
+        ,"Companies — ElixOR Connect": ["Компанії — ElixOR Connect", "Companies — ElixOR Connect"]
+        ,"Analytics — ElixOR Connect": ["Аналітика — ElixOR Connect", "Analytics — ElixOR Connect"]
+        ,"Unknown": ["Невідомо", "Unknown"]
+        ,"Entity": ["Об'єкт", "Entity"]
+    };
+
+    Object.keys(legacyTranslations).forEach(function (source) {
+        const [ukrainian, english] = legacyTranslations[source];
+        translations.uk[source] = ukrainian;
+        translations.en[source] = english;
+    });
+
 
     /* =========================================================
        LANGUAGE
@@ -775,6 +1199,8 @@
 
     let sessionLanguage = null;
     let sessionTheme = null;
+    let languagePersistenceUnavailable = false;
+    let themePersistenceUnavailable = false;
 
     function readPreference(key) {
         try {
@@ -794,6 +1220,10 @@
     }
 
     function getLang() {
+        if (languagePersistenceUnavailable && sessionLanguage) {
+            return sessionLanguage;
+        }
+
         const stored = readPreference("finflow-language");
 
         if (stored === "uk" || stored === "en") {
@@ -815,12 +1245,17 @@
         return getLang();
     }
 
+    function getLocale() {
+        return getLang() === "en" ? "en-GB" : "uk-UA";
+    }
+
 
     function setLang(lang) {
         lang = lang === "en" ? "en" : "uk";
 
         sessionLanguage = lang;
-        writePreference("finflow-language", lang);
+        languagePersistenceUnavailable =
+            !writePreference("finflow-language", lang);
 
         applyLanguage(lang);
 
@@ -839,7 +1274,10 @@
     const ukrainianToEnglish = {};
 
     Object.keys(translations.uk).forEach(function (english) {
-        ukrainianToEnglish[translations.uk[english]] = english;
+        const ukrainian = translations.uk[english];
+        if (!Object.prototype.hasOwnProperty.call(ukrainianToEnglish, ukrainian)) {
+            ukrainianToEnglish[ukrainian] = english;
+        }
     });
 
 
@@ -850,6 +1288,21 @@
         lang = lang || getLang();
 
         const text = String(value);
+        const normalizedText = text.replace(/\s+/g, " ").trim();
+
+        if (
+            translations[lang] &&
+            Object.prototype.hasOwnProperty.call(translations[lang], text)
+        ) {
+            return translations[lang][text];
+        }
+
+        if (normalizedText !== text && translations[lang]) {
+            const normalizedKey = Object.keys(translations[lang]).find(function (key) {
+                return key.replace(/\s+/g, " ").trim() === normalizedText;
+            });
+            if (normalizedKey) return translations[lang][normalizedKey];
+        }
 
         if (lang === "uk") {
 
@@ -901,6 +1354,11 @@
 
 
         if (lang === "uk") {
+
+            result = result.replace(
+                /Invoice (.+?) is (\d+) day(?:s)? overdue\. ([€$₴][\d,.]+) outstanding\./gi,
+                "Рахунок $1 прострочено на $2 дн. Не сплачено: $3."
+            );
 
             result = result.replace(
                 /\bISSUED\b/gi,
@@ -963,13 +1421,23 @@
             );
 
             result = result.replace(
-                /Budget exceeded by €([\d,.]+)/gi,
-                "Бюджет перевищено на €$1"
+                /Budget exceeded by ([€$₴])([\d,.]+)/gi,
+                "Бюджет перевищено на $1$2"
             );
 
             result = result.replace(
-                /([\d.]+)% of the budget has been invoiced\. €([\d,.]+) remains\./gi,
-                "Виставлено $1% бюджету. Залишок: €$2."
+                /([\d,.]+)% of the budget has been invoiced\. ([€$₴])([\d,.]+) remains\./gi,
+                "Виставлено $1% бюджету. Залишок: $2$3."
+            );
+
+            result = result.replace(
+                /Contract ends in (\d+) day(?:s)?\./gi,
+                "До завершення договору $1 дн."
+            );
+
+            result = result.replace(
+                /Invoice (.+?) is (\d+) day(?:s)? overdue\. ([€$₴][\d,.]+) outstanding\./gi,
+                "Рахунок $1 прострочено на $2 дн. Не сплачено: $3."
             );
 
             result = result.replace(
@@ -980,6 +1448,11 @@
 
 
         if (lang === "en") {
+
+            result = result.replace(
+                /Рахунок (.+?) прострочено на (\d+) дн\.? Не сплачено: ([€$₴][\d,.]+)\./gi,
+                "Invoice $1 is $2 days overdue. $3 outstanding."
+            );
 
             result = result.replace(
                 /\bВИСТАВЛЕНО\b/gi,
@@ -1042,18 +1515,23 @@
             );
 
             result = result.replace(
-                /Бюджет перевищено на €([\d,.]+)/gi,
-                "Budget exceeded by €$1"
+                /Бюджет перевищено на ([€$₴])([\d,.]+)/gi,
+                "Budget exceeded by $1$2"
             );
 
             result = result.replace(
-                /Виставлено ([\d.]+)% бюджету\. Залишок: €([\d,.]+)\./gi,
-                "$1% of the budget has been invoiced. €$2 remains."
+                /Виставлено ([\d,.]+)% бюджету\. Залишок: ([€$₴])([\d,.]+)\./gi,
+                "$1% of the budget has been invoiced. $2$3 remains."
             );
 
             result = result.replace(
-                /До завершення договору (\d+) дн/gi,
-                "Contract ends in $1 day"
+                /До завершення договору (\d+) дн\.?/gi,
+                "Contract ends in $1 days."
+            );
+
+            result = result.replace(
+                /Рахунок (.+?) прострочено на (\d+) дн\.? Не сплачено: ([€$₴][\d,.]+)\./gi,
+                "Invoice $1 is $2 days overdue. $3 outstanding."
             );
         }
 
@@ -1067,6 +1545,7 @@
        ========================================================= */
 
     const originalTextNodes = new WeakMap();
+    const originalDocumentTitle = document.title;
 
 
     function sourceText(node) {
@@ -1249,6 +1728,31 @@
                     : key;
         });
 
+        root.querySelectorAll("[data-i18n-aria-label]").forEach(function (el) {
+            const key = el.dataset.i18nAriaLabel;
+            const translated =
+                lang === "uk"
+                    ? (translations.uk[key] || key)
+                    : (translations.en[key] || key);
+
+            el.setAttribute("aria-label", translated);
+        });
+
+        root.querySelectorAll("[data-finflow-date]").forEach(function (el) {
+            const value = el.dataset.finflowDate;
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return;
+
+            const options = el.hasAttribute("data-finflow-date-time")
+                ? { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }
+                : { year: "numeric", month: "2-digit", day: "2-digit" };
+
+            el.textContent = new Intl.DateTimeFormat(
+                lang === "en" ? "en-GB" : "uk-UA",
+                options
+            ).format(date);
+        });
+
 
         /* Explicit data-i18n-value support */
 
@@ -1402,6 +1906,8 @@
         document.documentElement.lang =
             lang;
 
+        document.title = translateSmart(originalDocumentTitle, lang);
+
 
         translateDom(
             document.body,
@@ -1539,6 +2045,10 @@
     const THEME_STORAGE_KEY = "finflow-theme";
 
     function getTheme() {
+        if (themePersistenceUnavailable && sessionTheme) {
+            return sessionTheme;
+        }
+
         const saved = readPreference(THEME_STORAGE_KEY);
 
         if (saved === "light" || saved === "dark") {
@@ -1556,7 +2066,8 @@
         document.documentElement.setAttribute("data-theme", nextTheme);
 
         if (persist) {
-            writePreference(THEME_STORAGE_KEY, nextTheme);
+            themePersistenceUnavailable =
+                !writePreference(THEME_STORAGE_KEY, nextTheme);
         }
 
         window.dispatchEvent(
@@ -1591,6 +2102,7 @@
 
         getLang,
         getLanguage,
+        getLocale,
         translate,
         translateSmart,
         setLang,

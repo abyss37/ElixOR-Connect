@@ -267,7 +267,12 @@
                 <div class="ff-product-created">
                     <span data-i18n="Created">Created</span>
                     <strong>
-                        {{ product.created_at.strftime('%d.%m.%Y') if product.created_at else '—' }}
+                        {% if product.created_at %}
+                        <time datetime="{{ product.created_at.isoformat() }}"
+                              data-finflow-date="{{ product.created_at.isoformat() }}">
+                            {{ product.created_at.strftime('%d.%m.%Y') }}
+                        </time>
+                        {% else %}—{% endif %}
                     </strong>
                 </div>
 
@@ -508,6 +513,6 @@
 ]
 </script>
 
-<script src="{{ url_for('static', filename='js/products.js') }}?v=20260929-7"></script>
+<script src="{{ url_for('static', filename='js/products.js') }}?v=20261017-1"></script>
 
 {% endblock %}

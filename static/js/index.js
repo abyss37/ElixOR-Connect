@@ -18,6 +18,17 @@
         return document.getElementById(id);
     }
 
+    function t(value) {
+        return window.finflowI18n?.translateSmart(value) || value;
+    }
+
+    function escapeHtml(value) {
+        return String(value ?? '').replace(/[&<>"']/g, char => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;',
+            '"': '&quot;', "'": '&#39;'
+        })[char]);
+    }
+
 
     function canonicalCurrency(value) {
         return window.FinFlowMoney
@@ -29,7 +40,7 @@
     function money(value, currency) {
         return window.FinFlowMoney
             ? window.FinFlowMoney.formatMoney(value, canonicalCurrency(currency))
-            : `${canonicalCurrency(currency)} ${Number(value || 0).toLocaleString('uk-UA', {
+            : `${canonicalCurrency(currency)} ${Number(value || 0).toLocaleString(window.finflowI18n?.getLocale?.() || 'uk-UA', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             })}`;
@@ -37,7 +48,7 @@
 
 
     function percent(value) {
-        return `${Number(value || 0).toLocaleString('uk-UA', {
+        return `${Number(value || 0).toLocaleString(window.finflowI18n?.getLocale?.() || 'uk-UA', {
             minimumFractionDigits: 1,
             maximumFractionDigits: 1
         })}%`;
@@ -213,9 +224,13 @@
             products.textContent = String(activeProducts.length);
 
             if (productMeta) {
-                productMeta.textContent = activeProducts.length
-                    ? activeProducts.map(product => product.name).filter(Boolean).join('\n')
-                    : 'Нет активных продуктов';
+                productMeta.innerHTML = activeProducts.length
+                    ? activeProducts
+                        .map(product => product.name)
+                        .filter(Boolean)
+                        .map(name => `<span data-finflow-no-i18n>${escapeHtml(name)}</span>`)
+                        .join('<br>')
+                    : escapeHtml(t('Нет активных продуктов'));
             }
         }
 
@@ -245,8 +260,8 @@
         if (invoiceMeta) {
             invoiceMeta.textContent =
                 active.length === 1
-                    ? 'активный счёт'
-                    : 'активных счетов';
+                    ? t('активный счёт')
+                    : t('активных счетов');
         }
 
 
@@ -297,6 +312,10 @@
         const data = getData();
 
         renderOverview(data);
+
+        window.addEventListener('finflow-language-changed', () => {
+            renderOverview(data);
+        });
 
         console.info(
             '[FinFlow] Overview initialized'

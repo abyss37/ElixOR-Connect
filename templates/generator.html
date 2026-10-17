@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Генератор — ElixOR Connect{% endblock %}
+{% block title %}Invoice Generator — ElixOR Connect{% endblock %}
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/generator.css') }}?v=20261017-1">
@@ -37,7 +37,7 @@
                 id="generatorPrintButton"
             >
                 <i class="bi bi-printer"></i>
-                <span>Печать</span>
+                <span data-i18n="Print">Print</span>
             </button>
 
             <button
@@ -92,6 +92,7 @@
                         type="button"
                         class="ff-generator-filter"
                         data-filter="{{ product.code }}"
+                        data-finflow-no-i18n
                         aria-label="{{ product.name or product.code }}"
                         title="{{ product.name or product.code }}"
                     >
@@ -174,5 +175,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/generator.js') }}?v=20260925-5"></script>
+<script src="{{ url_for('static', filename='js/generator.js') }}?v=20261017-2"></script>
 {% endblock %}

@@ -24,6 +24,10 @@
 
     const $ = (id) => document.getElementById(id);
 
+    function t(value) {
+        return window.finflowI18n?.translateSmart(value) || value;
+    }
+
     function escapeHtml(value) {
         return String(value ?? '')
             .replace(/&/g, '&amp;')
@@ -68,9 +72,11 @@
             changes: 'Изменения'
         };
 
-        return labels[key] || String(key)
+        const label = labels[key] || String(key)
             .replace(/_/g, ' ')
             .replace(/\b\w/g, char => char.toUpperCase());
+
+        return t(label);
     }
 
     function formatDetailValue(value) {
@@ -121,21 +127,24 @@
         const action = String(item.action || '').toUpperCase();
 
         const assetLabels = {
-            logo: 'Логотип',
-            stamp: 'Печать',
-            signature: 'Подпись'
+            logo: 'Logo',
+            stamp: 'Stamp',
+            signature: 'Signature'
         };
 
         if (action === 'OUR_COMPANY_ASSET_UPDATED' && data.asset_type) {
-            const assetName =
-                assetLabels[String(data.asset_type).toLowerCase()] ||
-                formatDetailValue(data.asset_type);
+            const updatedLabel =
+                window.finflowI18n?.translateSmart("updated") || "updated";
+            const assetLabel = assetLabels[String(data.asset_type).toLowerCase()];
+            const assetName = assetLabel
+                ? (window.finflowI18n?.translateSmart(assetLabel) || assetLabel)
+                : formatDetailValue(data.asset_type);
 
             return `
                 <div class="ff-audit-detail-content">
                     <div class="ff-audit-detail-title">
                         <i class="bi bi-arrow-repeat"></i>
-                        ${escapeHtml(assetName)} обновлён
+                        ${escapeHtml(assetName)} ${escapeHtml(updatedLabel)}
                     </div>
 
                     <div class="ff-audit-detail-grid">
@@ -143,8 +152,8 @@
                             data.original_filename
                                 ? `
                                     <div class="ff-audit-detail-item">
-                                        <span>Исходный файл</span>
-                                        <strong>${escapeHtml(data.original_filename)}</strong>
+                        <span>${window.finflowI18n?.translateSmart("Original file") || "Original file"}</span>
+                                        <strong data-finflow-no-i18n>${escapeHtml(data.original_filename)}</strong>
                                     </div>
                                 `
                                 : ''
@@ -154,8 +163,8 @@
                             data.old_filename
                                 ? `
                                     <div class="ff-audit-detail-item">
-                                        <span>Предыдущий файл</span>
-                                        <strong>${escapeHtml(data.old_filename)}</strong>
+                                        <span>${window.finflowI18n?.translateSmart("Previous file") || "Previous file"}</span>
+                                        <strong data-finflow-no-i18n>${escapeHtml(data.old_filename)}</strong>
                                     </div>
                                 `
                                 : ''
@@ -165,8 +174,8 @@
                             data.new_filename
                                 ? `
                                     <div class="ff-audit-detail-item">
-                                        <span>Новый файл</span>
-                                        <strong>${escapeHtml(data.new_filename)}</strong>
+                                        <span>${window.finflowI18n?.translateSmart("New file") || "New file"}</span>
+                                        <strong data-finflow-no-i18n>${escapeHtml(data.new_filename)}</strong>
                                     </div>
                                 `
                                 : ''
@@ -176,8 +185,8 @@
                             data.original_extension
                                 ? `
                                     <div class="ff-audit-detail-item">
-                                        <span>Исходный формат</span>
-                                        <strong>${escapeHtml(String(data.original_extension).toUpperCase())}</strong>
+                                        <span>${window.finflowI18n?.translateSmart("Original format") || "Original format"}</span>
+                                        <strong data-finflow-no-i18n>${escapeHtml(String(data.original_extension).toUpperCase())}</strong>
                                     </div>
                                 `
                                 : ''
@@ -187,8 +196,8 @@
                             data.processed_format
                                 ? `
                                     <div class="ff-audit-detail-item">
-                                        <span>Обработан как</span>
-                                        <strong>${escapeHtml(String(data.processed_format).toUpperCase())}</strong>
+                                        <span>${window.finflowI18n?.translateSmart("Processed as") || "Processed as"}</span>
+                                        <strong data-finflow-no-i18n>${escapeHtml(String(data.processed_format).toUpperCase())}</strong>
                                     </div>
                                 `
                                 : ''
@@ -210,7 +219,7 @@
                     ${entries.map(([key, value]) => `
                         <div class="ff-audit-detail-item">
                             <span>${escapeHtml(formatDetailLabel(key))}</span>
-                            <strong>${escapeHtml(formatDetailValue(value))}</strong>
+                            <strong data-finflow-no-i18n>${escapeHtml(formatDetailValue(value))}</strong>
                         </div>
                     `).join('')}
                 </div>
@@ -219,7 +228,8 @@
     }
 
     function formatNumber(value) {
-        return new Intl.NumberFormat('ru-RU').format(Number(value || 0));
+        const locale = window.finflowI18n?.getLocale?.() || 'uk-UA';
+        return new Intl.NumberFormat(locale).format(Number(value || 0));
     }
 
     function formatDateTime(value) {
@@ -240,12 +250,12 @@
         }
 
         return {
-            date: new Intl.DateTimeFormat('ru-RU', {
+            date: new Intl.DateTimeFormat(window.finflowI18n?.getLocale?.() || 'uk-UA', {
                 day: '2-digit',
                 month: '2-digit',
                 year: 'numeric'
             }).format(date),
-            time: new Intl.DateTimeFormat('ru-RU', {
+            time: new Intl.DateTimeFormat(window.finflowI18n?.getLocale?.() || 'uk-UA', {
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit'
@@ -320,23 +330,17 @@
         }
 
         const labels = {
-            CREATE: 'CREATE',
-            UPDATE: 'UPDATE',
-            DELETE: 'DELETE',
-            CANCEL: 'CANCEL',
-            LOGIN: 'LOGIN',
-            LOGOUT: 'LOGOUT',
-            CREATE_COMPANY: 'CREATE',
-            UPDATE_COMPANY: 'UPDATE',
-            DELETE_COMPANY: 'DELETE',
-            CREATE_INVOICE: 'CREATE',
-            UPDATE_INVOICE: 'UPDATE',
-            CANCEL_INVOICE: 'CANCEL',
-            CREATE_BUDGET: 'CREATE',
-            UPDATE_BUDGET: 'UPDATE'
+            CREATE: 'Create', UPDATE: 'Update', DELETE: 'Delete',
+            CANCEL: 'Cancel', LOGIN: 'Login', LOGOUT: 'Logout',
+            CREATE_COMPANY: 'Create', UPDATE_COMPANY: 'Update', DELETE_COMPANY: 'Delete',
+            CREATE_INVOICE: 'Create', UPDATE_INVOICE: 'Update', CANCEL_INVOICE: 'Cancel',
+            CREATE_BUDGET: 'Create', UPDATE_BUDGET: 'Update'
         };
 
-        return labels[String(action).toUpperCase()] || String(action);
+        const normalized = String(action).toUpperCase();
+        return labels[normalized]
+            ? t(labels[normalized])
+            : String(action);
     }
 
     function normalizeCompany(item) {
@@ -351,7 +355,7 @@
         const current = select.value;
 
         select.innerHTML =
-            `<option value="">${escapeHtml(emptyLabel)}</option>` +
+            `<option value="">${escapeHtml(t(emptyLabel))}</option>` +
             items.map(item => {
                 const value = item?.[valueKey];
                 const label = item?.[labelKey];
@@ -360,7 +364,7 @@
                     return '';
                 }
 
-                return `<option value="${escapeHtml(value)}">${escapeHtml(label ?? value)}</option>`;
+                return `<option value="${escapeHtml(value)}" data-finflow-no-i18n>${escapeHtml(label ?? value)}</option>`;
             }).join('');
 
         if (
@@ -391,7 +395,7 @@
         );
 
         select.innerHTML =
-            '<option value="">Все действия</option>' +
+            `<option value="">${escapeHtml(t('Все действия'))}</option>` +
             actions.map(action =>
                 `<option value="${escapeHtml(action)}">${escapeHtml(normalizeActionLabel(action))}</option>`
             ).join('');
@@ -548,7 +552,7 @@
         const status = $('auditSummaryStatus');
 
         if (status && isLoading) {
-            status.textContent = 'Загрузка';
+            status.textContent = t('Загрузка');
         }
     }
 
@@ -563,13 +567,13 @@
         if (pagination) pagination.classList.add('hidden');
         if (empty) empty.classList.add('hidden');
         if (error) error.classList.remove('hidden');
-        if (errorMessage) errorMessage.textContent = message;
+        if (errorMessage) errorMessage.textContent = t(message);
 
         const status = $('auditSummaryStatus');
-        if (status) status.textContent = 'Ошибка';
+        if (status) status.textContent = t('Ошибка');
 
         const heroMeta = $('auditHeroMeta');
-        if (heroMeta) heroMeta.textContent = 'Не удалось загрузить';
+        if (heroMeta) heroMeta.textContent = t('Не удалось загрузить');
     }
 
     function hideError() {
@@ -596,8 +600,8 @@
         if ($('auditHeroMeta')) {
             $('auditHeroMeta').textContent =
                 total === 0
-                    ? 'Нет совпадений'
-                    : `страница ${state.page} из ${Math.max(state.pages, 1)}`;
+                    ? t('Нет совпадений')
+                    : `${t('страница')} ${state.page} ${t('из')} ${Math.max(state.pages, 1)}`;
         }
 
         if ($('auditSummaryTotal')) {
@@ -622,8 +626,8 @@
         if ($('auditSummaryStatus')) {
             $('auditSummaryStatus').textContent =
                 state.loading
-                    ? 'Загрузка'
-                    : 'Готово';
+                    ? t('Загрузка')
+                    : t('Готово');
         }
     }
 
@@ -639,14 +643,14 @@
         if (state.filters.search) {
             chips.push({
                 key: 'search',
-                label: `Поиск: ${state.filters.search}`
+                label: `${t('Search')}: ${state.filters.search}`
             });
         }
 
         if (state.filters.action) {
             chips.push({
                 key: 'action',
-                label: `Действие: ${normalizeActionLabel(state.filters.action)}`
+                label: `${t('Action')}: ${normalizeActionLabel(state.filters.action)}`
             });
         }
 
@@ -657,7 +661,7 @@
 
             chips.push({
                 key: 'company_id',
-                label: `Компания: ${company?.name || state.filters.company_id}`
+                label: `${t('Company')}: ${company?.name || state.filters.company_id}`
             });
         }
 
@@ -668,28 +672,28 @@
 
             chips.push({
                 key: 'user_id',
-                label: `Пользователь: ${user?.username || state.filters.user_id}`
+                label: `${t('User')}: ${user?.username || state.filters.user_id}`
             });
         }
 
         if (state.filters.software) {
             chips.push({
                 key: 'software',
-                label: `Продукт: ${state.filters.software}`
+                label: `${t('Product')}: ${state.filters.software}`
             });
         }
 
         if (state.filters.date_from) {
             chips.push({
                 key: 'date_from',
-                label: `От: ${state.filters.date_from}`
+                label: `${t('From')}: ${state.filters.date_from}`
             });
         }
 
         if (state.filters.date_to) {
             chips.push({
                 key: 'date_to',
-                label: `До: ${state.filters.date_to}`
+                label: `${t('To')}: ${state.filters.date_to}`
             });
         }
 
@@ -739,8 +743,8 @@
 
             const action = String(item.action || '—');
             const actionLabel = normalizeActionLabel(action);
-            const companyName = normalizeCompany(item) || 'Без компании';
-            const username = item.username || 'Система';
+            const companyName = normalizeCompany(item) || t('Без компании');
+            const username = item.username || t('Система');
             const software = item.software || '';
             const description =
                 item.description ||
@@ -773,7 +777,7 @@
                                 <i class="bi bi-building"></i>
                             </span>
                             <div class="ff-audit-company-copy">
-                                <div class="ff-audit-company-name">
+                                <div class="ff-audit-company-name" data-finflow-no-i18n>
                                     ${escapeHtml(companyName)}
                                 </div>
                                 ${
@@ -791,7 +795,7 @@
                                 ${escapeHtml(initials(username))}
                             </span>
                             <div class="ff-audit-user-copy">
-                                <div class="ff-audit-user-name">
+                                <div class="ff-audit-user-name" data-finflow-no-i18n>
                                     ${escapeHtml(username)}
                                 </div>
                             </div>
@@ -801,7 +805,7 @@
                     <td>
                         ${
                             software
-                                ? `<span class="ff-audit-product">
+                                ? `<span class="ff-audit-product" data-finflow-no-i18n>
                                     ${escapeHtml(software)}
                                    </span>`
                                 : '<span class="ff-audit-product">—</span>'
@@ -810,13 +814,13 @@
 
                     <td>
                         <div class="ff-audit-description">
-                            <div class="ff-audit-description-main" title="${escapeHtml(description)}">
+                            <div class="ff-audit-description-main" data-finflow-no-i18n title="${escapeHtml(description)}">
                                 ${escapeHtml(description)}
                             </div>
                             ${
                                 item.entity_type || item.entity_id
-                                    ? `<div class="ff-audit-description-meta">
-                                        ${escapeHtml(item.entity_type || 'entity')}${item.entity_id ? ` · ${escapeHtml(item.entity_id)}` : ''}
+                                    ? `<div class="ff-audit-description-meta" data-finflow-no-i18n>
+                                        ${escapeHtml(item.entity_type || t('Entity'))}${item.entity_id ? ` · ${escapeHtml(item.entity_id)}` : ''}
                                        </div>`
                                     : ''
                             }
@@ -880,7 +884,7 @@
 
         if ($('auditPaginationInfo')) {
             $('auditPaginationInfo').textContent =
-                `${formatNumber(start)}–${formatNumber(end)} из ${formatNumber(state.total)}`;
+                `${formatNumber(start)}–${formatNumber(end)} ${t('of')} ${formatNumber(state.total)}`;
         }
 
         if ($('auditPrev')) {
@@ -957,8 +961,8 @@
         const hasFilters = Object.values(state.filters).some(Boolean);
 
         description.textContent = hasFilters
-            ? 'Результаты с учётом выбранных фильтров'
-            : 'Последние действия в системе';
+            ? t('Результаты с учётом выбранных фильтров')
+            : t('Последние действия в системе');
     }
 
     function updateSearchClear() {
@@ -997,7 +1001,7 @@
         const to = $('filterDateTo')?.value || '';
 
         if (from && to && from > to) {
-            alert('Дата начала не может быть позже даты окончания.');
+            alert(t('Дата начала не может быть позже даты окончания.'));
             return;
         }
 
@@ -1119,12 +1123,12 @@
 
             button.setAttribute(
                 'aria-label',
-                expanded ? 'Скрыть детали' : 'Показать детали'
+                t(expanded ? 'Скрыть детали' : 'Показать детали')
             );
 
             button.setAttribute(
                 'title',
-                expanded ? 'Скрыть детали' : 'Показать детали'
+                t(expanded ? 'Скрыть детали' : 'Показать детали')
             );
         });
     }
@@ -1134,6 +1138,8 @@
         updateSearchClear();
         loadAuditLogs();
     });
+
+    window.addEventListener('finflow-language-changed', renderAll);
 
     window.loadAuditLogs = loadAuditLogs;
 })();

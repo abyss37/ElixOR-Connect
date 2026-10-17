@@ -34,6 +34,12 @@ from reportlab.platypus import (
 
 app = Flask(__name__)
 
+
+def api_error_response(message, status_code, log_context):
+    """Return a safe API error while retaining details in server logs."""
+    app.logger.exception(log_context)
+    return jsonify({"status": "error", "message": message}), status_code
+
 COMPANY_STAMP_DIR = os.path.join(
     app.root_path,
     "static",
@@ -1882,12 +1888,9 @@ def create_company():
             "code": "duplicate",
             "message": "Компания с таким названием уже существует."
         }), 409
-    except Exception as exc:
+    except Exception:
         db.session.rollback()
-        return jsonify({
-            "status": "error",
-            "message": str(exc),
-        }), 400
+        return api_error_response("Could not create company.", 400, "Could not create company")
 
 
 @app.route("/companies/<int:company_id>/update", methods=["POST"])
@@ -1962,12 +1965,9 @@ def update_company(company_id):
             "message": "Компания с таким названием уже существует."
         }), 409
 
-    except Exception as exc:
+    except Exception:
         db.session.rollback()
-        return jsonify({
-            "status": "error",
-            "message": str(exc),
-        }), 400
+        return api_error_response("Could not update company.", 400, "Could not update company")
 
 
 @app.route("/companies/<int:company_id>/delete", methods=["POST"])
@@ -2003,12 +2003,9 @@ def delete_company(company_id):
             "company_name": company_name,
         })
 
-    except Exception as exc:
+    except Exception:
         db.session.rollback()
-        return jsonify({
-            "status": "error",
-            "message": str(exc),
-        }), 400
+        return api_error_response("Could not delete company.", 400, "Could not delete company")
 
 
 
@@ -2144,12 +2141,9 @@ def create_product():
             "message": "Продукт с таким кодом уже существует."
         }), 409
 
-    except Exception as exc:
+    except Exception:
         db.session.rollback()
-        return jsonify({
-            "status": "error",
-            "message": str(exc),
-        }), 400
+        return api_error_response("Could not create product.", 400, "Could not create product")
 
 
 @app.route("/products/<int:product_id>/update", methods=["POST"])
@@ -2314,12 +2308,9 @@ def update_product(product_id):
             "message": "Продукт с таким кодом уже существует."
         }), 409
 
-    except Exception as exc:
+    except Exception:
         db.session.rollback()
-        return jsonify({
-            "status": "error",
-            "message": str(exc),
-        }), 400
+        return api_error_response("Could not update product.", 400, "Could not update product")
 
 
 @app.route("/products/<int:product_id>/archive", methods=["POST"])
@@ -2367,12 +2358,9 @@ def archive_product(product_id):
             },
         })
 
-    except Exception as exc:
+    except Exception:
         db.session.rollback()
-        return jsonify({
-            "status": "error",
-            "message": str(exc),
-        }), 400
+        return api_error_response("Could not archive product.", 400, "Could not archive product")
 
 
 @app.route("/products/<int:product_id>/delete", methods=["POST"])
@@ -2436,12 +2424,9 @@ def delete_product(product_id):
             "message": "Продукт используется в системе и не может быть удалён."
         }), 409
 
-    except Exception as exc:
+    except Exception:
         db.session.rollback()
-        return jsonify({
-            "status": "error",
-            "message": str(exc),
-        }), 400
+        return api_error_response("Could not delete product.", 400, "Could not delete product")
 
 
 @app.route("/analytics")
@@ -2606,8 +2591,61 @@ def _pdf_contract_data(raw):
     }
 
 
-def build_invoice_pdf(invoice):
+def build_invoice_pdf(invoice, language="en"):
     """Build a standalone A4 ElixOR Connect invoice PDF from the current DB invoice."""
+    language = "uk" if language == "uk" else "en"
+    pdf_labels = {
+        "en": {
+            "invoice": "INVOICE",
+            "bill_to": "BILL TO",
+            "invoice_date": "INVOICE DATE",
+            "completion_date": "COMPLETION DATE",
+            "payment_terms": "PAYMENT TERMS",
+            "product": "PRODUCT",
+            "currency": "CURRENCY",
+            "po_number": "PO NUMBER",
+            "description": "DESCRIPTION",
+            "quantity": "QTY",
+            "rate": "RATE",
+            "amount": "AMOUNT",
+            "subtotal": "SUBTOTAL",
+            "total": "TOTAL",
+            "notes": "NOTES",
+            "terms": "TERMS",
+            "cancelled": "CANCELLED",
+            "no_reason": "No reason provided",
+            "software_license": "Software License",
+            "registration_number": "Registration number",
+            "email": "Email",
+        },
+        "uk": {
+            "invoice": "РАХУНОК",
+            "bill_to": "ОТРИМУВАЧ",
+            "invoice_date": "ДАТА РАХУНКУ",
+            "completion_date": "ДАТА ЗАВЕРШЕННЯ",
+            "payment_terms": "УМОВИ ОПЛАТИ",
+            "product": "ПРОДУКТ",
+            "currency": "ВАЛЮТА",
+            "po_number": "№ ЗАМОВЛЕННЯ",
+            "description": "ОПИС",
+            "quantity": "КІЛЬКІСТЬ",
+            "rate": "ЦІНА",
+            "amount": "СУМА",
+            "subtotal": "ПРОМІЖНИЙ ПІДСУМОК",
+            "total": "РАЗОМ",
+            "notes": "ПРИМІТКИ",
+            "terms": "УМОВИ",
+            "cancelled": "СКАСОВАНО",
+            "no_reason": "Причину не вказано",
+            "software_license": "Ліцензія на програмне забезпечення",
+            "registration_number": "Реєстраційний номер",
+            "email": "Електронна пошта",
+        },
+    }[language]
+
+    def label(key):
+        return pdf_labels[key]
+
     buffer = BytesIO()
 
     font_regular = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
@@ -2625,9 +2663,9 @@ def build_invoice_pdf(invoice):
         leftMargin=16 * mm,
         topMargin=15 * mm,
         bottomMargin=15 * mm,
-        title=f"ElixOR Connect Invoice {invoice.invoice_number or invoice.id}",
+        title=f"ElixOR Connect {label('invoice').title()} {invoice.invoice_number or invoice.id}",
         author="ElixOR Connect",
-        subject="Invoice",
+        subject=label("invoice").title(),
     )
 
     width, _ = A4
@@ -2685,10 +2723,10 @@ def build_invoice_pdf(invoice):
 
     header_company = Paragraph(
         "<b>ACME SOFTWARE SOLUTIONS LTD</b><br/>"
-        "Registration number - <b>HE 123456</b><br/>"
+        f"{label('registration_number')} - <b>HE 123456</b><br/>"
         "T.I.C.- <b>12345678X</b>, VAT <b>CY 12345678X</b><br/>"
         "123 Business Street, Suite 100, Limassol, Cyprus<br/>"
-        "Email: info@example.com",
+        f"{label('email')}: info@example.com",
         small_style,
     )
 
@@ -2698,7 +2736,7 @@ def build_invoice_pdf(invoice):
         [[
             header_company,
             [
-                Paragraph("INVOICE", title_style),
+                Paragraph(label("invoice"), title_style),
                 Paragraph(
                     f"<b># {invoice_number}</b>",
                     ParagraphStyle(
@@ -2730,18 +2768,18 @@ def build_invoice_pdf(invoice):
     bill_details = _pdf_escape_text(contract["bill_to_details"])
 
     invoice_date = (
-        invoice.invoice_date.strftime("%d.%m.%Y")
+        invoice.invoice_date.strftime("%d.%m.%Y" if language == "uk" else "%d/%m/%Y")
         if invoice.invoice_date
         else "—"
     )
     completion_date = (
-        invoice.completion_date.strftime("%d.%m.%Y")
+        invoice.completion_date.strftime("%d.%m.%Y" if language == "uk" else "%d/%m/%Y")
         if invoice.completion_date
         else "—"
     )
 
     meta_left = [
-        Paragraph("BILL TO", label_style),
+        Paragraph(label("bill_to"), label_style),
         Paragraph(f"<b>{bill_to or '—'}</b>", body_style),
     ]
 
@@ -2749,17 +2787,17 @@ def build_invoice_pdf(invoice):
         meta_left.append(Paragraph(bill_details.replace("\n", "<br/>"), small_style))
 
     meta_right = [
-        Paragraph("INVOICE DATE", label_style),
+        Paragraph(label("invoice_date"), label_style),
         Paragraph(f"<b>{invoice_date}</b>", body_style),
         Spacer(1, 3),
-        Paragraph("COMPLETION DATE", label_style),
+        Paragraph(label("completion_date"), label_style),
         Paragraph(f"<b>{completion_date}</b>", body_style),
     ]
 
     if contract["payment_terms"]:
         meta_right.extend([
             Spacer(1, 3),
-            Paragraph("PAYMENT TERMS", label_style),
+            Paragraph(label("payment_terms"), label_style),
             Paragraph(
                 _pdf_escape_text(contract["payment_terms"]),
                 body_style,
@@ -2782,12 +2820,12 @@ def build_invoice_pdf(invoice):
     story.extend([meta, Spacer(1, 8 * mm)])
 
     details = [
-        [Paragraph("PRODUCT", label_style), Paragraph("CURRENCY", label_style)],
+        [Paragraph(label("product"), label_style), Paragraph(label("currency"), label_style)],
         [Paragraph(f"<b>{software}</b>", body_style), Paragraph(f"<b>{currency}</b>", body_style)],
     ]
 
     if contract["po_number"]:
-        details[0].append(Paragraph("PO NUMBER", label_style))
+        details[0].append(Paragraph(label("po_number"), label_style))
         details[1].append(
             Paragraph(_pdf_escape_text(contract["po_number"]), body_style)
         )
@@ -2812,17 +2850,17 @@ def build_invoice_pdf(invoice):
 
     if not items:
         items = [{
-            "description": f"{software} Software License",
+            "description": f"{software} {label('software_license')}",
             "quantity": Decimal("1.00"),
             "rate": money(invoice.amount_eur),
             "amount": money(invoice.amount_eur),
         }]
 
     table_data = [[
-        Paragraph("DESCRIPTION", label_style),
-        Paragraph("QTY", label_style),
-        Paragraph("RATE", label_style),
-        Paragraph("AMOUNT", label_style),
+        Paragraph(label("description"), label_style),
+        Paragraph(label("quantity"), label_style),
+        Paragraph(label("rate"), label_style),
+        Paragraph(label("amount"), label_style),
     ]]
 
     subtotal = Decimal("0.00")
@@ -2887,8 +2925,8 @@ def build_invoice_pdf(invoice):
 
     totals = Table(
         [
-            [Paragraph("SUBTOTAL", label_style), Paragraph(_pdf_money(subtotal, currency), right_style)],
-            [Paragraph("<b>TOTAL</b>", body_style), Paragraph(
+            [Paragraph(label("subtotal"), label_style), Paragraph(_pdf_money(subtotal, currency), right_style)],
+            [Paragraph(f"<b>{label('total')}</b>", body_style), Paragraph(
                 f"<b>{_pdf_money(total, currency)}</b>",
                 ParagraphStyle(
                     "FFTotal",
@@ -2919,7 +2957,7 @@ def build_invoice_pdf(invoice):
 
         if contract["notes"]:
             notes.append([
-                Paragraph("NOTES", label_style),
+                Paragraph(label("notes"), label_style),
                 Paragraph(
                     _pdf_escape_text(contract["notes"]).replace("\n", "<br/>"),
                     small_style,
@@ -2928,7 +2966,7 @@ def build_invoice_pdf(invoice):
 
         if contract["terms"]:
             notes.append([
-                Paragraph("TERMS", label_style),
+                Paragraph(label("terms"), label_style),
                 Paragraph(
                     _pdf_escape_text(contract["terms"]).replace("\n", "<br/>"),
                     small_style,
@@ -3067,12 +3105,12 @@ def build_invoice_pdf(invoice):
                 story.append(signature_stamp_table)
 
     if invoice.status == "CANCELLED":
-        reason = _pdf_escape_text(invoice.cancellation_reason or "No reason provided")
+        reason = _pdf_escape_text(invoice.cancellation_reason or label("no_reason"))
         story.extend([
             Spacer(1, 7 * mm),
             Table(
                 [[Paragraph(
-                    f"<b>CANCELLED</b><br/>{reason}",
+                    f"<b>{label('cancelled')}</b><br/>{reason}",
                     ParagraphStyle(
                         "FFCancelled",
                         parent=small_style,
@@ -3106,7 +3144,8 @@ def generator_pdf(invoice_id):
         .first_or_404()
     )
 
-    pdf = build_invoice_pdf(invoice)
+    requested_language = request.args.get("lang", "en")
+    pdf = build_invoice_pdf(invoice, requested_language)
 
     invoice_number = (invoice.invoice_number or f"invoice-{invoice.id}").strip()
     safe_name = "".join(
@@ -3682,12 +3721,13 @@ def update_invoice_payment(invoice_id):
             "message": str(exc),
         }), 400
 
-    except Exception as exc:
+    except Exception:
         db.session.rollback()
-        return jsonify({
-            "status": "error",
-            "message": str(exc),
-        }), 500
+        return api_error_response(
+            "Could not update payment information.",
+            500,
+            "Could not update invoice payment information",
+        )
 
 
 @app.route("/update_company_budget", methods=["POST"])
@@ -3761,7 +3801,11 @@ def update_company_budget():
         db.session.rollback()
         return jsonify({
             "status": "error",
-            "message": str(exc),
+            "message": (
+                "Invalid budget product or amount"
+                if str(exc) == "Invalid budget product or amount"
+                else "Invalid company budget data."
+            ),
         }), 400
 
 
@@ -3830,7 +3874,7 @@ def update_company_completion_date():
         db.session.rollback()
         return jsonify({
             "status": "error",
-            "message": str(exc),
+            "message": "Invalid contract completion date or currency.",
         }), 400
 
 
@@ -4861,9 +4905,10 @@ def api_audit_log():
         })
 
     except (ValueError, TypeError) as exc:
+        app.logger.info("Invalid audit log filters: %s", exc)
         return jsonify({
             "status": "error",
-            "message": str(exc),
+            "message": "Invalid audit log filters.",
         }), 400
 
 @app.route("/notifications")
@@ -4909,11 +4954,8 @@ def api_notifications():
             "unread_count": unread_count,
         })
 
-    except Exception as exc:
-        return jsonify({
-            "status": "error",
-            "message": str(exc),
-        }), 500
+    except Exception:
+        return api_error_response("Could not load notifications.", 500, "Could not load notifications")
 @app.route("/api/notifications/<int:notification_id>/read", methods=["POST"])
 @login_required
 def api_notification_read(notification_id):
@@ -4946,13 +4988,9 @@ def api_notification_read(notification_id):
             "unread_count": unread_count,
         })
 
-    except Exception as exc:
+    except Exception:
         db.session.rollback()
-
-        return jsonify({
-            "status": "error",
-            "message": str(exc),
-        }), 500
+        return api_error_response("Could not update notification.", 500, "Could not mark notification as read")
 @app.route("/api/notifications/<int:notification_id>", methods=["DELETE"])
 @login_required
 def api_notification_delete(notification_id):
@@ -4983,13 +5021,9 @@ def api_notification_delete(notification_id):
             "unread_count": unread_count,
         })
 
-    except Exception as exc:
+    except Exception:
         db.session.rollback()
-
-        return jsonify({
-            "status": "error",
-            "message": str(exc),
-        }), 500
+        return api_error_response("Could not delete notification.", 500, "Could not delete notification")
 
 
 @app.route("/api/notifications/read-all", methods=["POST"])
@@ -5018,13 +5052,9 @@ def api_notifications_read_all():
             "unread_count": 0,
         })
 
-    except Exception as exc:
+    except Exception:
         db.session.rollback()
-
-        return jsonify({
-            "status": "error",
-            "message": str(exc),
-        }), 500
+        return api_error_response("Could not mark notifications as read.", 500, "Could not mark all notifications as read")
 @app.route("/health")
 def health():
     return jsonify({"status": "ok", "database": "postgresql" if DATABASE_URL.startswith("postgresql") else "sqlite"})

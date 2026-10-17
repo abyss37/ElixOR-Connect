@@ -200,7 +200,7 @@
         }
 
         const confirmed = window.confirm(
-            `Изменить роль пользователя на "${selectedRole}"?`
+            `${window.finflowI18n?.translateSmart("Change role of user to") || "Change role of user to"} "${selectedRole}"?`
         );
 
         if (!confirmed) {

@@ -7,6 +7,10 @@
         return;
     }
 
+    function t(value) {
+        return window.finflowI18n?.translateSmart(value) || value;
+    }
+
     const invoices = Array.isArray(window.finflowGeneratorInvoices)
         ? window.finflowGeneratorInvoices
         : [];
@@ -89,7 +93,7 @@
     function formatMoney(value, currency) {
         return window.FinFlowMoney
             ? window.FinFlowMoney.formatMoney(value, currency)
-            : `${String(currency || "EUR").toUpperCase()} ${Number(value || 0).toLocaleString("uk-UA", {
+            : `${String(currency || "EUR").toUpperCase()} ${Number(value || 0).toLocaleString(window.finflowI18n?.getLocale?.() || "uk-UA", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
             })}`;
@@ -106,26 +110,34 @@
             return escapeHtml(value);
         }
 
-        return `${parts[2]}.${parts[1]}.${parts[0]}`;
+        const date = new Date(`${parts[0]}-${parts[1]}-${parts[2]}T00:00:00`);
+        if (Number.isNaN(date.getTime())) {
+            return escapeHtml(value);
+        }
+
+        return new Intl.DateTimeFormat(
+            window.finflowI18n?.getLocale?.() || "uk-UA",
+            { day: "2-digit", month: "2-digit", year: "numeric" }
+        ).format(date);
     }
 
     function statusLabel(status) {
         const normalized = String(status || "ISSUED").toUpperCase();
 
         if (normalized === "CANCELLED") {
-            return "Отменён";
+            return t("Отменён");
         }
 
-        return "Выдан";
+        return t("Выдан");
     }
 
     function paymentLabel(status) {
         const normalized = String(status || "UNPAID").toUpperCase();
 
         const labels = {
-            PAID: "Оплачен",
-            PARTIAL: "Частично оплачен",
-            UNPAID: "Не оплачен",
+            PAID: t("Оплачен"),
+            PARTIAL: t("Частично оплачен"),
+            UNPAID: t("Не оплачен"),
         };
 
         return labels[normalized] || normalized;
@@ -207,25 +219,25 @@
                 </span>
 
                 <span class="ff-generator-archive-main">
-                    <strong>
+                    <strong data-finflow-no-i18n>
                         ${escapeHtml(
                             invoice.invoice_number || `#${invoice.id}`
                         )}
                     </strong>
 
-                    <span>
+                    <span data-finflow-no-i18n>
                         ${escapeHtml(invoice.company_name || "—")}
                     </span>
 
                     <small>
-                        ${escapeHtml(invoice.software || "—")}
+                        <span data-finflow-no-i18n>${escapeHtml(invoice.software || "—")}</span>
                         ·
-                        ${escapeHtml(invoice.currency || "—")}
+                        <span data-finflow-no-i18n>${escapeHtml(invoice.currency || "—")}</span>
                         ·
-                        ${formatMoney(
+                        <span data-finflow-no-i18n>${formatMoney(
                             invoice.amount,
                             invoice.currency
-                        )}
+                        )}</span>
                     </small>
                 </span>
 
@@ -271,17 +283,16 @@
                     <i class="bi bi-file-earmark-pdf"></i>
                 </div>
 
-                <h2>Выберите счет</h2>
+                <h2>${escapeHtml(t("Выберите счет"))}</h2>
 
                 <p>
-                    Выберите документ из архива,
-                    чтобы открыть его предпросмотр.
+                    ${escapeHtml(t("Выберите документ из архива, чтобы открыть его предпросмотр."))}
                 </p>
             </div>
         `;
 
         if (previewLabel) {
-            previewLabel.textContent = "Выберите счет";
+            previewLabel.textContent = t("Выберите счет");
         }
 
         if (previewStatus) {
@@ -290,7 +301,7 @@
 
             previewStatus.innerHTML = `
                 <i class="bi bi-circle"></i>
-                Нет выбранного счета
+                ${escapeHtml(t("Нет выбранного счета"))}
             `;
         }
 
@@ -315,36 +326,36 @@
         const lines = [];
 
         if (requisites.legal_address) {
-            lines.push(`Юридический адрес: ${escapeHtml(requisites.legal_address)}`);
+            lines.push(`${escapeHtml(t("Юридический адрес:"))} <span data-finflow-no-i18n>${escapeHtml(requisites.legal_address)}</span>`);
         }
 
         if (requisites.registration_number) {
-            lines.push(`Рег. номер: ${escapeHtml(requisites.registration_number)}`);
+            lines.push(`${escapeHtml(t("Рег. номер:"))} <span data-finflow-no-i18n>${escapeHtml(requisites.registration_number)}</span>`);
         }
 
         if (requisites.tax_number) {
-            lines.push(`ИНН: ${escapeHtml(requisites.tax_number)}`);
+            lines.push(`${escapeHtml(t("ИНН:"))} <span data-finflow-no-i18n>${escapeHtml(requisites.tax_number)}</span>`);
         }
 
         if (requisites.vat_number) {
-            lines.push(`VAT: ${escapeHtml(requisites.vat_number)}`);
+            lines.push(`VAT: <span data-finflow-no-i18n>${escapeHtml(requisites.vat_number)}</span>`);
         }
 
         if (requisites.bank_name) {
-            lines.push(`Банк: ${escapeHtml(requisites.bank_name)}`);
+            lines.push(`${escapeHtml(t("Банк:"))} <span data-finflow-no-i18n>${escapeHtml(requisites.bank_name)}</span>`);
         }
 
         if (requisites.iban) {
-            lines.push(`IBAN: ${escapeHtml(requisites.iban)}`);
+            lines.push(`IBAN: <span data-finflow-no-i18n>${escapeHtml(requisites.iban)}</span>`);
         }
 
         if (requisites.swift) {
-            lines.push(`SWIFT: ${escapeHtml(requisites.swift)}`);
+            lines.push(`SWIFT: <span data-finflow-no-i18n>${escapeHtml(requisites.swift)}</span>`);
         }
 
         return lines.length
             ? lines.join("<br>")
-            : "Реквизиты пока не заполнены";
+            : t("Реквизиты пока не заполнены");
     }
 
     function renderOurCompanyHeader(invoiceNumber) {
@@ -371,9 +382,9 @@
                     </div>
 
                     <div class="ff-paper-org-info">
-                        <strong>
+                        <strong data-finflow-no-i18n>
                             ${escapeHtml(
-                                ourCompany.name || "Организация не указана"
+                            ourCompany.name || t("Организация не указана")
                             )}
                         </strong>
 
@@ -412,9 +423,9 @@
                 </div>
 
                 <div class="ff-paper-title">
-                    <span>INVOICE</span>
+                    <span>${escapeHtml(t("Invoice"))}</span>
 
-                    <strong>
+                    <strong data-finflow-no-i18n>
                         #${escapeHtml(
                             invoiceNumber || ""
                         )}
@@ -480,7 +491,7 @@
                               </td>
 
                               <td>
-                                  ${escapeHtml(item.description)}
+                              <span data-finflow-no-i18n>${escapeHtml(item.description)}</span>
                               </td>
 
                               <td class="ff-paper-number">
@@ -520,16 +531,14 @@
                 <tr>
                     <td class="ff-paper-index">1</td>
                     <td>
-                        ${escapeHtml(
-                            invoice.software || "Software License"
-                        )}
-                        Software License
+                        <span data-finflow-no-i18n>${escapeHtml(invoice.software || "")}</span>
+                        ${escapeHtml(t("Software License"))}
                     </td>
                     <td class="ff-paper-number">1</td>
-                    <td class="ff-paper-number">
+                    <td class="ff-paper-number" data-finflow-no-i18n>
                         ${formatMoney(total, invoice.currency)}
                     </td>
-                    <td class="ff-paper-number">
+                    <td class="ff-paper-number" data-finflow-no-i18n>
                         ${formatMoney(total, invoice.currency)}
                     </td>
                 </tr>
@@ -541,15 +550,15 @@
                     <i class="bi bi-x-octagon"></i>
 
                     <div>
-                        <strong>Счёт отменён</strong>
+                        <strong>${escapeHtml(t("Счёт отменён"))}</strong>
 
-                        <span>
+                        <span data-finflow-no-i18n>
                             ${
                                 invoice.cancellation_reason
                                     ? escapeHtml(
                                           invoice.cancellation_reason
                                       )
-                                    : "Причина отмены не указана."
+                                    : t("Причина отмены не указана.")
                             }
                         </span>
                     </div>
@@ -567,15 +576,15 @@
                 <section class="ff-paper-parties">
 
                     <div class="ff-paper-party">
-                        <span class="ff-paper-label">BILL TO</span>
+                    <span class="ff-paper-label">${escapeHtml(t("BILL TO"))}</span>
 
-                        <strong>
+                        <strong data-finflow-no-i18n>
                             ${escapeHtml(
                                 invoice.company_name || "—"
                             )}
                         </strong>
 
-                        <p>
+                        <p data-finflow-no-i18n>
                             ${
                                 contract.bill_to_details
                                     ? escapeHtml(
@@ -594,36 +603,36 @@
                 <section class="ff-paper-meta-grid">
 
                     <div>
-                        <span>Invoice date</span>
+                        <span>${escapeHtml(t("Invoice date"))}</span>
                         <strong>
                             ${formatDate(invoice.invoice_date)}
                         </strong>
                     </div>
 
                     <div>
-                        <span>Completion date</span>
+                        <span>${escapeHtml(t("Completion date"))}</span>
                         <strong>
                             ${formatDate(invoice.completion_date)}
                         </strong>
                     </div>
 
                     <div>
-                        <span>Product</span>
-                        <strong>
+                        <span>${escapeHtml(t("Product"))}</span>
+                        <strong data-finflow-no-i18n>
                             ${escapeHtml(invoice.software || "—")}
                         </strong>
                     </div>
 
                     <div>
-                        <span>Currency</span>
-                        <strong>
+                        <span>${escapeHtml(t("Currency"))}</span>
+                        <strong data-finflow-no-i18n>
                             ${escapeHtml(invoice.currency || "—")}
                         </strong>
                     </div>
 
                     <div>
-                        <span>PO number</span>
-                        <strong>
+                        <span>${escapeHtml(t("PO number"))}</span>
+                        <strong data-finflow-no-i18n>
                             ${escapeHtml(
                                 contract.po_number || "—"
                             )}
@@ -631,8 +640,8 @@
                     </div>
 
                     <div>
-                        <span>Payment terms</span>
-                        <strong>
+                        <span>${escapeHtml(t("Payment terms"))}</span>
+                        <strong data-finflow-no-i18n>
                             ${escapeHtml(
                                 contract.payment_terms || "—"
                             )}
@@ -646,10 +655,10 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Description</th>
-                                <th>Qty</th>
-                                <th>Rate</th>
-                                <th>Amount</th>
+                                <th>${escapeHtml(t("Description"))}</th>
+                                <th>${escapeHtml(t("Qty"))}</th>
+                                <th>${escapeHtml(t("Rate"))}</th>
+                                <th>${escapeHtml(t("Amount"))}</th>
                             </tr>
                         </thead>
 
@@ -664,7 +673,7 @@
                     <div class="ff-paper-payment">
 
                         <div>
-                            <span>Payment status</span>
+                            <span>${escapeHtml(t("Payment status"))}</span>
                             <strong>
                                 ${escapeHtml(
                                     paymentLabel(
@@ -675,7 +684,7 @@
                         </div>
 
                         <div>
-                            <span>Paid</span>
+                            <span>${escapeHtml(t("Paid"))}</span>
                             <strong>
                                 ${formatMoney(
                                     paid,
@@ -685,7 +694,7 @@
                         </div>
 
                         <div>
-                            <span>Outstanding</span>
+                            <span>${escapeHtml(t("Outstanding"))}</span>
                             <strong>
                                 ${formatMoney(
                                     outstanding,
@@ -699,7 +708,7 @@
                     <div class="ff-paper-totals">
 
                         <div>
-                            <span>Subtotal</span>
+                            <span>${escapeHtml(t("Subtotal"))}</span>
                             <strong>
                                 ${formatMoney(
                                     subtotal,
@@ -709,7 +718,7 @@
                         </div>
 
                         <div class="ff-paper-total">
-                            <span>Total</span>
+                            <span>${escapeHtml(t("Total"))}</span>
                             <strong>
                                 ${formatMoney(
                                     total,
@@ -726,8 +735,8 @@
                     contract.notes
                         ? `
                             <section class="ff-paper-notes">
-                                <span>Notes</span>
-                                <p>
+                                <span>${escapeHtml(t("Notes"))}</span>
+                                <p data-finflow-no-i18n>
                                     ${escapeHtml(
                                         contract.notes
                                     ).replace(
@@ -744,8 +753,8 @@
                     contract.terms
                         ? `
                             <section class="ff-paper-terms">
-                                <span>Terms & conditions</span>
-                                <p>
+                                <span>${escapeHtml(t("Terms & conditions"))}</span>
+                                <p data-finflow-no-i18n>
                                     ${escapeHtml(
                                         contract.terms
                                     ).replace(
@@ -770,7 +779,7 @@
                                                     src="${escapeHtml(
                                                         ourCompany.signature_url
                                                     )}"
-                                                    alt="Подпись"
+                                                alt="${escapeHtml(t("Подпись"))}"
                                                 >
                                             </div>
                                         `
@@ -785,7 +794,7 @@
                                                     src="${escapeHtml(
                                                         ourCompany.stamp_url
                                                     )}"
-                                                    alt="Печать"
+                                                    alt="${escapeHtml(t("Stamp"))}"
                                                 >
                                             </div>
                                         `
@@ -802,7 +811,7 @@
 
         if (previewLabel) {
             previewLabel.textContent =
-                `Счёт ${invoice.invoice_number || `#${invoice.id}`}`;
+                `${window.finflowI18n?.translateSmart("Invoice") || "Invoice"} ${invoice.invoice_number || `#${invoice.id}`}`;
         }
 
         if (previewStatus) {
@@ -822,8 +831,8 @@
 
                 ${
                     cancelled
-                        ? "Отменён"
-                        : "Готов к печати"
+                        ? t("Отменён")
+                        : t("Готов к печати")
                 }
             `;
         }
@@ -865,6 +874,8 @@
         window.location.href =
             `/generator/pdf/${encodeURIComponent(
                 selectedInvoiceId
+            )}?lang=${encodeURIComponent(
+                window.finflowI18n?.getLang?.() === "uk" ? "uk" : "en"
             )}`;
     }
 
@@ -913,6 +924,15 @@
     );
 
     renderArchive();
+
+    window.addEventListener("finflow-language-changed", () => {
+        renderArchive();
+        if (selectedInvoiceId) {
+            selectInvoice(selectedInvoiceId);
+        } else {
+            renderEmptyPreview();
+        }
+    });
 
     if (initialInvoiceId) {
         selectInvoice(initialInvoiceId);

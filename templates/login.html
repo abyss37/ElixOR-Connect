@@ -644,6 +644,29 @@
             color: #64748b;
         }
 
+        .login-language {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 0 0 18px;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .login-language button {
+            border: 0;
+            padding: 2px 4px;
+            color: inherit;
+            background: transparent;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .login-language button.is-active {
+            color: #60a5fa;
+            font-weight: 700;
+        }
+
 </style>
 </head>
 
@@ -661,24 +684,30 @@
             </h2>
 
             <div class="brand-subtitle">
-                Платформа фінансового контролю
+                <span data-i18n="Financial control platform">Платформа фінансового контролю</span>
             </div>
         </header>
+
+        <div class="login-language" id="ff-landing-lang-switcher" aria-label="Мова" data-i18n-aria-label="Language">
+            <button type="button" class="landing-language-button" data-lang="uk" aria-pressed="true">UA</button>
+            <span aria-hidden="true">/</span>
+            <button type="button" class="landing-language-button" data-lang="en" aria-pressed="false">EN</button>
+        </div>
 
         <section class="card" aria-labelledby="login-title">
 
             <div class="card-header">
-                <h1 id="login-title" class="card-title">З поверненням</h1>
+                <h1 id="login-title" class="card-title" data-i18n="Welcome back">З поверненням</h1>
 
                 <p class="card-description">
-                    Увійдіть, щоб продовжити роботу в ElixOR Connect.
+                    <span data-i18n="Sign in to continue working in ElixOR Connect.">Увійдіть, щоб продовжити роботу в ElixOR Connect.</span>
                 </p>
             </div>
 
             {% if error %}
                 <div class="error" role="alert">
                     <span class="error-icon">!</span>
-                    <span>{{ error }}</span>
+                    <span data-i18n="{{ error }}">{{ error }}</span>
                 </div>
             {% endif %}
 
@@ -697,7 +726,7 @@
                     <label
                         class="field-label"
                         for="username">
-                        Ім'я користувача
+                        <span data-i18n="Username">Ім'я користувача</span>
                     </label>
 
                     <input
@@ -708,14 +737,15 @@
                         autocomplete="username"
                         required
                         autofocus
-                        placeholder="Введіть ім'я користувача">
+                        placeholder="Введіть ім'я користувача"
+                        data-i18n-placeholder="Enter username">
                 </div>
 
                 <div class="field">
                     <label
                         class="field-label"
                         for="password">
-                        Пароль
+                        <span data-i18n="Password">Пароль</span>
                     </label>
 
                     <div class="input-wrap">
@@ -726,7 +756,8 @@
                             type="password"
                             autocomplete="current-password"
                             required
-                            placeholder="Введіть пароль">
+                            placeholder="Введіть пароль"
+                            data-i18n-placeholder="Enter password">
 
                         <button
                             class="password-toggle"
@@ -754,13 +785,13 @@
                 <button
                     class="submit-button"
                     type="submit">
-                    Увійти
+                    <span data-i18n="Sign in">Увійти</span>
                 </button>
             </form>
 
             <div class="security-note">
                 <span class="security-dot"></span>
-                Захищений доступ до ElixOR Connect
+                <span data-i18n="Secure access to ElixOR Connect">Захищений доступ до ElixOR Connect</span>
             </div>
         </section>
 
@@ -786,12 +817,16 @@
 
                 toggle.setAttribute(
                     'aria-label',
-                    visible ? 'Показати пароль' : 'Hide password'
+                    visible
+                        ? (window.finflowI18n?.getLang?.() === 'en' ? 'Show password' : 'Показати пароль')
+                        : (window.finflowI18n?.getLang?.() === 'en' ? 'Hide password' : 'Приховати пароль')
                 );
 
                 toggle.setAttribute(
                     'title',
-                    visible ? 'Показати пароль' : 'Hide password'
+                    visible
+                        ? (window.finflowI18n?.getLang?.() === 'en' ? 'Show password' : 'Показати пароль')
+                        : (window.finflowI18n?.getLang?.() === 'en' ? 'Hide password' : 'Приховати пароль')
                 );
 
                 eye.innerHTML = visible
@@ -808,5 +843,6 @@
             });
         })();
     </script>
+    <script src="{{ url_for('static', filename='js/finflow-i18n.js') }}?v=20261017-8"></script>
 </body>
 </html>

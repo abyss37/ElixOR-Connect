@@ -130,7 +130,7 @@ function loadProductsView() {
             return '—';
         }
 
-        return new Intl.DateTimeFormat('uk-UA', {
+        return new Intl.DateTimeFormat(window.finflowI18n?.getLocale?.() || 'uk-UA', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric'
@@ -905,6 +905,8 @@ function loadProductsView() {
             applyProductsView(button.dataset.productsView);
         });
     });
+
+    window.addEventListener('finflow-language-changed', renderProducts);
 
     loadProductsView();
     renderProducts();

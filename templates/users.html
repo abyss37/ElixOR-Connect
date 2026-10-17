@@ -292,16 +292,26 @@
 
                         <td>
                             <span class="user-date">
-                                {{ user.created_at.strftime('%Y-%m-%d %H:%M')
-                                   if user.created_at else '—' }}
+                                {% if user.created_at %}
+                                <time datetime="{{ user.created_at.isoformat() }}"
+                                      data-finflow-date="{{ user.created_at.isoformat() }}"
+                                      data-finflow-date-time>
+                                    {{ user.created_at.strftime('%Y-%m-%d %H:%M') }}
+                                </time>
+                                {% else %}—{% endif %}
                             </span>
                         </td>
 
 
                         <td>
                             <span class="user-date">
-                                {{ user.last_login.strftime('%Y-%m-%d %H:%M')
-                                   if user.last_login else 'Never' }}
+                                {% if user.last_login %}
+                                <time datetime="{{ user.last_login.isoformat() }}"
+                                      data-finflow-date="{{ user.last_login.isoformat() }}"
+                                      data-finflow-date-time>
+                                    {{ user.last_login.strftime('%Y-%m-%d %H:%M') }}
+                                </time>
+                                {% else %}<span data-i18n="Never">Never</span>{% endif %}
                             </span>
                         </td>
 
@@ -717,6 +727,6 @@
     };
 </script>
 
-<script src="{{ url_for('static', filename='js/users.js') }}?v=20260923"></script>
+<script src="{{ url_for('static', filename='js/users.js') }}?v=20261017-1"></script>
 
 {% endblock %}

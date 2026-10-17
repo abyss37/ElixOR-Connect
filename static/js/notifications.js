@@ -24,6 +24,11 @@
     }
 
 
+    function t(value) {
+        return window.finflowI18n?.translateSmart?.(value) || value;
+    }
+
+
     function getCsrfToken() {
         return document.querySelector(
             '#ff-logout-form input[name="csrf_token"]'
@@ -107,22 +112,22 @@
     function notificationTypeLabel(type) {
         switch (type) {
             case 'OVERDUE_INVOICE':
-                return 'Просроченный счёт';
+                return t('Просроченный счёт');
 
             case 'BUDGET_EXCEEDED':
-                return 'Превышение бюджета';
+                return t('Превышение бюджета');
 
             case 'BUDGET_CRITICAL':
-                return 'Критическое состояние бюджета';
+                return t('Критическое состояние бюджета');
 
             case 'BUDGET_WARNING':
-                return 'Предупреждение по бюджету';
+                return t('Предупреждение по бюджету');
 
             case 'CONTRACT_EXPIRING':
-                return 'Завершение договора';
+                return t('Завершение договора');
 
             default:
-                return 'Системное уведомление';
+                return t('Системное уведомление');
         }
     }
 
@@ -130,16 +135,16 @@
     function levelLabel(level) {
         switch (level) {
             case 'critical':
-                return 'Критично';
+                return t('Критично');
 
             case 'warning':
-                return 'Внимание';
+                return t('Внимание');
 
             case 'info':
-                return 'Информация';
+                return t('Информация');
 
             default:
-                return level || 'Информация';
+                return t(level || 'Информация');
         }
     }
 
@@ -237,10 +242,10 @@
         }
 
         const labels = {
-            all: 'Все уведомления',
-            unread: 'Непрочитанные',
-            critical: 'Критические',
-            warning: 'Предупреждения'
+            all: t('Все уведомления'),
+            unread: t('Непрочитанные'),
+            critical: t('Критические'),
+            warning: t('Предупреждения')
         };
 
         label.textContent =
@@ -276,13 +281,12 @@
                     <div>
                         <strong>
                             ${state.filter === 'unread'
-                                ? 'Непрочитанных уведомлений нет'
-                                : 'Уведомлений нет'}
+                                ? t('Непрочитанных уведомлений нет')
+                                : t('Уведомлений нет')}
                         </strong>
 
                         <span>
-                            Все контрольные события в выбранной категории
-                            отсутствуют.
+                            ${t('Все контрольные события в выбранной категории отсутствуют.')}
                         </span>
                     </div>
                 </div>
@@ -318,20 +322,34 @@
 
         if (item.software) {
             contextParts.push(
-                escapeHtml(item.software)
+                `<span data-finflow-no-i18n>${escapeHtml(item.software)}</span>`
             );
         }
 
         if (item.invoice_id) {
             contextParts.push(
-                `Счёт #${escapeHtml(item.invoice_id)}`
+                `${escapeHtml(t('Счёт'))} <span data-finflow-no-i18n>#${escapeHtml(item.invoice_id)}</span>`
             );
         }
 
         const context =
             contextParts.length
                 ? contextParts.join(' · ')
-                : 'Системное событие';
+                : t('Системное событие');
+
+        const knownSystemType = [
+            'OVERDUE_INVOICE',
+            'BUDGET_EXCEEDED',
+            'BUDGET_CRITICAL',
+            'BUDGET_WARNING',
+            'CONTRACT_EXPIRING'
+        ].includes(item.type);
+        const message = knownSystemType
+            ? t(item.message || '')
+            : item.message || '';
+        const messageProtection = knownSystemType
+            ? ''
+            : ' data-finflow-no-i18n';
 
         return `
             <article
@@ -355,7 +373,7 @@
                                 ${escapeHtml(levelLabel(item.level))}
                             </span>
 
-                            <h3>
+                            <h3 data-finflow-no-i18n>
                                 ${companyMeta}
                             </h3>
 
@@ -375,14 +393,14 @@
                         ${context}
                     </div>
 
-                    <p class="ff-notification-item-message">
-                        ${escapeHtml(item.message)}
+                    <p class="ff-notification-item-message"${messageProtection}>
+                        ${escapeHtml(message)}
                     </p>
 
                     <div class="ff-notification-item-details">
 
                         <div class="ff-notification-detail-row">
-                            <span>Событие</span>
+                            <span>${escapeHtml(t('Событие'))}</span>
                             <strong>
                                 ${escapeHtml(
                                     notificationTypeLabel(item.type)
@@ -394,9 +412,9 @@
                             item.software
                                 ? `
                                     <div class="ff-notification-detail-row">
-                                        <span>Продукт</span>
+                                        <span>${escapeHtml(t('Продукт'))}</span>
                                         <strong>
-                                            ${escapeHtml(item.software)}
+                                            <span data-finflow-no-i18n>${escapeHtml(item.software)}</span>
                                         </strong>
                                     </div>
                                 `
@@ -407,7 +425,7 @@
                             item.invoice_id
                                 ? `
                                     <div class="ff-notification-detail-row">
-                                        <span>Счёт</span>
+                                        <span>${escapeHtml(t('Счёт'))}</span>
                                         <strong>
                                             #${escapeHtml(item.invoice_id)}
                                         </strong>
@@ -417,14 +435,14 @@
                         }
 
                         <div class="ff-notification-detail-row">
-                            <span>Создано</span>
+                            <span>${escapeHtml(t('Создано'))}</span>
                             <strong>
                                 ${escapeHtml(formatDate(item.created_at))}
                             </strong>
                         </div>
 
                         <div class="ff-notification-detail-message">
-                            ${escapeHtml(item.message)}
+                            <span${messageProtection}>${escapeHtml(message)}</span>
                         </div>
 
                     </div>
@@ -440,8 +458,8 @@
 
                             ${
                                 item.is_read
-                                    ? 'Прочитано'
-                                    : 'Новое уведомление'
+                                    ? t('Прочитано')
+                                    : t('Новое уведомление')
                             }
                         </span>
 
@@ -457,7 +475,7 @@
                                             data-read-id="${escapeHtml(item.id)}">
 
                                             <i class="bi bi-check2"></i>
-                                            Прочитать
+                                            ${escapeHtml(t('Прочитать'))}
                                         </button>
                                     `
                             }
@@ -466,11 +484,11 @@
                                 type="button"
                                 class="ff-notification-delete"
                                 data-delete-id="${escapeHtml(item.id)}"
-                                aria-label="Удалить уведомление"
-                                title="Удалить уведомление">
+                                aria-label="${escapeHtml(t('Удалить уведомление'))}"
+                                title="${escapeHtml(t('Удалить уведомление'))}">
 
                                 <i class="bi bi-trash3"></i>
-                                Удалить
+                                ${escapeHtml(t('Удалить'))}
                             </button>
 
                         </div>

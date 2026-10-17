@@ -4,7 +4,7 @@
 
 {% block head %}
 <link rel="stylesheet"
-      href="{{ url_for('static', filename='css/analytics.css') }}?v=20261016-1">
+      href="{{ url_for('static', filename='css/analytics.css') }}?v=20261017-2">
 {% endblock %}
 
 
@@ -141,7 +141,7 @@
         <div class="ff-analytics-panel-heading">
 
             <div>
-                <div class="ff-section-kicker">
+                <div class="ff-section-kicker" data-i18n="FILTERS">
                     FILTERS
                 </div>
 
@@ -172,14 +172,12 @@
                     <i class="bi bi-building"></i>
 
                     <select id="filterCompany">
-                        <option
-                            value=""
-                            data-i18n-option="All companies">
-                            <span data-i18n="All companies">All companies</span>
+                        <option value="" data-i18n="All companies">
+                            All companies
                         </option>
 
                         {% for company in companies %}
-                        <option value="{{ company.id }}">
+                        <option value="{{ company.id }}" data-finflow-no-i18n>
                             {{ company.name }}
                         </option>
                         {% endfor %}
@@ -204,14 +202,12 @@
                     <i class="bi bi-box"></i>
 
                     <select id="filterProduct">
-                        <option
-                            value=""
-                            data-i18n-option="All products">
-                            <span data-i18n="All products">All products</span>
+                        <option value="" data-i18n="All products">
+                            All products
                         </option>
 
                         {% for product in products %}
-                            <option value="{{ product.code }}">
+                            <option value="{{ product.code }}" data-finflow-no-i18n>
                                 {{ product.name or product.code }}
                             </option>
                         {% endfor %}
@@ -274,20 +270,14 @@
                     </span>
 
                     <div>
-                        <div class="ff-section-kicker">
+                        <div class="ff-section-kicker" data-i18n="COMPANY ANALYSIS">
                             COMPANY ANALYSIS
                         </div>
 
-                        <h3 data-i18n="Spend by company">
-                            <span data-i18n="Expenses by company">Expenses by company</span>
-                        </h3>
+                        <h3 data-i18n="Spend by company">Spend by company</h3>
                     </div>
 
                 </div>
-
-                <span class="ff-analytics-heading-badge">
-                    EUR
-                </span>
 
             </div>
 
@@ -332,20 +322,14 @@
                     </span>
 
                     <div>
-                        <div class="ff-section-kicker">
+                        <div class="ff-section-kicker" data-i18n="PRODUCT ANALYSIS">
                             PRODUCT ANALYSIS
                         </div>
 
-                        <h3 data-i18n="Spend by product">
-                            <span data-i18n="Expenses by product">Expenses by product</span>
-                        </h3>
+                        <h3 data-i18n="Spend by product">Spend by product</h3>
                     </div>
 
                 </div>
-
-                <span class="ff-analytics-heading-badge">
-                    EUR
-                </span>
 
             </div>
 
@@ -394,7 +378,7 @@
                 </span>
 
                 <div>
-                    <div class="ff-section-kicker">
+                    <div class="ff-section-kicker" data-i18n="TIMELINE">
                         TIMELINE
                     </div>
 
@@ -406,7 +390,7 @@
             </div>
 
             <span class="ff-analytics-heading-badge">
-                MONTHLY
+                <span data-i18n="MONTHLY">MONTHLY</span>
             </span>
 
         </div>
@@ -447,7 +431,7 @@
 
 {% block scripts %}
 
-<script src="{{ url_for('static', filename='js/analytics.js') }}?v=20260923-2"></script>
+<script src="{{ url_for('static', filename='js/analytics.js') }}?v=20261017-4"></script>
 
 
 {% endblock %}

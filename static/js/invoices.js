@@ -44,7 +44,7 @@
     function money(value, currency = "EUR") {
         return window.FinFlowMoney
             ? window.FinFlowMoney.formatMoney(value, currency)
-            : `${String(currency || "EUR").toUpperCase()} ${Number(value || 0).toLocaleString("uk-UA", {
+            : `${String(currency || "EUR").toUpperCase()} ${Number(value || 0).toLocaleString(window.finflowI18n?.getLocale?.() || "uk-UA", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
             })}`;
@@ -57,7 +57,7 @@
 
         if (Number.isNaN(date.getTime())) return "—";
 
-        return new Intl.DateTimeFormat("uk-UA", {
+        return new Intl.DateTimeFormat(window.finflowI18n?.getLocale?.() || "uk-UA", {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
@@ -189,7 +189,10 @@
             ])
         ).entries()]
             .sort((a, b) =>
-                String(a[1]).localeCompare(String(b[1]), "uk")
+                String(a[1]).localeCompare(
+                    String(b[1]),
+                    window.finflowI18n?.getLocale?.() || "uk-UA"
+                )
             );
 
         for (const [id, name] of companies) {

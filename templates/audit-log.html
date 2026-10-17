@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Аудит — ElixOR Connect{% endblock %}
+{% block title %}Audit Log — ElixOR Connect{% endblock %}
 
 {% block head %}
 <link
@@ -180,7 +180,7 @@
                 <select id="filterSoftware" class="ff-audit-select">
                     <option value="">Все продукты</option>
                     {% for product in products %}
-                        <option value="{{ product.code }}">
+                        <option value="{{ product.code }}" data-finflow-no-i18n>
                             {{ product.name or product.code }}
                         </option>
                     {% endfor %}
@@ -379,5 +379,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/audit.js') }}?v=20260923"></script>
+<script src="{{ url_for('static', filename='js/audit.js') }}?v=20261017-2"></script>
 {% endblock %}

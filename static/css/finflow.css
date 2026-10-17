@@ -3853,8 +3853,8 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
 
 [data-theme="light"] {
     --ff-app-background: linear-gradient(135deg, #eef3f8 0%, #f7fafd 52%, #edf3f8 100%);
-    --ff-surface-card: linear-gradient(145deg, rgba(255, 255, 255, .88), rgba(246, 249, 253, .76));
-    --ff-surface-panel: linear-gradient(145deg, rgba(255, 255, 255, .82), rgba(246, 249, 252, .74));
+    --ff-surface-card: linear-gradient(145deg, rgba(255, 255, 255, .92), rgba(246, 249, 253, .84));
+    --ff-surface-panel: linear-gradient(145deg, rgba(255, 255, 255, .88), rgba(246, 249, 252, .82));
     --ff-surface-control: linear-gradient(180deg, rgba(255, 255, 255, .76), rgba(248, 250, 252, .62));
     --ff-surface-filter: rgba(255, 255, 255, .76);
     --ff-surface-filter-focus: #fff;
@@ -3874,8 +3874,8 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
     --ff-text-secondary: #334155;
     --ff-text-input: #0f172a;
     --ff-text-nav: #475569;
-    --ff-border-subtle: rgba(71, 85, 105, .13);
-    --ff-border-panel-divider: rgba(71, 85, 105, .10);
+    --ff-border-subtle: rgba(71, 85, 105, .17);
+    --ff-border-panel-divider: rgba(71, 85, 105, .13);
     --ff-border-control: rgba(71, 85, 105, .15);
     --ff-border-control-hover: rgba(71, 85, 105, .22);
     --ff-border-button: rgba(71, 85, 105, .17);
@@ -3905,12 +3905,12 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
     --ff-glass: rgba(255, 255, 255, .62);
     --ff-glass-strong: rgba(255, 255, 255, .82);
     --ff-glass-soft: rgba(255, 255, 255, .54);
-    --ff-border: rgba(71, 85, 105, .14);
-    --ff-border-light: rgba(71, 85, 105, .18);
+    --ff-border: rgba(71, 85, 105, .17);
+    --ff-border-light: rgba(71, 85, 105, .21);
     --ff-border-accent: rgba(37, 99, 235, .22);
     --ff-text: #0f172a;
-    --ff-text-soft: #475569;
-    --ff-text-muted: #64748b;
+    --ff-text-soft: #334155;
+    --ff-text-muted: #58677b;
     --ff-accent: #2563eb;
     --ff-accent-2: #0891b2;
     --ff-green: #059669;
@@ -5037,4 +5037,16 @@ body.ff-sidebar-collapsed .ff-brand-row .ff-sidebar-toggle {
     .users-page .ff-icon-button {
         transition: none !important;
     }
+}
+
+
+/* Dashboard: compact currency amounts in the total budget KPI only. */
+#kpi-total-budget {
+    font-size: 0.85em;
+    line-height: 1.08;
+}
+
+#kpi-total-budget > div {
+    line-height: 1.08;
+    white-space: nowrap;
 }

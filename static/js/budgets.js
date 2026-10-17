@@ -24,7 +24,7 @@
     function money(value, currency) {
         return window.FinFlowMoney
             ? window.FinFlowMoney.formatMoney(value, currency)
-            : `${String(currency || "EUR").toUpperCase()} ${Number(value || 0).toLocaleString("uk-UA", {
+            : `${String(currency || "EUR").toUpperCase()} ${Number(value || 0).toLocaleString(window.finflowI18n?.getLocale?.() || "uk-UA", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
             })}`;
@@ -134,7 +134,7 @@
             return value;
         }
 
-        return new Intl.DateTimeFormat("uk-UA", {
+        return new Intl.DateTimeFormat(window.finflowI18n?.getLocale?.() || "uk-UA", {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
@@ -609,6 +609,11 @@
             "submit",
             saveBudget
         );
+    });
+
+    window.addEventListener("finflow-language-changed", () => {
+        renderStats();
+        render();
     });
 
     window.openCreateBudgetModal = openCreateBudgetModal;

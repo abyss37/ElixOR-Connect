@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Companies · ElixOR Connect{% endblock %}
+{% block title %}Companies — ElixOR Connect{% endblock %}
 
 {% block head %}
 <link rel="stylesheet"
@@ -185,7 +185,7 @@ Companies, contracts and financial relationships in one workspace.
 
                         <span class="ff-company-title">
 
-                            <strong>{{ company.name }}</strong>
+                            <strong data-finflow-no-i18n>{{ company.name }}</strong>
 
                             <small>
                                 <span data-i18n="Company">Company</span> #{{ company.id }}
@@ -549,7 +549,7 @@ Companies, contracts and financial relationships in one workspace.
                     </span>
 
                     <span>
-                        <strong>{{ company.name }}</strong>
+                        <strong data-finflow-no-i18n>{{ company.name }}</strong>
                         <small>#{{ company.id }}</small>
                     </span>
 
@@ -829,6 +829,6 @@ Companies, contracts and financial relationships in one workspace.
     window.FIN_FLOW_CSRF_TOKEN = {{ csrf_token()|tojson }};
 </script>
 
-<script src="{{ url_for('static', filename='js/companies.js') }}?v=20261016-1"></script>
+<script src="{{ url_for('static', filename='js/companies.js') }}?v=20261017-2"></script>
 
 {% endblock %}
