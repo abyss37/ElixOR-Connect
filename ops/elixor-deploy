@@ -493,6 +493,28 @@ UPDATED=1
 git merge --ff-only "$TARGET_COMMIT"
 
 echo
+echo "===== NORMALIZE APPLICATION FILE PERMISSIONS ====="
+
+for directory in templates static; do
+    if [ ! -d "$APP_DIR/$directory" ]; then
+        echo "ERROR: Required directory is missing: $directory" >&2
+        exit 1
+    fi
+done
+
+find "$APP_DIR/templates" "$APP_DIR/static" -type d \
+    -exec chmod 0755 {} +
+find "$APP_DIR/templates" "$APP_DIR/static" -type f \
+    -exec chmod 0644 {} +
+
+if ! runuser -u accounting -- test -r "$APP_DIR/templates/error.html"; then
+    echo "ERROR: accounting cannot read templates/error.html" >&2
+    exit 1
+fi
+
+echo "Template and static file permissions normalized."
+
+echo
 echo "===== INSTALL DEPENDENCIES ====="
 
 "$PYTHON" -m pip install \
