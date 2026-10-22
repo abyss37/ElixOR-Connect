@@ -4,7 +4,7 @@
 
 {% block head %}
 <link rel="stylesheet"
-      href="{{ url_for('static', filename='css/companies.css') }}?v=20261016-4">
+      href="{{ url_for('static', filename='css/companies.css') }}?v=20261022-1">
 {% endblock %}
 
 
@@ -166,7 +166,8 @@ Companies, contracts and financial relationships in one workspace.
         <article
             class="ff-company-card"
             data-company-id="{{ company.id }}"
-            data-company-name="{{ company.name|lower }}">
+            data-company-name="{{ company.name|lower }}"
+            data-company-status="{{ company.status }}">
 
             <!-- CARD MAIN -->
             <div class="ff-company-card-main">
@@ -189,6 +190,7 @@ Companies, contracts and financial relationships in one workspace.
 
                             <small>
                                 <span data-i18n="Company">Company</span> #{{ company.id }}
+                                <span class="ff-status-badge ff-company-status-badge {% if company.status == 'ARCHIVED' %}ff-company-status-archived{% else %}ff-company-status-active{% endif %}" data-i18n="{{ 'Archived' if company.status == 'ARCHIVED' else 'Active' }}">{{ 'Archived' if company.status == 'ARCHIVED' else 'Active' }}</span>
                             </small>
 
                         </span>
@@ -229,15 +231,17 @@ Companies, contracts and financial relationships in one workspace.
 
                         </button>
 
-                        <button
-                            type="button"
-                            class="is-danger"
-                            data-company-delete="{{ company.id }}">
-
-                            <i class="bi bi-trash3"></i>
-                            <span data-i18n="Delete">Delete</span>
-
+                        {% if company.status == 'ARCHIVED' %}
+                        <button type="button" data-company-reactivate="{{ company.id }}">
+                            <i class="bi bi-arrow-counterclockwise"></i>
+                            <span data-i18n="Reactivate">Reactivate</span>
                         </button>
+                        {% else %}
+                        <button type="button" class="is-danger" data-company-archive="{{ company.id }}">
+                            <i class="bi bi-archive"></i>
+                            <span data-i18n="Archive company">Archive company</span>
+                        </button>
+                        {% endif %}
 
                     </div>
 
@@ -537,7 +541,8 @@ Companies, contracts and financial relationships in one workspace.
             <div
                 class="ff-company-list-row"
                 data-company-id="{{ company.id }}"
-                data-company-name="{{ company.name|lower }}">
+                data-company-name="{{ company.name|lower }}"
+                data-company-status="{{ company.status }}">
 
                 <button
                     type="button"
@@ -550,7 +555,7 @@ Companies, contracts and financial relationships in one workspace.
 
                     <span>
                         <strong data-finflow-no-i18n>{{ company.name }}</strong>
-                        <small>#{{ company.id }}</small>
+                        <small>#{{ company.id }} <span class="ff-status-badge ff-company-status-badge {% if company.status == 'ARCHIVED' %}ff-company-status-archived{% else %}ff-company-status-active{% endif %}" data-i18n="{{ 'Archived' if company.status == 'ARCHIVED' else 'Active' }}">{{ 'Archived' if company.status == 'ARCHIVED' else 'Active' }}</span></small>
                     </span>
 
                 </button>
@@ -588,15 +593,17 @@ Companies, contracts and financial relationships in one workspace.
 
                         </button>
 
-                        <button
-                            type="button"
-                            class="is-danger"
-                            data-company-delete="{{ company.id }}">
-
-                            <i class="bi bi-trash3"></i>
-                            <span data-i18n="Delete">Delete</span>
-
+                        {% if company.status == 'ARCHIVED' %}
+                        <button type="button" data-company-reactivate="{{ company.id }}">
+                            <i class="bi bi-arrow-counterclockwise"></i>
+                            <span data-i18n="Reactivate">Reactivate</span>
                         </button>
+                        {% else %}
+                        <button type="button" class="is-danger" data-company-archive="{{ company.id }}">
+                            <i class="bi bi-archive"></i>
+                            <span data-i18n="Archive company">Archive company</span>
+                        </button>
+                        {% endif %}
 
                     </div>
 
@@ -829,6 +836,6 @@ Companies, contracts and financial relationships in one workspace.
     window.FIN_FLOW_CSRF_TOKEN = {{ csrf_token()|tojson }};
 </script>
 
-<script src="{{ url_for('static', filename='js/companies.js') }}?v=20261017-2"></script>
+<script src="{{ url_for('static', filename='js/companies.js') }}?v=20261022-1"></script>
 
 {% endblock %}

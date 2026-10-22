@@ -1510,7 +1510,7 @@
        DELETE COMPANY
        ========================================================= */
 
-    async function deleteCompany(companyId) {
+    async function archiveCompany(companyId) {
         if (!canManageCompanies) {
             return;
         }
@@ -1524,9 +1524,8 @@
 
         const confirmed =
             window.confirm(
-                `${window.finflowI18n?.translateSmart("Delete company") || "Delete company"} «${company.name}»?\n\n` +
-                `${window.finflowI18n?.translateSmart("Deleting the company will also remove its invoices, budgets, and related notifications.") || "Deleting the company will also remove its invoices, budgets, and related notifications."}\n\n` +
-                (window.finflowI18n?.translateSmart("The audit history will be preserved.") || "The audit history will be preserved.")
+                `${window.finflowI18n?.translateSmart("Archive company") || "Archive company"} «${company.name}»?\n\n` +
+                (window.finflowI18n?.translateSmart("Archiving keeps invoices and budgets available in history.") || "Archiving keeps invoices and budgets available in history.")
             );
 
         if (!confirmed) {
@@ -1553,7 +1552,7 @@
             if (!response.ok) {
                 throw new Error(
                     result.message ||
-                    "Не удалось удалить компанию."
+                    "Could not archive company."
                 );
             }
 
@@ -1564,8 +1563,24 @@
 
             window.alert(
                 error.message ||
-                "Не удалось удалить компанию."
+                "Could not archive company."
             );
+        }
+    }
+
+    async function reactivateCompany(companyId) {
+        if (!canManageCompanies) return;
+        try {
+            const response = await fetch(`/companies/${companyId}/reactivate`, {
+                method: "POST",
+                headers: { "X-CSRF-Token": csrfToken() },
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(result.message || "Could not reactivate company.");
+            window.location.reload();
+        } catch (error) {
+            console.error(error);
+            window.alert(error.message || "Could not reactivate company.");
         }
     }
 
@@ -1942,22 +1957,30 @@
             }
 
 
-            const deleteButton =
+            const archiveButton =
                 event.target.closest(
-                    "[data-company-delete]"
+                    "[data-company-archive]"
                 );
 
-            if (deleteButton) {
+            if (archiveButton) {
                 event.preventDefault();
 
                 closeAllCompanyMenus();
 
-                deleteCompany(
+                archiveCompany(
                     Number(
-                        deleteButton.dataset.companyDelete
+                        archiveButton.dataset.companyArchive
                     )
                 );
 
+                return;
+            }
+
+            const reactivateButton = event.target.closest("[data-company-reactivate]");
+            if (reactivateButton) {
+                event.preventDefault();
+                closeAllCompanyMenus();
+                reactivateCompany(Number(reactivateButton.dataset.companyReactivate));
                 return;
             }
 
@@ -2233,6 +2256,7 @@
                             ".ff-list-company strong"
                         )?.textContent?.trim() ||
                         "",
+                    status: row?.dataset.companyStatus || "ACTIVE",
                 };
             });
 

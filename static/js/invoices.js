@@ -971,6 +971,17 @@
                         invoice.contract_details
                     );
 
+                const companySelect = form.elements.company_name;
+                const existingCompanyOption = Array.from(companySelect.options)
+                    .find(option => option.value === (invoice.company_name || ""));
+                if (!existingCompanyOption && invoice.company_name) {
+                    const option = document.createElement("option");
+                    option.value = invoice.company_name;
+                    option.textContent = `${invoice.company_name} (${window.finflowI18n?.translateSmart("Archived") || "Archived"})`;
+                    option.dataset.historicalArchivedCompany = "true";
+                    companySelect.append(option);
+                }
+
                 form.elements.company_name.value =
                     invoice.company_name || "";
 
@@ -1078,6 +1089,8 @@
 
             if (els.createFormElement) {
                 els.createFormElement.reset();
+                els.createFormElement.querySelectorAll("option[data-historical-archived-company]")
+                    .forEach(option => option.remove());
             }
 
             if (els.createError) {

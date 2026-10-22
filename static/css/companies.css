@@ -996,6 +996,21 @@
     background: rgba(100, 116, 139, .12);
 }
 
+.ff-company-status-badge {
+    margin-inline-start: 6px;
+    vertical-align: middle;
+}
+
+.ff-company-status-active {
+    color: #bbf7d0;
+    background: rgba(34, 197, 94, .09);
+}
+
+.ff-company-status-archived {
+    color: #cbd5e1;
+    background: rgba(100, 116, 139, .16);
+}
+
 .ff-invoice-actions {
     display: flex;
     align-items: center;
@@ -2811,6 +2826,16 @@
     color: #991b1b !important;
     background: rgba(254,226,226,.94) !important;
     border-color: rgba(153,27,27,.24) !important;
+}
+
+[data-theme="light"] .ff-company-status-active {
+    color: #166534 !important;
+    background: rgba(220,252,231,.92) !important;
+}
+
+[data-theme="light"] .ff-company-status-archived {
+    color: #475569 !important;
+    background: rgba(226,232,240,.92) !important;
 }
 
 /* Invoice rows remain clean — no gray slab */

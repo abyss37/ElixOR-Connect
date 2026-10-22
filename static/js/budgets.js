@@ -408,6 +408,8 @@
 
         if (!modal || !form) return;
 
+        removeHistoricalArchivedCompanyOption();
+
         form.reset();
 
         $("#budgetEditId").value = "";
@@ -441,6 +443,17 @@
 
         if (!budget) return;
 
+        if (budget.company_status === "ARCHIVED") {
+            const select = $("#budgetEditCompanyId");
+            if (!Array.from(select.options).some(option => option.value === String(budget.company_id))) {
+                const option = document.createElement("option");
+                option.value = String(budget.company_id);
+                option.textContent = `${budget.company_name} (${window.finflowI18n?.translateSmart("Archived") || "Archived"})`;
+                option.dataset.historicalArchivedCompany = "true";
+                select.append(option);
+            }
+        }
+
         $("#budgetEditId").value = budget.id;
         $("#budgetEditCompanyId").value = budget.company_id;
         $("#budgetEditSoftware").value = budget.software;
@@ -472,6 +485,12 @@
     function closeBudgetModal() {
         $("#budgetEditModal")?.classList.add("hidden");
         document.body.classList.remove("overflow-hidden");
+        removeHistoricalArchivedCompanyOption();
+    }
+
+    function removeHistoricalArchivedCompanyOption() {
+        $("#budgetEditCompanyId")?.querySelectorAll("option[data-historical-archived-company]")
+            .forEach(option => option.remove());
     }
 
     async function saveBudget(event) {

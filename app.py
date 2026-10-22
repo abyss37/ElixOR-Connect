@@ -706,9 +706,35 @@ class Product(db.Model):
 
 
 class Company(db.Model):
+    __table_args__ = (
+        db.CheckConstraint(
+            "status IN ('ACTIVE', 'ARCHIVED')",
+            name="ck_company_status",
+        ),
+    )
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), unique=True, nullable=False)
     stamp_filename = db.Column(db.String(255), nullable=True)
+    status = db.Column(
+        db.String(20),
+        nullable=False,
+        default="ACTIVE",
+        server_default="ACTIVE",
+    )
+    created_at = db.Column(
+        db.DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(timezone.utc),
+        server_default=db.func.now(),
+    )
+    updated_at = db.Column(
+        db.DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(timezone.utc),
+        server_default=db.func.now(),
+        onupdate=db.func.now(),
+    )
     invoices = db.relationship("Invoice", backref="company", lazy=True, cascade="all, delete-orphan")
     budgets = db.relationship("CompanyBudget", backref="company", lazy=True, cascade="all, delete-orphan")
 
@@ -1627,6 +1653,7 @@ def budgets_page():
 
     companies = (
         Company.query
+        .filter_by(status="ACTIVE")
         .order_by(Company.name.asc())
         .all()
     )
@@ -1679,6 +1706,7 @@ def budgets_page():
             "id": budget.id,
             "company_id": budget.company_id,
             "company_name": budget.company.name if budget.company else "",
+            "company_status": budget.company.status if budget.company else "ACTIVE",
             "software": software,
             "currency": currency,
             "symbol": currency_symbol(currency),
@@ -1716,6 +1744,7 @@ def invoices_page():
 
     companies = (
         Company.query
+        .filter_by(status="ACTIVE")
         .order_by(Company.name.asc())
         .all()
     )
@@ -1978,34 +2007,69 @@ def delete_company(company_id):
     try:
         company_id_value = company.id
         company_name = company.name
-        invoice_count = len(company.invoices)
-        budget_count = len(company.budgets)
+        if company.status == "ARCHIVED":
+            return jsonify({
+                "status": "ok",
+                "company_id": company_id_value,
+                "company_name": company_name,
+                "company_status": company.status,
+            })
 
+        company.status = "ARCHIVED"
         write_audit_log(
-            action="COMPANY_DELETED",
+            action="COMPANY_ARCHIVED",
             entity_type="company",
             entity_id=company_id_value,
             company_id=company_id_value,
-            description=f"Company {company_name} deleted",
-            details={
-                "company_name": company_name,
-                "invoice_count": invoice_count,
-                "budget_count": budget_count,
-            },
+            description=f"Company {company_name} archived",
+            details={"company_name": company_name},
         )
-
-        db.session.delete(company)
         db.session.commit()
 
         return jsonify({
             "status": "ok",
             "company_id": company_id_value,
             "company_name": company_name,
+            "company_status": company.status,
         })
 
     except Exception:
         db.session.rollback()
         return api_error_response("Could not delete company.", 400, "Could not delete company")
+
+
+@app.route("/companies/<int:company_id>/reactivate", methods=["POST"])
+@role_required("admin", "manager")
+def reactivate_company(company_id):
+    company = Company.query.get_or_404(company_id)
+    try:
+        if company.status == "ACTIVE":
+            return jsonify({
+                "status": "ok",
+                "company_id": company.id,
+                "company_name": company.name,
+                "company_status": company.status,
+            })
+
+        company.status = "ACTIVE"
+        write_audit_log(
+            action="COMPANY_REACTIVATED",
+            entity_type="company",
+            entity_id=company.id,
+            company_id=company.id,
+            description=f"Company {company.name} reactivated",
+            details={"company_name": company.name},
+        )
+        db.session.commit()
+        return jsonify({
+            "status": "ok",
+            "company_id": company.id,
+            "company_name": company.name,
+            "company_status": company.status,
+        })
+    except Exception:
+        db.session.rollback()
+        return api_error_response("Could not reactivate company.", 400, "Could not reactivate company")
 
 
 
@@ -3294,10 +3358,20 @@ def generator():
         current_user=get_current_user(),
     )
 
-def get_or_create_company(name):
+class ArchivedCompanyError(ValueError):
+    """Raised when a new financial operation targets an archived company."""
+
+
+def get_or_create_company(name, allow_archived_company_id=None):
     company = Company.query.filter(
         func.lower(Company.name) == name.lower()
     ).first()
+
+    if company and company.status == "ARCHIVED":
+        if company.id != allow_archived_company_id:
+            raise ArchivedCompanyError(
+                "This company is archived. Reactivate it before creating new financial records."
+            )
 
     if not company:
         company = Company(name=name)
@@ -3406,6 +3480,9 @@ def add_invoice():
 
         db.session.commit()
         return redirect(url_for("index"))
+    except ArchivedCompanyError as exc:
+        db.session.rollback()
+        return jsonify({"status": "error", "code": "company_archived", "message": str(exc)}), 409
     except (ValueError, TypeError) as exc:
         db.session.rollback()
         return jsonify({"status": "error", "message": str(exc)}), 400
@@ -3455,6 +3532,9 @@ def save_generated_invoice():
 
         db.session.commit()
         return jsonify({"status": "ok", "invoice_id": new_inv.id})
+    except ArchivedCompanyError as exc:
+        db.session.rollback()
+        return jsonify({"status": "error", "code": "company_archived", "message": str(exc)}), 409
     except (ValueError, TypeError) as exc:
         db.session.rollback()
         return jsonify({"status": "error", "message": str(exc)}), 400
@@ -3473,7 +3553,10 @@ def update_generated_invoice(invoice_id):
 
     try:
         company_name, invoice_number, invoice_date, completion_date, software, currency, amount, contract_details = invoice_payload(request.json or {})
-        company = get_or_create_company(company_name)
+        company = get_or_create_company(
+            company_name,
+            allow_archived_company_id=inv.company_id,
+        )
 
         duplicate = duplicate_invoice(
             company.id,
@@ -3612,6 +3695,9 @@ def update_generated_invoice(invoice_id):
             "invoice_id": inv.id,
         })
 
+    except ArchivedCompanyError as exc:
+        db.session.rollback()
+        return jsonify({"status": "error", "code": "company_archived", "message": str(exc)}), 409
     except (ValueError, TypeError) as exc:
         db.session.rollback()
         return jsonify({
@@ -3755,6 +3841,11 @@ def update_company_budget():
             currency=currency,
         ).first()
 
+        if company.status == "ARCHIVED" and budget is None:
+            raise ArchivedCompanyError(
+                "This company is archived. Reactivate it before creating a budget."
+            )
+
         if not budget:
             old_amount = Decimal("0.00")
             budget = CompanyBudget(
@@ -3797,6 +3888,9 @@ def update_company_budget():
             "currency": currency,
         })
 
+    except ArchivedCompanyError as exc:
+        db.session.rollback()
+        return jsonify({"status": "error", "code": "company_archived", "message": str(exc)}), 409
     except (ValueError, TypeError) as exc:
         db.session.rollback()
         return jsonify({
@@ -3826,6 +3920,11 @@ def update_company_completion_date():
             software=software,
             currency=currency,
         ).first()
+
+        if company.status == "ARCHIVED" and budget is None:
+            raise ArchivedCompanyError(
+                "This company is archived. Reactivate it before creating a budget."
+            )
 
         if not budget:
             old_completion_date = None
@@ -3870,6 +3969,9 @@ def update_company_completion_date():
             "currency": currency,
         })
 
+    except ArchivedCompanyError as exc:
+        db.session.rollback()
+        return jsonify({"status": "error", "code": "company_archived", "message": str(exc)}), 409
     except (ValueError, TypeError) as exc:
         db.session.rollback()
         return jsonify({
