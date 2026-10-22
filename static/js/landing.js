@@ -1,20 +1,23 @@
 (function () {
     "use strict";
     const THEME_STORAGE_KEY = "finflow-theme";
+    let sessionTheme = null;
 
     function getTheme() {
         try {
             const saved = localStorage.getItem(THEME_STORAGE_KEY);
-            if (saved === "light" || saved === "dark") return saved;
+            if (saved === "light" || saved === "dark") {
+                sessionTheme = saved;
+                return saved;
+            }
         } catch (e) {}
 
-        return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches
-            ? "light"
-            : "dark";
+        return sessionTheme || "dark";
     }
 
     function setTheme(theme) {
         const nextTheme = theme === "light" ? "light" : "dark";
+        sessionTheme = nextTheme;
         document.documentElement.setAttribute("data-theme", nextTheme);
         try { localStorage.setItem(THEME_STORAGE_KEY, nextTheme); } catch (e) {}
         updateThemeToggle();
@@ -371,7 +374,6 @@
             });
         }
 
-        document.documentElement.setAttribute("data-theme", getTheme());
         window.addEventListener("finflow-theme-changed", updateThemeToggle);
         updateThemeToggle();
 

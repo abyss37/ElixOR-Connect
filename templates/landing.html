@@ -4,6 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <script>
+        (function () {
+            try {
+                var theme = localStorage.getItem('finflow-theme');
+                if (theme === 'light' || theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', theme);
+                }
+            } catch (error) {
+                /* Keep the dark theme declared on <html> as the fallback. */
+            }
+        })();
+    </script>
+
     <title>ElixOR Connect — Financial Infrastructure</title>
     <meta name="description"
           content="ElixOR Connect — self-hosted financial operations and company control platform.">
