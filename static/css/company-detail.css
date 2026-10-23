@@ -1,0 +1,336 @@
+.ff-company-detail-page {
+    display: grid;
+    gap: 18px;
+}
+
+.ff-company-detail-actions,
+.ff-company-detail-heading,
+.ff-company-detail-section-heading,
+.ff-contact-name-line,
+.ff-contact-actions,
+.ff-contact-modal-heading,
+.ff-contact-modal-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.ff-company-detail-actions {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.ff-company-detail-summary,
+.ff-company-detail-section {
+    padding: 22px;
+    min-width: 0;
+}
+
+.ff-company-detail-heading h2,
+.ff-company-detail-section-heading h2,
+.ff-contact-modal-heading h2 {
+    margin: 5px 0 10px;
+    color: var(--ff-text-primary);
+}
+
+.ff-company-detail-id,
+.ff-company-detail-count {
+    color: var(--ff-text-muted);
+    font-weight: 700;
+}
+
+.ff-company-detail-dates {
+    display: flex;
+    gap: 32px;
+    margin-top: 22px;
+    padding-top: 17px;
+    border-top: 1px solid var(--ff-border);
+}
+
+.ff-company-detail-dates div,
+.ff-company-related-row div {
+    display: grid;
+    gap: 5px;
+}
+
+.ff-company-detail-dates span,
+.ff-company-detail-dates strong,
+.ff-company-related-row small {
+    color: var(--ff-text-muted);
+    font-size: 12px;
+}
+
+.ff-company-detail-dates strong {
+    color: var(--ff-text-primary);
+    font-weight: 600;
+}
+
+.ff-contact-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.ff-contact-card {
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid var(--ff-border);
+    border-radius: 14px;
+    background: var(--ff-surface-card);
+}
+
+.ff-contact-card.is-archived {
+    opacity: .76;
+}
+
+.ff-contact-card-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.ff-contact-avatar {
+    display: grid;
+    place-items: center;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    color: var(--ff-accent);
+    background: var(--ff-surface-control);
+}
+
+.ff-contact-main { min-width: 0; }
+
+.ff-contact-name-line {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.ff-contact-name-line h3 {
+    margin: 0;
+    color: var(--ff-text-primary);
+    overflow-wrap: anywhere;
+    font-size: 15px;
+}
+
+.ff-contact-main p,
+.ff-contact-notes {
+    margin: 5px 0 0;
+    color: var(--ff-text-muted);
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.ff-contact-primary {
+    padding: 4px 7px;
+    border-radius: 7px;
+    color: #166534;
+    background: rgba(34, 197, 94, .12);
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.ff-contact-details {
+    display: grid;
+    gap: 7px;
+    margin-top: 15px;
+}
+
+.ff-contact-details a {
+    display: flex;
+    gap: 8px;
+    min-width: 0;
+    color: var(--ff-text-secondary);
+    font-size: 12px;
+    overflow-wrap: anywhere;
+    text-decoration: none;
+}
+
+.ff-contact-details a:hover { color: var(--ff-accent); }
+.ff-contact-details i { color: var(--ff-text-muted); }
+
+.ff-contact-actions {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid var(--ff-border);
+}
+
+.ff-contact-actions button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    border: 0;
+    border-radius: 7px;
+    color: var(--ff-text-secondary);
+    background: transparent;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.ff-contact-actions button:hover { background: var(--ff-surface-control-hover); }
+.ff-contact-actions button.is-danger { color: var(--ff-state-danger); }
+
+.ff-company-financial-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.ff-company-related-list {
+    display: grid;
+    margin-top: 12px;
+}
+
+.ff-company-related-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid var(--ff-border);
+    color: var(--ff-text-primary);
+    font-size: 12px;
+}
+
+.ff-company-related-row:first-child { border-top: 0; }
+.ff-company-related-row strong { overflow-wrap: anywhere; }
+
+.ff-company-detail-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 76px;
+    color: var(--ff-text-muted);
+    font-size: 13px;
+}
+
+.ff-contact-modal {
+    position: fixed;
+    z-index: 1200;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 18px;
+}
+
+.ff-contact-modal.hidden { display: none; }
+.ff-contact-modal-backdrop { position: absolute; inset: 0; background: rgba(2, 6, 23, .68); }
+
+.ff-contact-modal-card {
+    position: relative;
+    width: min(620px, 100%);
+    max-height: min(90vh, 820px);
+    overflow: auto;
+    padding: 22px;
+    border: 1px solid var(--ff-border);
+    border-radius: 18px;
+    background: var(--ff-surface-modal);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, .28);
+    color-scheme: dark;
+    --ff-contact-input-autofill: #334155;
+}
+
+.ff-contact-modal-heading { margin-bottom: 16px; }
+.ff-contact-modal-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 31px;
+    width: 31px;
+    height: 31px;
+    padding: 0;
+    color: rgba(148, 163, 184, .65);
+    background: rgba(148, 163, 184, .05);
+    border: 1px solid rgba(148, 163, 184, .08);
+    border-radius: 9px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color .18s ease, background .18s ease, border-color .18s ease;
+}
+.ff-contact-modal-close:hover {
+    color: #f8fafc;
+    background: rgba(148, 163, 184, .1);
+}
+.ff-contact-modal-close:focus-visible {
+    outline: 2px solid var(--ff-accent);
+    outline-offset: 2px;
+}
+.ff-contact-modal-close i { display: block; line-height: 1; }
+.ff-contact-modal-card form { display: grid; gap: 13px; }
+.ff-contact-modal-card form > label,
+.ff-contact-form-row label { display: grid; gap: 6px; color: var(--ff-text-secondary); font-size: 12px; }
+.ff-contact-form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.ff-contact-modal-card input:not([type="checkbox"]):not([type="hidden"]),
+.ff-contact-modal-card textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 11px;
+    border: 1px solid var(--ff-border-control);
+    border-radius: 9px;
+    outline: none;
+    color: var(--ff-text-input);
+    background: var(--ff-surface-control-hover);
+    -webkit-appearance: none;
+    appearance: none;
+    font: inherit;
+}
+.ff-contact-modal-card input::placeholder,
+.ff-contact-modal-card textarea::placeholder { color: var(--ff-text-muted); opacity: 1; }
+.ff-contact-modal-card input:not([type="checkbox"]):not([type="hidden"]):hover:not(:disabled),
+.ff-contact-modal-card textarea:hover:not(:disabled) {
+    border-color: var(--ff-border-control-hover);
+}
+.ff-contact-modal-card input:not([type="checkbox"]):not([type="hidden"]):focus,
+.ff-contact-modal-card textarea:focus {
+    border-color: var(--ff-focus-border);
+    background: var(--ff-surface-control-focus);
+    box-shadow: var(--ff-focus-ring);
+}
+.ff-contact-modal-card input[type="checkbox"] { accent-color: var(--ff-accent); }
+.ff-contact-modal-card input:-webkit-autofill,
+.ff-contact-modal-card input:-webkit-autofill:hover,
+.ff-contact-modal-card input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--ff-text-input);
+    -webkit-box-shadow: 0 0 0 1000px var(--ff-contact-input-autofill) inset;
+}
+.ff-contact-modal-card textarea { resize: vertical; }
+.ff-contact-primary-toggle { display: flex !important; align-items: center; gap: 8px !important; }
+.ff-contact-form-error { margin: 0; color: var(--ff-state-danger); font-size: 12px; }
+.ff-contact-form-error.hidden { display: none; }
+.ff-contact-modal-actions { justify-content: flex-end; margin-top: 4px; }
+
+@media (max-width: 760px) {
+    .ff-company-detail-summary,
+    .ff-company-detail-section { padding: 16px; }
+    .ff-company-financial-grid { grid-template-columns: 1fr; }
+    .ff-company-detail-dates { flex-direction: column; gap: 12px; }
+    .ff-company-related-row { grid-template-columns: minmax(0, 1fr) auto; }
+    .ff-company-related-row .ff-status-badge { grid-column: 1 / -1; justify-self: start; }
+}
+
+[data-theme="light"] .ff-contact-card { background: var(--ff-surface-card); }
+[data-theme="light"] .ff-contact-modal-card {
+    background: var(--ff-surface-modal);
+    color-scheme: light;
+    --ff-contact-input-autofill: #fff;
+}
+[data-theme="light"] .ff-contact-modal-close {
+    color: var(--ff-text-muted);
+    background: rgba(241, 245, 249, .8);
+    border-color: rgba(71, 85, 105, .12);
+}
+[data-theme="light"] .ff-contact-modal-close:hover {
+    color: var(--ff-text-primary);
+    background: rgba(226, 232, 240, .9);
+}
+[data-theme="light"] .ff-contact-modal-card input:not([type="checkbox"]):not([type="hidden"]),
+[data-theme="light"] .ff-contact-modal-card textarea {
+    background: #fff;
+}

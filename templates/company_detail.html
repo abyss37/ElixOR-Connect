@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}{{ company.name }} · ElixOR Connect{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/company-detail.css') }}?v=20261023-2">
+{% endblock %}
+
+{% block page_icon %}
+<span class="ff-page-icon"><i class="bi bi-building"></i></span>
+{% endblock %}
+
+{% block page_title %}<span data-finflow-no-i18n>{{ company.name }}</span>{% endblock %}
+
+{% block page_subtitle %}
+<span data-i18n="Company profile and business contacts.">Company profile and business contacts.</span>
+{% endblock %}
+
+{% block content %}
+<main class="ff-page ff-company-detail-page" data-company-id="{{ company.id }}" data-company-status="{{ company.status }}">
+    <div class="ff-company-detail-actions">
+        <a class="ff-btn ff-btn-secondary" href="{{ url_for('companies_page') }}">
+            <i class="bi bi-arrow-left"></i><span data-i18n="All companies">All companies</span>
+        </a>
+        {% if current_user and current_user.role in ['admin', 'manager'] and company.status == 'ACTIVE' %}
+        <button class="ff-btn ff-btn-primary" type="button" data-contact-create>
+            <i class="bi bi-person-plus"></i><span data-i18n="Add contact">Add contact</span>
+        </button>
+        {% endif %}
+    </div>
+
+    <section class="ff-company-detail-summary ff-panel">
+        <div class="ff-company-detail-heading">
+            <div>
+                <span class="ff-page-eyebrow" data-i18n="Company">Company</span>
+                <h2 data-finflow-no-i18n>{{ company.name }}</h2>
+                <span class="ff-status-badge {{ 'ff-company-status-active' if company.status == 'ACTIVE' else 'ff-company-status-archived' }}" data-i18n="{{ 'Active' if company.status == 'ACTIVE' else 'Archived' }}">{{ 'Active' if company.status == 'ACTIVE' else 'Archived' }}</span>
+            </div>
+            <span class="ff-company-detail-id">#{{ company.id }}</span>
+        </div>
+        <div class="ff-company-detail-dates">
+            <div><span data-i18n="Created">Created</span><strong>{{ company_created_at }} UTC</strong></div>
+            <div><span data-i18n="Last updated">Last updated</span><strong>{{ company_updated_at }} UTC</strong></div>
+        </div>
+    </section>
+
+    <section class="ff-company-detail-section ff-panel">
+        <div class="ff-company-detail-section-heading">
+            <div><span class="ff-page-eyebrow" data-i18n="PEOPLE">PEOPLE</span><h2 data-i18n="Contacts">Contacts</h2></div>
+            <span class="ff-company-detail-count">{{ contacts|length }}</span>
+        </div>
+        <div class="ff-contact-list">
+            {% for contact in contacts %}
+            <article class="ff-contact-card {{ 'is-archived' if contact.status == 'ARCHIVED' else '' }}" data-contact-id="{{ contact.id }}">
+                <div class="ff-contact-card-top">
+                    <div class="ff-contact-avatar"><i class="bi bi-person"></i></div>
+                    <div class="ff-contact-main">
+                        <div class="ff-contact-name-line">
+                            <h3 data-finflow-no-i18n>{{ contact.full_name }}</h3>
+                            {% if contact.is_primary and contact.status == 'ACTIVE' %}<span class="ff-contact-primary" data-i18n="Primary contact">Primary contact</span>{% endif %}
+                            {% if contact.status == 'ARCHIVED' %}<span class="ff-status-badge ff-company-status-archived" data-i18n="Archived">Archived</span>{% endif %}
+                        </div>
+                        {% if contact.job_title %}<p data-finflow-no-i18n>{{ contact.job_title }}</p>{% endif %}
+                    </div>
+                </div>
+                <div class="ff-contact-details">
+                    {% if contact.email %}<a href="mailto:{{ contact.email }}" data-finflow-no-i18n><i class="bi bi-envelope"></i>{{ contact.email }}</a>{% endif %}
+                    {% if contact.phone %}<a href="tel:{{ contact.phone }}" data-finflow-no-i18n><i class="bi bi-telephone"></i>{{ contact.phone }}</a>{% endif %}
+                    {% if contact.mobile %}<a href="tel:{{ contact.mobile }}" data-finflow-no-i18n><i class="bi bi-phone"></i>{{ contact.mobile }}</a>{% endif %}
+                </div>
+                {% if contact.notes %}<p class="ff-contact-notes" data-finflow-no-i18n>{{ contact.notes }}</p>{% endif %}
+                {% if current_user and current_user.role in ['admin', 'manager'] %}
+                <div class="ff-contact-actions">
+                    {% if contact.status == 'ACTIVE' %}
+                        {% if company.status == 'ACTIVE' and not contact.is_primary %}<button type="button" data-contact-primary="{{ contact.id }}"><i class="bi bi-star"></i><span data-i18n="Set as primary">Set as primary</span></button>{% endif %}
+                        {% if company.status == 'ACTIVE' %}<button type="button" data-contact-edit="{{ contact.id }}"><i class="bi bi-pencil"></i><span data-i18n="Edit">Edit</span></button>{% endif %}
+                        <button type="button" class="is-danger" data-contact-archive="{{ contact.id }}"><i class="bi bi-archive"></i><span data-i18n="Archive">Archive</span></button>
+                    {% elif company.status == 'ACTIVE' %}
+                        <button type="button" data-contact-restore="{{ contact.id }}"><i class="bi bi-arrow-counterclockwise"></i><span data-i18n="Restore">Restore</span></button>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </article>
+            {% else %}
+            <div class="ff-company-detail-empty"><i class="bi bi-person-lines-fill"></i><span data-i18n="No contacts yet.">No contacts yet.</span></div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <div class="ff-company-financial-grid">
+        <section class="ff-company-detail-section ff-panel">
+            <div class="ff-company-detail-section-heading"><div><span class="ff-page-eyebrow" data-i18n="FINANCE">FINANCE</span><h2 data-i18n="Invoices">Invoices</h2></div><span class="ff-company-detail-count">{{ invoices|length }}</span></div>
+            <div class="ff-company-related-list">
+                {% for invoice in invoices %}
+                <div class="ff-company-related-row">
+                    <div><strong data-finflow-no-i18n>{{ invoice.invoice_number or ('#' ~ invoice.id) }}</strong><small>{{ invoice.invoice_date.isoformat() if invoice.invoice_date else '—' }} · {{ invoice.software }}</small></div>
+                    <span>{{ "%.2f"|format(invoice.amount_eur or 0) }} {{ invoice.currency }}</span>
+                    <span class="ff-status-badge {{ 'ff-status-cancelled' if invoice.status == 'CANCELLED' else '' }}" data-i18n="{{ invoice.status }}">{{ invoice.status }}</span>
+                </div>
+                {% else %}<div class="ff-company-detail-empty"><span data-i18n="No invoices.">No invoices.</span></div>{% endfor %}
+            </div>
+        </section>
+
+        <section class="ff-company-detail-section ff-panel">
+            <div class="ff-company-detail-section-heading"><div><span class="ff-page-eyebrow" data-i18n="FINANCE">FINANCE</span><h2 data-i18n="Budgets">Budgets</h2></div><span class="ff-company-detail-count">{{ budgets|length }}</span></div>
+            <div class="ff-company-related-list">
+                {% for budget in budgets %}
+                <div class="ff-company-related-row">
+                    <div><strong data-finflow-no-i18n>{{ budget.software }}</strong><small>{{ budget.completion_date.isoformat() if budget.completion_date else '—' }}</small></div>
+                    <span>{{ "%.2f"|format(budget.total_amount or 0) }} {{ budget.currency }}</span>
+                </div>
+                {% else %}<div class="ff-company-detail-empty"><span data-i18n="No budgets.">No budgets.</span></div>{% endfor %}
+            </div>
+        </section>
+    </div>
+
+    {% if current_user and current_user.role in ['admin', 'manager'] and company.status == 'ACTIVE' %}
+    <div class="ff-contact-modal hidden" id="contactModal" aria-hidden="true">
+        <div class="ff-contact-modal-backdrop" data-contact-close></div>
+        <section class="ff-contact-modal-card" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+            <div class="ff-contact-modal-heading"><div><span class="ff-page-eyebrow" data-i18n="COMPANY CONTACT">COMPANY CONTACT</span><h2 id="contactModalTitle" data-i18n="Add contact">Add contact</h2></div><button type="button" class="ff-contact-modal-close" data-contact-close aria-label="Close"><i class="bi bi-x-lg"></i></button></div>
+            <form id="contactForm">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="contact_id">
+                <label><span data-i18n="Full name">Full name</span><input name="full_name" maxlength="255" required></label>
+                <label><span data-i18n="Job title">Job title</span><input name="job_title" maxlength="255"></label>
+                <div class="ff-contact-form-row"><label><span data-i18n="Email">Email</span><input name="email" type="email" maxlength="255"></label><label><span data-i18n="Phone">Phone</span><input name="phone" maxlength="100"></label></div>
+                <label><span data-i18n="Mobile">Mobile</span><input name="mobile" maxlength="100"></label>
+                <label><span data-i18n="Notes">Notes</span><textarea name="notes" rows="3"></textarea></label>
+                <label class="ff-contact-primary-toggle"><input name="is_primary" type="checkbox"><span data-i18n="Set as primary contact">Set as primary contact</span></label>
+                <p class="ff-contact-form-error hidden" id="contactFormError" role="alert"></p>
+                <div class="ff-contact-modal-actions"><button type="button" class="ff-btn ff-btn-secondary" data-contact-close data-i18n="Cancel">Cancel</button><button type="submit" class="ff-btn ff-btn-primary" data-i18n="Save contact">Save contact</button></div>
+            </form>
+        </section>
+    </div>
+    {% endif %}
+
+    <script id="companyContactsData" type="application/json">{
+    "companyId": {{ company.id }},
+    "canManage": {{ 'true' if current_user and current_user.role in ['admin', 'manager'] else 'false' }},
+    "contacts": {{ contact_data|tojson }}
+    }
+    </script>
+    <script>window.FIN_FLOW_CSRF_TOKEN = {{ csrf_token()|tojson }};</script>
+    <script src="{{ url_for('static', filename='js/company-detail.js') }}?v=20261022-1"></script>
+</main>
+{% endblock %}

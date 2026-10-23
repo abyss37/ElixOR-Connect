@@ -836,22 +836,26 @@
 }
 
 .ff-audit-details-cell {
-    padding: 0 14px 14px 14px !important;
+    padding: 14px 14px 18px !important;
+    vertical-align: middle !important;
 }
 
 .ff-audit-details {
     margin: 0;
-    padding: 12px 14px;
-    overflow-x: auto;
-    border: 1px solid rgba(148, 163, 184, .08);
-    border-radius: 10px;
-    background: rgba(3, 10, 19, .44);
-    color: #7dd3fc;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 9px;
-    line-height: 1.6;
-    white-space: pre-wrap;
-    word-break: break-word;
+    display: block;
+    width: fit-content;
+    max-width: min(100%, 920px);
+    padding: 16px 18px;
+    overflow-wrap: anywhere;
+    overflow-x: hidden;
+    border: 1px solid rgba(148, 163, 184, .10);
+    border-radius: 12px;
+    background: rgba(15, 23, 42, .40);
+    color: #cbd5e1;
+    font-family: inherit;
+    font-size: 10px;
+    line-height: 1.55;
+    white-space: normal;
 }
 
 .ff-audit-state-row td {
@@ -1647,6 +1651,7 @@ html[data-theme="light"] .ff-audit-page-ellipsis {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    max-width: 100%;
 }
 
 .ff-audit-detail-title {
@@ -1731,5 +1736,99 @@ html[data-theme="light"] .ff-audit-detail-item span {
 html[data-theme="light"] .ff-audit-detail-item strong,
 html[data-theme="light"] .ff-audit-detail-text {
     color: #475569;
+}
+
+/* Contact audit entries show only a compact, safe field-name summary. */
+.ff-audit-details-contact {
+    width: fit-content;
+    max-width: min(100%, 560px);
+    color: #cbd5e1;
+    line-height: 1.45;
+}
+
+.ff-audit-contact-detail-content {
+    display: grid;
+    gap: 9px;
+    max-width: 100%;
+}
+
+.ff-audit-contact-detail-heading {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #e2e8f0;
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.ff-audit-contact-detail-heading i {
+    color: #6ee7b7;
+    font-size: 12px;
+}
+
+.ff-audit-contact-field-group {
+    display: grid;
+    gap: 6px;
+}
+
+.ff-audit-contact-field-label {
+    color: #8291a6;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.ff-audit-contact-field-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.ff-audit-contact-field {
+    max-width: 100%;
+    padding: 4px 8px;
+    border: 1px solid rgba(148, 163, 184, .12);
+    border-radius: 7px;
+    background: rgba(148, 163, 184, .055);
+    color: #cbd5e1;
+    font-size: 10px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+html[data-theme="light"] .ff-audit-details-contact {
+    border-color: rgba(15, 23, 42, .09);
+    background: #fff;
+    color: #334155;
+}
+
+html[data-theme="light"] .ff-audit-contact-detail-heading {
+    color: #1e293b;
+}
+
+html[data-theme="light"] .ff-audit-contact-detail-heading i {
+    color: #059669;
+}
+
+html[data-theme="light"] .ff-audit-contact-field-label {
+    color: #64748b;
+}
+
+html[data-theme="light"] .ff-audit-contact-field {
+    border-color: rgba(71, 85, 105, .14);
+    background: #f8fafc;
+    color: #334155;
+}
+
+@media (max-width: 640px) {
+    .ff-audit-details-cell {
+        padding: 12px 10px 14px !important;
+    }
+
+    .ff-audit-details,
+    .ff-audit-details-contact {
+        width: 100%;
+        max-width: 100%;
+        padding: 13px 14px;
+    }
 }
 

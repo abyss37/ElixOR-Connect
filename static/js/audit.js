@@ -97,6 +97,7 @@
 
     function renderDetails(item) {
         const details = item?.details;
+        const contactEvent = isContactEvent(item);
 
         if (details === null || details === undefined || details === '') {
             return '';
@@ -108,12 +109,68 @@
             try {
                 data = JSON.parse(details);
             } catch {
+                if (contactEvent) {
+                    return '';
+                }
                 return `
                     <div class="ff-audit-detail-text">
                         ${escapeHtml(details)}
                     </div>
                 `;
             }
+        }
+
+        if (contactEvent) {
+            const changedFields = Array.isArray(data?.changed_fields)
+                ? data.changed_fields
+                : [];
+            const fieldLabels = {
+                full_name: 'Full name',
+                job_title: 'Job title',
+                email: 'Email',
+                phone: 'Phone',
+                mobile: 'Mobile phone',
+                notes: 'Notes',
+                is_primary: 'Primary contact',
+                status: 'Status'
+            };
+            const safeLabels = [];
+
+            changedFields.forEach(field => {
+                if (typeof field !== 'string') {
+                    return;
+                }
+
+                const key = field.trim().toLowerCase();
+                const label = Object.prototype.hasOwnProperty.call(fieldLabels, key)
+                    ? t(fieldLabels[key])
+                    : t('Other field');
+
+                if (!safeLabels.includes(label)) {
+                    safeLabels.push(label);
+                }
+            });
+
+            if (!safeLabels.length) {
+                return '';
+            }
+
+            return `
+                <div class="ff-audit-contact-detail-content">
+                    <div class="ff-audit-contact-detail-heading">
+                        <i class="bi bi-card-checklist" aria-hidden="true"></i>
+                        <strong>${escapeHtml(t('Details'))}</strong>
+                    </div>
+                    <div class="ff-audit-contact-field-group">
+                        <span class="ff-audit-contact-field-label">${escapeHtml(t('Changed fields'))}</span>
+                        <div class="ff-audit-contact-field-list">
+                            ${safeLabels.map(label => `
+                                <span class="ff-audit-contact-field" data-finflow-no-i18n>${escapeHtml(label)}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
         if (!data || typeof data !== 'object') {
@@ -125,6 +182,26 @@
         }
 
         const action = String(item.action || '').toUpperCase();
+
+        if (action === 'USER_PASSWORD_CHANGED') {
+            const username = data && typeof data === 'object' && !Array.isArray(data)
+                ? data.username
+                : null;
+            if (!username) {
+                return '';
+            }
+
+            return `
+                <div class="ff-audit-detail-content">
+                    <div class="ff-audit-detail-grid">
+                        <div class="ff-audit-detail-item">
+                            <span>${escapeHtml(t('User'))}</span>
+                            <strong data-finflow-no-i18n>${escapeHtml(username)}</strong>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
 
         const assetLabels = {
             logo: 'Logo',
@@ -334,17 +411,45 @@
             CANCEL: 'Cancel', LOGIN: 'Login', LOGOUT: 'Logout',
             CREATE_COMPANY: 'Create', UPDATE_COMPANY: 'Update', DELETE_COMPANY: 'Delete',
             CREATE_INVOICE: 'Create', UPDATE_INVOICE: 'Update', CANCEL_INVOICE: 'Cancel',
-            CREATE_BUDGET: 'Create', UPDATE_BUDGET: 'Update'
+            CREATE_BUDGET: 'Create', UPDATE_BUDGET: 'Update',
+            CONTACT_CREATED: 'Contact created',
+            CONTACT_UPDATED: 'Contact updated',
+            CONTACT_PRIMARY_SET: 'Primary contact assigned',
+            CONTACT_ARCHIVED: 'Contact archived',
+            CONTACT_RESTORED: 'Contact restored',
+            USER_PASSWORD_CHANGED: 'User password changed'
         };
 
         const normalized = String(action).toUpperCase();
         return labels[normalized]
             ? t(labels[normalized])
-            : String(action);
+            : normalized.startsWith('CONTACT_')
+                ? t('Contact activity')
+                : String(action);
     }
 
     function normalizeCompany(item) {
         return item.company || item.company_name || '';
+    }
+
+    function normalizeDescription(item) {
+        const action = String(item?.action || '').toUpperCase();
+        if (action === 'USER_PASSWORD_CHANGED') {
+            return t('User password changed');
+        }
+
+        const description = item?.description ||
+            (typeof item?.details === 'string' ? item.details : '') ||
+            '—';
+        const legacyPasswordDescription = /^Password changed for user\s+.+$/i;
+        return legacyPasswordDescription.test(String(description))
+            ? t('User password changed')
+            : description;
+    }
+
+    function isContactEvent(item) {
+        return String(item?.entity_type || '').toLowerCase() === 'contact' ||
+            String(item?.action || '').toUpperCase().startsWith('CONTACT_');
     }
 
     function renderSelectOptions(select, items, emptyLabel, valueKey, labelKey) {
@@ -743,13 +848,11 @@
 
             const action = String(item.action || '—');
             const actionLabel = normalizeActionLabel(action);
+            const contactEvent = isContactEvent(item);
             const companyName = normalizeCompany(item) || t('Без компании');
             const username = item.username || t('Система');
-            const software = item.software || '';
-            const description =
-                item.description ||
-                (typeof item.details === 'string' ? item.details : '') ||
-                '—';
+            const software = contactEvent ? '' : (item.software || '');
+            const description = contactEvent ? '—' : normalizeDescription(item);
 
             const detailsHtml = renderDetails(item);
             const hasDetails = Boolean(detailsHtml);
@@ -818,7 +921,7 @@
                                 ${escapeHtml(description)}
                             </div>
                             ${
-                                item.entity_type || item.entity_id
+                                !contactEvent && (item.entity_type || item.entity_id)
                                     ? `<div class="ff-audit-description-meta" data-finflow-no-i18n>
                                         ${escapeHtml(item.entity_type || t('Entity'))}${item.entity_id ? ` · ${escapeHtml(item.entity_id)}` : ''}
                                        </div>`
@@ -849,7 +952,7 @@
                             class="ff-audit-details-row"
                             data-details-index="${index}">
                             <td colspan="7" class="ff-audit-details-cell">
-                                <div class="ff-audit-details">${detailsHtml}</div>
+                                <div class="ff-audit-details${isContactEvent(item) ? ' ff-audit-details-contact' : ''}">${detailsHtml}</div>
                             </td>
                            </tr>`
                         : ''

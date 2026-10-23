@@ -4,7 +4,7 @@
 
 {% block head %}
 <link rel="stylesheet"
-      href="{{ url_for('static', filename='css/companies.css') }}?v=20261022-1">
+      href="{{ url_for('static', filename='css/companies.css') }}?v=20261022-2">
 {% endblock %}
 
 
@@ -405,6 +405,7 @@ Companies, contracts and financial relationships in one workspace.
                             </span>
 
                             <h3 data-i18n="Company invoices">Company invoices</h3>
+                            <a class="ff-company-profile-link" href="{{ url_for('company_detail_page', company_id=company.id) }}"><i class="bi bi-person-vcard"></i><span data-i18n="Open company profile">Open company profile</span></a>
 
                         </div>
 
@@ -628,6 +629,7 @@ Companies, contracts and financial relationships in one workspace.
                                 </span>
 
                                 <h3 data-i18n="Company invoices">Company invoices</h3>
+                                <a class="ff-company-profile-link" href="{{ url_for('company_detail_page', company_id=company.id) }}"><i class="bi bi-person-vcard"></i><span data-i18n="Open company profile">Open company profile</span></a>
                             </div>
 
                             <button

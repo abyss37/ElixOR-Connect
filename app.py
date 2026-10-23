@@ -1,6 +1,7 @@
 import json
 import os
 import hmac
+import re
 import secrets
 from datetime import date, datetime, timezone, timedelta
 from decimal import Decimal, InvalidOperation
@@ -14,6 +15,7 @@ from PIL import Image, ImageChops, ImageEnhance, ImageFilter, ImageOps
 from functools import wraps
 from sqlalchemy import Numeric, func
 from sqlalchemy.exc import IntegrityError
+from werkzeug.exceptions import HTTPException
 
 from io import BytesIO
 
@@ -737,6 +739,67 @@ class Company(db.Model):
     )
     invoices = db.relationship("Invoice", backref="company", lazy=True, cascade="all, delete-orphan")
     budgets = db.relationship("CompanyBudget", backref="company", lazy=True, cascade="all, delete-orphan")
+    contacts = db.relationship("Contact", backref="company", lazy=True, passive_deletes=True)
+
+
+class Contact(db.Model):
+    __tablename__ = "contact"
+    __table_args__ = (
+        db.CheckConstraint(
+            "length(trim(full_name)) > 0",
+            name="ck_contact_full_name_nonempty",
+        ),
+        db.CheckConstraint(
+            "status IN ('ACTIVE', 'ARCHIVED')",
+            name="ck_contact_status",
+        ),
+        db.Index("ix_contact_company_status", "company_id", "status"),
+        db.Index(
+            "uq_contact_active_primary_per_company",
+            "company_id",
+            unique=True,
+            postgresql_where=db.text("is_primary = true AND status = 'ACTIVE'"),
+            sqlite_where=db.text("is_primary = 1 AND status = 'ACTIVE'"),
+        ),
+    )
+
+    id = db.Column(db.Integer, primary_key=True)
+    company_id = db.Column(
+        db.Integer,
+        db.ForeignKey("company.id", ondelete="RESTRICT"),
+        nullable=False,
+    )
+    full_name = db.Column(db.String(255), nullable=False)
+    job_title = db.Column(db.String(255), nullable=True)
+    email = db.Column(db.String(255), nullable=True)
+    phone = db.Column(db.String(100), nullable=True)
+    mobile = db.Column(db.String(100), nullable=True)
+    notes = db.Column(db.Text, nullable=True)
+    is_primary = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=False,
+        server_default=db.false(),
+    )
+    status = db.Column(
+        db.String(20),
+        nullable=False,
+        default="ACTIVE",
+        server_default="ACTIVE",
+    )
+    created_at = db.Column(
+        db.DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(timezone.utc),
+        server_default=db.func.now(),
+    )
+    updated_at = db.Column(
+        db.DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(timezone.utc),
+        server_default=db.func.now(),
+        onupdate=db.func.now(),
+    )
 
 
 class OurCompany(db.Model):
@@ -2070,6 +2133,317 @@ def reactivate_company(company_id):
     except Exception:
         db.session.rollback()
         return api_error_response("Could not reactivate company.", 400, "Could not reactivate company")
+
+
+def _contact_bool(value, default=False):
+    if value is None:
+        return default
+    if isinstance(value, bool):
+        return value
+    return str(value).strip().lower() in {"1", "true", "yes", "on"}
+
+
+class ContactValidationError(ValueError):
+    """Raised when submitted contact fields do not pass validation."""
+
+
+def _contact_payload(data, current=None):
+    if not hasattr(data, "get"):
+        raise ContactValidationError("Invalid contact data.")
+    values = {}
+    limits = {
+        "full_name": 255,
+        "job_title": 255,
+        "email": 255,
+        "phone": 100,
+        "mobile": 100,
+    }
+    for field, limit in limits.items():
+        raw_value = data.get(field, getattr(current, field, "") if current else "")
+        value = str(raw_value or "").strip()
+        if field == "full_name" and not value:
+            raise ContactValidationError("Contact name is required.")
+        if len(value) > limit:
+            raise ContactValidationError("Contact field exceeds its maximum length.")
+        if field == "email":
+            value = value.lower()
+            if value and not re.fullmatch(r"[^\s@]+@[^\s@]+\.[^\s@]+", value):
+                raise ContactValidationError("Enter a valid email address.")
+        values[field] = value or None
+
+    raw_notes = data.get("notes", getattr(current, "notes", "") if current else "")
+    values["notes"] = str(raw_notes or "").strip() or None
+    values["is_primary"] = _contact_bool(
+        data.get("is_primary"),
+        default=bool(current.is_primary) if current else False,
+    )
+    return values
+
+
+def _contact_audit(action, contact, changed_fields):
+    write_audit_log(
+        action=action,
+        entity_type="contact",
+        entity_id=contact.id,
+        company_id=contact.company_id,
+        description=f"Contact {action.lower().replace('contact_', '')}",
+        details={"changed_fields": sorted(set(changed_fields))},
+    )
+
+
+def _set_primary_contact(company_id, contact):
+    company = (
+        Company.query
+        .filter_by(id=company_id)
+        .with_for_update()
+        .first()
+    )
+    if not company:
+        raise LookupError("Company not found.")
+    if company.status != "ACTIVE":
+        raise ValueError("Contacts cannot be activated for an archived company.")
+    if contact.company_id != company.id or contact.status != "ACTIVE":
+        raise ValueError("Only an active contact belonging to this company can be primary.")
+
+    Contact.query.filter(
+        Contact.company_id == company.id,
+        Contact.status == "ACTIVE",
+        Contact.is_primary.is_(True),
+        Contact.id != contact.id,
+    ).update({Contact.is_primary: False}, synchronize_session="fetch")
+    contact.is_primary = True
+
+
+def _contact_error(message, status=400, code="invalid_contact"):
+    return jsonify({"status": "error", "code": code, "message": message}), status
+
+
+def _utc_timestamp(value):
+    if value is None:
+        return "—"
+    if value.tzinfo is None:
+        value = value.replace(tzinfo=timezone.utc)
+    return value.astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M")
+
+
+@app.route("/companies/<int:company_id>")
+@login_required
+def company_detail_page(company_id):
+    company = Company.query.get_or_404(company_id)
+    contacts = sorted(
+        company.contacts,
+        key=lambda contact: (
+            contact.status != "ACTIVE",
+            not contact.is_primary,
+            contact.full_name.casefold(),
+        ),
+    )
+    invoices = sorted(company.invoices, key=lambda invoice: invoice.id, reverse=True)
+    budgets = sorted(
+        company.budgets,
+        key=lambda budget: (budget.software, budget.currency),
+    )
+    contact_data = [
+        {
+            "id": contact.id,
+            "full_name": contact.full_name,
+            "job_title": contact.job_title or "",
+            "email": contact.email or "",
+            "phone": contact.phone or "",
+            "mobile": contact.mobile or "",
+            "notes": contact.notes or "",
+            "is_primary": contact.is_primary,
+            "status": contact.status,
+        }
+        for contact in contacts
+    ]
+    return render_template(
+        "company_detail.html",
+        company=company,
+        contacts=contacts,
+        invoices=invoices,
+        budgets=budgets,
+        contact_data=contact_data,
+        current_user=get_current_user(),
+        currency_symbols=SUPPORTED_CURRENCIES,
+        company_created_at=_utc_timestamp(company.created_at),
+        company_updated_at=_utc_timestamp(company.updated_at),
+    )
+
+
+@app.route("/companies/<int:company_id>/contacts", methods=["POST"])
+@role_required("admin", "manager")
+def create_contact(company_id):
+    try:
+        company = Company.query.filter_by(id=company_id).with_for_update().first()
+        if not company:
+            return _contact_error("Company not found.", 404, "company_not_found")
+        if company.status != "ACTIVE":
+            return _contact_error("Contacts cannot be created for an archived company.", 409, "company_archived")
+        data = request.get_json(silent=True) or request.form
+        values = _contact_payload(data)
+        make_primary = values.pop("is_primary")
+        contact = Contact(company_id=company.id, is_primary=False, **values)
+        db.session.add(contact)
+        db.session.flush()
+        if make_primary:
+            if company.status == "ACTIVE":
+                _set_primary_contact(company.id, contact)
+            elif not contact.is_primary:
+                raise ValueError("Contacts cannot be activated for an archived company.")
+        _contact_audit(
+            "CONTACT_CREATED",
+            contact,
+            values.keys(),
+        )
+        if make_primary:
+            _contact_audit("CONTACT_PRIMARY_SET", contact, ["is_primary"])
+        db.session.commit()
+        return jsonify({"status": "ok", "contact_id": contact.id}), 201
+    except ContactValidationError as exc:
+        db.session.rollback()
+        return _contact_error(str(exc))
+    except IntegrityError as exc:
+        app.logger.exception(
+            "IntegrityError while creating contact for company_id=%s: %s",
+            company_id,
+            exc,
+        )
+        db.session.rollback()
+        return _contact_error(
+            "Contact state changed concurrently. Reload and try again.",
+            409,
+            "contact_conflict",
+        )
+    except HTTPException:
+        db.session.rollback()
+        raise
+    except Exception:
+        db.session.rollback()
+        return api_error_response("Could not create contact.", 500, "Could not create contact")
+
+
+@app.route("/companies/<int:company_id>/contacts/<int:contact_id>/update", methods=["POST"])
+@role_required("admin", "manager")
+def update_contact(company_id, contact_id):
+    try:
+        company = Company.query.get_or_404(company_id)
+        contact = Contact.query.filter_by(id=contact_id, company_id=company.id).first_or_404()
+        if contact.status != "ACTIVE":
+            return _contact_error("Restore this contact before editing it.", 409, "contact_archived")
+        data = request.get_json(silent=True) or request.form
+        values = _contact_payload(data, current=contact)
+        changed_fields = [
+            field for field, value in values.items()
+            if getattr(contact, field) != value
+        ]
+        make_primary = values["is_primary"]
+        for field, value in values.items():
+            if field != "is_primary":
+                setattr(contact, field, value)
+        if make_primary:
+            _set_primary_contact(company.id, contact)
+        else:
+            contact.is_primary = False
+        if changed_fields:
+            _contact_audit("CONTACT_UPDATED", contact, changed_fields)
+        db.session.commit()
+        return jsonify({"status": "ok", "contact_id": contact.id})
+    except ContactValidationError as exc:
+        db.session.rollback()
+        return _contact_error(str(exc))
+    except ValueError as exc:
+        db.session.rollback()
+        return _contact_error(str(exc), 409, "contact_conflict")
+    except IntegrityError as exc:
+        app.logger.exception(
+            "IntegrityError while updating contact for company_id=%s: %s",
+            company_id,
+            exc,
+        )
+        db.session.rollback()
+        return _contact_error(
+            "Contact state changed concurrently. Reload and try again.",
+            409,
+            "contact_conflict",
+        )
+    except HTTPException:
+        db.session.rollback()
+        raise
+    except Exception:
+        db.session.rollback()
+        return api_error_response("Could not update contact.", 500, "Could not update contact")
+
+
+@app.route("/companies/<int:company_id>/contacts/<int:contact_id>/archive", methods=["POST"])
+@role_required("admin", "manager")
+def archive_contact(company_id, contact_id):
+    try:
+        contact = Contact.query.filter_by(company_id=company_id, id=contact_id).first_or_404()
+        if contact.status == "ARCHIVED":
+            return jsonify({"status": "ok", "contact_id": contact.id, "contact_status": contact.status})
+        contact.status = "ARCHIVED"
+        contact.is_primary = False
+        _contact_audit("CONTACT_ARCHIVED", contact, ["status", "is_primary"])
+        db.session.commit()
+        return jsonify({"status": "ok", "contact_id": contact.id, "contact_status": contact.status})
+    except HTTPException:
+        db.session.rollback()
+        raise
+    except Exception:
+        db.session.rollback()
+        return api_error_response("Could not archive contact.", 500, "Could not archive contact")
+
+
+@app.route("/companies/<int:company_id>/contacts/<int:contact_id>/restore", methods=["POST"])
+@role_required("admin", "manager")
+def restore_contact(company_id, contact_id):
+    try:
+        company = Company.query.filter_by(id=company_id).with_for_update().first()
+        if not company:
+            return _contact_error("Company not found.", 404, "company_not_found")
+        contact = Contact.query.filter_by(id=contact_id, company_id=company.id).first_or_404()
+        if company.status != "ACTIVE":
+            return _contact_error("Contacts cannot be restored for an archived company.", 409, "company_archived")
+        if contact.status == "ACTIVE":
+            return jsonify({"status": "ok", "contact_id": contact.id, "contact_status": contact.status})
+        contact.status = "ACTIVE"
+        contact.is_primary = False
+        _contact_audit("CONTACT_RESTORED", contact, ["status"])
+        db.session.commit()
+        return jsonify({"status": "ok", "contact_id": contact.id, "contact_status": contact.status})
+    except HTTPException:
+        db.session.rollback()
+        raise
+    except Exception:
+        db.session.rollback()
+        return api_error_response("Could not restore contact.", 500, "Could not restore contact")
+
+
+@app.route("/companies/<int:company_id>/contacts/<int:contact_id>/primary", methods=["POST"])
+@role_required("admin", "manager")
+def set_primary_contact(company_id, contact_id):
+    try:
+        contact = Contact.query.filter_by(id=contact_id, company_id=company_id).first_or_404()
+        already_primary = contact.is_primary and contact.status == "ACTIVE"
+        _set_primary_contact(company_id, contact)
+        if already_primary:
+            return jsonify({"status": "ok", "contact_id": contact.id, "is_primary": True})
+        _contact_audit("CONTACT_PRIMARY_SET", contact, ["is_primary"])
+        db.session.commit()
+        return jsonify({"status": "ok", "contact_id": contact.id, "is_primary": True})
+    except ValueError as exc:
+        db.session.rollback()
+        return _contact_error(str(exc), 409, "contact_conflict")
+    except IntegrityError:
+        db.session.rollback()
+        return _contact_error("Another primary contact was assigned concurrently. Reload and try again.", 409, "contact_conflict")
+    except HTTPException:
+        db.session.rollback()
+        raise
+    except Exception:
+        db.session.rollback()
+        return api_error_response("Could not set primary contact.", 500, "Could not set primary contact")
 
 
 
@@ -4946,6 +5320,10 @@ def api_audit_log():
         items = []
 
         for row in rows:
+            is_contact_event = (
+                str(row.entity_type or "").lower() == "contact"
+                or str(row.action or "").upper().startswith("CONTACT_")
+            )
             details = None
 
             if row.details:
@@ -4954,12 +5332,37 @@ def api_audit_log():
                 except (TypeError, ValueError):
                     details = row.details
 
+            if is_contact_event:
+                safe_contact_fields = {
+                    "full_name",
+                    "job_title",
+                    "email",
+                    "phone",
+                    "mobile",
+                    "notes",
+                    "is_primary",
+                    "status",
+                }
+                changed_fields = (
+                    details.get("changed_fields")
+                    if isinstance(details, dict)
+                    else None
+                )
+                details = {
+                    "changed_fields": [
+                        field.strip().lower()
+                        for field in changed_fields
+                        if isinstance(field, str)
+                        and field.strip().lower() in safe_contact_fields
+                    ]
+                } if isinstance(changed_fields, list) else None
+
             items.append({
                 "id": row.id,
                 "created_at": row.created_at.isoformat() if row.created_at else None,
                 "action": row.action,
                 "entity_type": row.entity_type,
-                "entity_id": row.entity_id,
+                "entity_id": None if is_contact_event else row.entity_id,
                 "company_id": row.company_id,
                 "user_id": row.user_id,
                 "username": (
@@ -4967,8 +5370,8 @@ def api_audit_log():
                     if getattr(row, "user", None)
                     else None
                 ),
-                "software": row.software,
-                "description": row.description,
+                "software": None if is_contact_event else row.software,
+                "description": None if is_contact_event else row.description,
                 "details": details,
             })
 

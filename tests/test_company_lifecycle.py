@@ -7,7 +7,6 @@ they cannot connect to a developer or production database.
 import os
 import unittest
 from decimal import Decimal
-from sqlalchemy import event, func, select
 
 os.environ["DATABASE_URL"] = "sqlite:///:memory:"
 os.environ["SECRET_KEY"] = "isolated-company-lifecycle-test-key"
@@ -23,6 +22,7 @@ from app import (  # noqa: E402
     db,
     get_or_create_company,
 )
+from tests.sqlite_audit_helpers import register_sqlite_audit_id_handler  # noqa: E402
 
 
 class CompanyLifecycleTests(unittest.TestCase):
@@ -30,16 +30,7 @@ class CompanyLifecycleTests(unittest.TestCase):
     def setUpClass(cls):
         app.config.update(TESTING=True, SECRET_KEY="company-lifecycle-test")
         cls.client = app.test_client()
-
-        # SQLite does not auto-increment a BIGINT primary key like PostgreSQL.
-        # Supply IDs only in this isolated test environment.
-        @event.listens_for(AuditLog, "before_insert")
-        def assign_sqlite_audit_id(mapper, connection, target):
-            if target.id is None:
-                maximum = connection.execute(
-                    select(func.max(AuditLog.id))
-                ).scalar_one()
-                target.id = (maximum or 0) + 1
+        register_sqlite_audit_id_handler()
 
     def setUp(self):
         with app.app_context():

@@ -1011,6 +1011,18 @@
     background: rgba(100, 116, 139, .16);
 }
 
+.ff-company-profile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 7px;
+    color: var(--ff-accent, #38bdf8);
+    font-size: 11px;
+    text-decoration: none;
+}
+
+.ff-company-profile-link:hover { text-decoration: underline; }
+
 .ff-invoice-actions {
     display: flex;
     align-items: center;
